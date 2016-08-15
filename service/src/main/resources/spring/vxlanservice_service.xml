@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+        http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+
+    <!-- these are included in the dependency jar -->
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+    <!-- jar rest server registration -->
+    <jaxrs:server id="restContainer" address="/">
+        <!-- registering beans -->
+        <jaxrs:serviceBeans>
+            <ref bean="VxLanServiceResource"></ref>
+        </jaxrs:serviceBeans>
+        <!-- registering providers -->
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <!-- Service Resource bean -->
+    <bean id="VxLanServiceResource" class="org.openo.sdno.vxlan.rest.VxlanSvcRoaResource">
+        <property name="vxlanService" ref="vxlanService"></property>
+    </bean>
+
+    <bean id="vxlanService" class="org.openo.sdno.vxlan.service.impl.VxlanServiceImpl"></bean>
+
+    <!-- Service Resource bean -->
+    <bean id="VxlanSvcRestModule" class="org.openo.sdno.vxlan.VxlanSvcRestModule" init-method="start"
+        destroy-method="stop">
+    </bean>
+</beans>
