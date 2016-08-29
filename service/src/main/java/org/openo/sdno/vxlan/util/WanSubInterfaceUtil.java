@@ -117,8 +117,8 @@ public class WanSubInterfaceUtil {
 
     private static ResultRsp<List<WanSubInterface>> getNeWanSubInterface(String cltuuid, String deviceId,
             String subInterUsedType) throws ServiceException {
-        RestfulParametes restParam = VxlanRestParameterUtil.getQueryWanInterfaceParam(subInterUsedType);
-        String queryUrl = UrlAdapterConst.ADAPTER_BASE_URL + cltuuid
+        RestfulParametes restParam = VxlanRestParameterUtil.getQueryWanInterfaceParam(subInterUsedType, cltuuid);
+        String queryUrl = UrlAdapterConst.WAN_INTERFACE_ADAPTER_BASE_URL
                 + MessageFormat.format(UrlAdapterConst.QUERY_WAN_INTERFACE, deviceId);
 
         RestfulResponse resp = RestfulProxy.get(queryUrl, restParam);

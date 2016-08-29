@@ -62,7 +62,7 @@ import org.springframework.util.StringUtils;
  * @version SDNO 0.5 03-Jun-2016
  */
 @Service
-@Path("/svc/vxlan/v1/vxlans")
+@Path("/sdnovxlan/v1/vxlans")
 public class VxlanSvcRoaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VxlanSvcRoaResource.class);

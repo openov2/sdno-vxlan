@@ -122,10 +122,10 @@ public class VxlanSbiAdapter {
 
     private static ResultRsp<List<NeVxlanInstance>> deployVxlanInstance(String ctrlUuid,
             List<NeVxlanInstance> vxlanInstancesList) throws ServiceException {
-        RestfulParametes restfulParametes = VxlanRestParameterUtil.getCreateVxlanInstanceParam(vxlanInstancesList);
+        RestfulParametes restfulParametes =
+                VxlanRestParameterUtil.getCreateVxlanInstanceParam(vxlanInstancesList, ctrlUuid);
         RestfulResponse response = RestfulProxy.post(
-                UrlAdapterConst.ADAPTER_BASE_URL + ctrlUuid + UrlAdapterConst.BATCH_CREATE_VXLAN_INSTANCE,
-                restfulParametes);
+                UrlAdapterConst.VXLAN_ADAPTER_BASE_URL + UrlAdapterConst.BATCH_CREATE_VXLAN_INSTANCE, restfulParametes);
         if(response.getStatus() == HttpCode.NOT_FOUND) {
             return new ResultRsp<List<NeVxlanInstance>>(ErrorCode.RESTFUL_COMMUNICATION_FAILED);
         }

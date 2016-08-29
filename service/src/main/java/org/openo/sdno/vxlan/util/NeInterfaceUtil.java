@@ -102,10 +102,9 @@ public class NeInterfaceUtil {
     }
 
     private static ResultRsp<NeVtep> getNeVtep(String contrUuid, String devId) throws ServiceException {
-        RestfulParametes restParametes = VxlanRestParameterUtil.getQueryVtepParam();
+        RestfulParametes restParametes = VxlanRestParameterUtil.getQueryVtepParam(contrUuid);
         String getUrl =
-                UrlAdapterConst.ADAPTER_BASE_URL + contrUuid
-                        + MessageFormat.format(UrlAdapterConst.QUERY_VTEP, devId);
+                UrlAdapterConst.VXLAN_ADAPTER_BASE_URL + MessageFormat.format(UrlAdapterConst.QUERY_VTEP, devId);
 
         RestfulResponse restResp = RestfulProxy.get(getUrl, restParametes);
         if(null != restResp) {

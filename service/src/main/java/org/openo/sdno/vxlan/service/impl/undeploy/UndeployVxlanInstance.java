@@ -150,9 +150,9 @@ public class UndeployVxlanInstance {
             String deleteInstanceUrl =
                     MessageFormat.format(UrlAdapterConst.REMOVE_VXLAN_INSTANCE, vxlanInstance.getUuid());
 
-            RestfulResponse response =
-                    RestfulProxy.delete(UrlAdapterConst.ADAPTER_BASE_URL + ctrlUuid + deleteInstanceUrl,
-                            VxlanRestParameterUtil.getDeleteInstanceParam(vxlanInstanceList));
+            RestfulResponse response = RestfulProxy.delete(UrlAdapterConst.VXLAN_ADAPTER_BASE_URL + deleteInstanceUrl,
+                    VxlanRestParameterUtil.getDeleteInstanceParam(vxlanInstanceList, ctrlUuid));
+
             try {
                 String overlayVpnContent = ResponseUtils.transferResponse(response);
                 ResultRsp<String> restResult =
