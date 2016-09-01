@@ -7,7 +7,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.openo.sdno</groupId>
+    <groupId>org.openo.sdno.vxlan</groupId>
     <artifactId>vxlanservice-root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
