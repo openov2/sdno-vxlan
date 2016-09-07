@@ -1,0 +1,68 @@
+{
+	"request": {
+		"uri": "/rest/svc/sbiadp/controller/[a-zA-Z0-9\\-\\_]{1,36}/v1/vxlan/batch-create-vxlan",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": [
+			{
+				"id": "111111111",
+				"tenantId": null,
+				"name": null,
+				"description": null,
+				"modifyMask": "NOMODIFY",
+				"operStatus": "none",
+				"adminStatus": "none",
+				"createTime": null,
+				"controllerId": null,
+				"connectionServiceId": null,
+				"vni": null,
+				"arpProxy": "false",
+				"arpBroadcastSuppress": "false",
+				"neId": null,
+				"vxlanInterfaces": null,
+				"vxlanTunnels": null,
+				"vxlanInterfaceList": null,
+				"vxlanTunnelList": null
+			}
+		]
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"httpCode": 200,
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": [
+				{
+					"id": "111111111",
+					"tenantId": null,
+					"name": null,
+					"description": null,
+					"modifyMask": "NOMODIFY",
+					"operStatus": "none",
+					"adminStatus": "none",
+					"createTime": null,
+					"controllerId": null,
+					"connectionServiceId": null,
+					"vni": null,
+					"arpProxy": "false",
+					"arpBroadcastSuppress": "false",
+					"neId": null,
+					"vxlanInterfaces": null,
+					"vxlanTunnels": null,
+					"vxlanInterfaceList": null,
+					"vxlanTunnelList": null
+				}
+			]
+		}
+	}
+}

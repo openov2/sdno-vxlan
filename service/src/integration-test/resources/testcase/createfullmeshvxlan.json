@@ -1,0 +1,107 @@
+{
+	"request": {
+		"uri": "/rest/svc/vxlan/v1/vxlans",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"id": "vpn1id",
+			"tenantId": "tenantid",
+			"name": "vpn1",
+			"description": "test overlayvpn instance",
+			"modifyMask": "NOMODIFY",
+			"operStatus": "none",
+			"adminStatus": "none",
+			"connectionIds": null,
+			"vpnConnections": [
+				{
+					"id": "connection1id",
+					"tenantId": "tenantid",
+					"name": "connection1",
+					"description": "test connection",
+					"modifyMask": "NOMODIFY",
+					"operStatus": "none",
+					"adminStatus": "none",
+					"topology": "full_mesh",
+					"technology": "vxlan",
+					"compositeVpnId": "vpn1id",
+					"mappingPolicyId": "mappingpolicy1id",
+					"epgIds": null,
+					"endpointGroups": [
+						{
+							"id": "egp1id",
+							"tenantId": "tenantid",
+							"name": "epg1",
+							"description": "Test for Epg",
+							"modifyMask": "NOMODIFY",
+							"operStatus": "none",
+							"adminStatus": "none",
+							"type": "port",
+							"endpoints": "[\"1\", \"2\"]",
+							"cidr": null,
+							"endpointList": null,
+							"gatewayId": null,
+							"neId": "ne1id",
+							"topologyRole": "none",
+							"connectionId": "connection1id",
+							"qosPolicyId": null,
+							"gateway": null
+						},
+						{
+							"id": "egp2id",
+							"tenantId": "tenantid",
+							"name": "epg2",
+							"description": "Test for Epg",
+							"modifyMask": "NOMODIFY",
+							"operStatus": "none",
+							"adminStatus": "none",
+							"type": "port",
+							"endpoints": "[\"3\", \"4\"]",
+							"cidr": null,
+							"endpointList": null,
+							"gatewayId": null,
+							"neId": "ne2id",
+							"topologyRole": "none",
+							"connectionId": "connection1id",
+							"qosPolicyId": null,
+							"gateway": null
+						}
+					],
+					"greMappingPolicy": null,
+					"ipsecMappingPolicy": null,
+					"vxlanMappingPolicy": {
+						"id": "policy1id",
+						"tenantId": "tenantid",
+						"name": "policy1",
+						"description": "test for mapping policy",
+						"modifyMask": "NOMODIFY",
+						"type": "vxlan",
+						"ikePolicyId": null,
+						"ipsecPolicyId": null,
+						"ikePolicy": null,
+						"ipSecPolicy": null,
+						"arpProxy": "false",
+						"arpBroadcastSuppress": "true"
+					}
+				}
+			]
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"httpCode": 200,
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": null
+		}
+	}
+}

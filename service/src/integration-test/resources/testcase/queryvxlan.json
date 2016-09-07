@@ -1,0 +1,13 @@
+{
+	"request": {
+		"uri": "/rest/svc/vxlan/v1/vxlans/{connectionid}/vxlantunnels",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 500,
+		"json": null
+	}
+}

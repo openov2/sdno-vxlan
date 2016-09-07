@@ -1,0 +1,25 @@
+{
+	"request": {
+		"uri": "/rest/svc/vxlan/v1/vxlans",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"id": "9&*74746646",
+			"tenantId": null,
+			"name": null,
+			"description": null,
+			"modifyMask": "NOMODIFY",
+			"operStatus": "none",
+			"adminStatus": "none",
+			"createTime": null,
+			"connectionIds": null,
+			"vpnConnections": null
+		}
+	},
+	"response": {
+		"status": 500,
+		"json": null
+	}
+}

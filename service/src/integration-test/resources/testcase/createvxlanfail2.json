@@ -1,0 +1,36 @@
+{
+	"request": {
+		"uri": "/rest/svc/vxlan/v1/vxlans",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"id": "vpn1id",
+			"tenantId": "tenantid",
+			"name": "vpn1",
+			"description": "test overlayvpn instance",
+			"modifyMask": "NOMODIFY",
+			"operStatus": "none",
+			"adminStatus": "none",
+			"connectionIds": null,
+			"vpnConnections": null
+		}
+	},
+	"response": {
+		"status": 500,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"httpCode": 200,
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": null
+		}
+	}
+}
