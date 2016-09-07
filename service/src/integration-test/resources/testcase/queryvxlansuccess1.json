@@ -1,0 +1,48 @@
+{
+	"request":
+	{
+		"uri": "/rest/svc/vxlan/v1/vxlanservice",
+		"method": "get",
+		"headers":{"Content-Type":"application/json;charset=UTF-8"}
+	},
+	"response":
+	{
+		"status":200,
+		"json":
+		{
+			"errorCode":"overlayvpn.operation.success",
+			"descArg":"",
+			"reasonArg":"",
+			"detailArg":"",
+			"adviceArg":"",
+			"httpCode":200,
+			"message":"",
+			"smallErrorCodeList":null,
+			"successed":null,
+			"fail":null,
+			"data":
+			[
+				{
+					"serviceId":null,
+					"tunnelType":null,
+					"tunnelId":null,
+					"srcNeId":null,
+					"srcIp":null,
+					"dstNeId":null,
+					"dstIp":null,
+					"vni":null
+				},
+				{
+					"serviceId":null,
+					"tunnelType":null,
+					"tunnelId":null,
+					"srcNeId":null,
+					"srcIp":null,
+					"dstNeId":null,
+					"dstIp":null,
+					"vni":null
+				}
+			]
+		}
+	}
+}

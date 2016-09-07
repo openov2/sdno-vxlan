@@ -1,0 +1,32 @@
+[
+	{
+		"name": "Ne1",
+		"description": "TestNetworkElement",
+		"productName": "SNC",
+		"version": "V1R3",
+		"source": "os",
+		"logicID": "849494949",
+		"phyNeID": "8965969966906",
+		"nativeID": "networkwork1id",
+		"ipAddress": "192.168.1.1",
+		"adminState": "active",
+		"operState": "up",
+		"controllerName": "Controller1",
+		"siteName": "Site1"
+	},
+	{
+		"name": "Ne2",
+		"description": "TestNetworkElement",
+		"productName": "SNC",
+		"version": "V1R3",
+		"source": "os",
+		"logicID": "849494949",
+		"phyNeID": "8965969966906",
+		"nativeID": "networkwork2id",
+		"ipAddress": "192.168.2.1",
+		"adminState": "active",
+		"operState": "up",
+		"controllerName": "Controller1",
+		"siteName": "Site1"
+	}
+]

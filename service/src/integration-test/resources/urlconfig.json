@@ -1,0 +1,14 @@
+[
+	{
+		"url": "/svc/mss/v2",
+		"prefix": "/org.openo.sdno.mss.service"
+	},
+	{
+		"url": "/brs/v1",
+		"prefix": "/org.openo.sdno.brs"
+	},
+	{
+		"url": "/svc/vxlan/v1",
+		"prefix": "/org.openo.sdno.vxlanservice"
+	}
+]

@@ -1,0 +1,28 @@
+{
+	"request": {
+		"uri": "/rest/svc/sbiadp/controller/[a-zA-Z0-9\\-\\_]{1,36}/v1/vxlan/device/[a-zA-Z0-9\\-\\_]{1,36}/vtep",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"httpCode": 200,
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": {
+				"neId": "6da6935d-cdf6-48e8-ac3b-2910e87377eh",
+				"vtepIp": "192.168.1.1"
+			}
+		}
+	}
+}

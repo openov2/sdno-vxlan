@@ -1,0 +1,50 @@
+{
+	"request": {
+		"uri": "/rest/svc/sbiadp/controller/[a-zA-Z0-9\\-\\_]{1,36}/v1/overlay/device/[a-zA-Z0-9\\-\\_]{1,36}/wan-sub-interfaces",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"httpCode": 200,
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": [
+				{
+					"neId": null,
+					"name": "wlan-radio0/0/0.1",
+					"ceHighVlan": 101,
+					"ceLowVlan": 101,
+					"ipAddress": "192.168.1.1",
+					"mask": "255.255.255.0",
+					"mac": "00:e0:f5:26:05:15",
+					"ip6": null,
+					"mask6": null,
+					"type": null
+				},
+				{
+					"neId": null,
+					"name": "wlan-radio0/0/0.2",
+					"ceHighVlan": 103,
+					"ceLowVlan": 103,
+					"ipAddress": "192.168.1.2",
+					"mask": "255.255.255.0",
+					"mac": "00:e0:f5:26:05:16",
+					"ip6": null,
+					"mask6": null,
+					"type": null
+				}
+			]
+		}
+	}
+}
