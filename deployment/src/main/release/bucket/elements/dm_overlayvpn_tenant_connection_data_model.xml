@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inventory xmlns="http://www.w3school.com.cn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3school.com.cn inv-datamodel-1.0.xsd">
+    <datamodel name="inv_overlayvpn_tenant_connection">
+        <index name="idx_overlayvpn_tenant_connection_uniqueid" value="uuid" isunique="true" />
+        <filter name="default"
+            value="uuid in (:uuid) and tenantId in (:tenantId) and name in (:name) and description in (:description) and operStatus in (:operStatus) and adminStatus in (:adminStatus) and source in (:source) and actionState in (:actionState) and createModelTime in (:createModelTime) and topology in (:topology) and technology in (:technology) and overlayVpnId in (:overlayVpnId) and mappingPolicyId in (:mappingPolicyId)" />
+    </datamodel>
+</inventory>

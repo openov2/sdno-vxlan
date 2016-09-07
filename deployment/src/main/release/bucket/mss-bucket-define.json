@@ -1,0 +1,12 @@
+{
+    "name":"vxlandb",
+
+    "owner":"vxlanSvc",
+
+    "authorization":"private",
+
+    "allowread":
+    [
+        "vxlanSvc"
+    ]
+}

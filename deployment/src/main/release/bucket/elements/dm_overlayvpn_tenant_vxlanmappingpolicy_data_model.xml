@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inventory xmlns="http://www.w3school.com.cn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3school.com.cn inv-datamodel-1.0.xsd">
+    <datamodel name="inv_overlayvpn_tenant_vxlanmappingpolicy">
+        <index name="idx_overlayvpn_tenant_vxlanmappingpolicy_uniqueid" value="uuid" isunique="true" />
+        <filter name="default"
+            value="uuid in (:uuid) and tenantId in (:tenantId) and name in (:name) and description in (:description) and type in (:type) and arpProxy in (:arpProxy) and arpBroadcastSuppress in (:arpBroadcastSuppress) and authMode in (:authMode) and psk in (:psk) and ikePolicyId in (:ikePolicyId) and ipsecPolicyId in (:ipsecPolicyId)" />
+    </datamodel>
+</inventory>
