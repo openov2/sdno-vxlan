@@ -40,40 +40,36 @@
                         <configuration>
                             <source>
                                 System.out.println("******** Going to make release zip ********")
-                                projectName = "org.openo.sdno.vxlanservice"
+
                                 deployFolder =
                                 "${project.build.directory}/deployoutput"
                                 deployUnzip =
                                 "${project.build.directory}/deployunzip"
                                 outfileName =
-                                "${projectName}.${project.version}.zip"
+                                "${package.name}-${project.version}.zip"
+
                                 ant.delete(dir: "${deployFolder}")
-                                ant.mkdir(dir:
-                                "${deployFolder}")
+                                ant.mkdir(dir: "${deployFolder}")
 
-                                ant.delete(dir:
-                                "${deployUnzip}")
+                                ant.delete(dir: "${deployUnzip}")
                                 ant.mkdir(dir:
                                 "${deployUnzip}")
 
-                                ant.mkdir(dir:
-                                "${deployUnzip}/webapps/")
+                                ant.mkdir(dir: "${deployUnzip}/webapps/ROOT")
                                 ant.mkdir(dir:
                                 "${deployUnzip}/logs")
 
-                                ant.copy(todir:
-                                "${deployUnzip}") {
+                                ant.copy(todir: "${deployUnzip}") {
                                 fileset(dir:
                                 "${basedir}/src/main/release"){
-                                exclude(name:
-                                "**/.gitignore")
+                                exclude(name: "**/.gitignore")
                                 }
                                 }
 
                                 ant.copy(todir:
-                                "${deployUnzip}/webapps/${projectName}-${project.version}") {
+                                "${deployUnzip}/webapps/ROOT") {
                                 fileset(dir:
-                                "${project.build.directory}/../../service/target/${projectName}-${project.version}")
+                                "${project.build.directory}/../../service/target/${package.name}-${project.version}")
                                 }
 
                                 ant.zip(destfile:
