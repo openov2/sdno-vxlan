@@ -83,12 +83,12 @@ public class CheckOverlayVpnUtil {
             CheckEngpointGroupUtil.checkEndpoints(epg);
             CheckEngpointGroupUtil.checkResourceInEpg(epg, deviceIdToNeMap);
             if(null != epg.getGateway()) {
-                CheckEngpointGroupUtil.checkResourceInGateway(epg.getGateway());
+                CheckGatewayUtil.checkResourceInGateway(epg.getGateway());
             }
         }
 
         // Validate Topology role
-        CheckEngpointGroupUtil.checkTopoRole(overlayVpn);
+        CheckTopoRoleUtil.checkTopoRole(overlayVpn);
     }
 
     private static void checkModelData(OverlayVpn overlayVpn) throws ServiceException {

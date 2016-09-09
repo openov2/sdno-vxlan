@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -61,11 +64,18 @@ import org.openo.sdno.vxlan.util.vxlanbuilder.VxlanProducer;
 
 import mockit.Mock;
 import mockit.MockUp;
+import mockit.Mocked;
 
 @RunWith(value = JMock.class)
 public class VxlanSvcRoaResourceCreateTest {
 
     Mockery mockery = new JUnit4Mockery();
+
+    @Mocked
+    HttpServletRequest request;
+
+    @Mocked
+    HttpServletResponse response;
 
     @Before
     public void setUp() throws Exception {
@@ -99,7 +109,7 @@ public class VxlanSvcRoaResourceCreateTest {
         roa.setVxlanService(new VxlanServiceImpl());
 
         try {
-            ResultRsp<OverlayVpn> resultRsp = roa.create(null, overlayVpn);
+            ResultRsp<OverlayVpn> resultRsp = roa.create(request, response, overlayVpn);
             assertEquals(resultRsp.getErrorCode(), ErrorCode.OVERLAYVPN_SUCCESS);
         } catch(ServiceException e) {
             e.printStackTrace();

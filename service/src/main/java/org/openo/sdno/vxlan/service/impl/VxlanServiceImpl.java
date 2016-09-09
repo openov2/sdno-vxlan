@@ -60,8 +60,7 @@ public class VxlanServiceImpl implements VxlanService {
     }
 
     @Override
-    public ResultRsp<Connection> delete(String connectionUuid, String tenantId)
-            throws ServiceException {
+    public ResultRsp<Connection> delete(String connectionUuid, String tenantId) throws ServiceException {
         return DeleteVxlanService.delete(connectionUuid, tenantId);
     }
 

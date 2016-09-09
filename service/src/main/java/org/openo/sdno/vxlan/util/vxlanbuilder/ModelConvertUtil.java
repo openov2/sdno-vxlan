@@ -87,7 +87,7 @@ public class ModelConvertUtil {
                         conn.getEndpointGroups(), strVNI);
                 vxlanBuilders.add(vxlanBuilder);
             } else {
-                ThrowVxlanExcpt.throwParmaterInvalid("Topology type", conn.getTopology());
+                ThrowVxlanExcpt.throwParmaterInvalid("Invalid Topology type", conn.getTopology());
             }
         }
 

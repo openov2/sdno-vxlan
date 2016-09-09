@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
+import org.openo.sdno.overlayvpn.model.common.enums.AdminStatus;
 import org.openo.sdno.overlayvpn.model.common.enums.EndpointType;
 import org.openo.sdno.overlayvpn.model.common.enums.vxlan.VxlanAccessType;
 import org.openo.sdno.overlayvpn.model.netmodel.vxlan.NeVtep;
@@ -130,6 +131,7 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
 
         neVxlanInstance.setVni(this.vni);
         neVxlanInstance.setNeId(localEpg.getDeviceId());
+        neVxlanInstance.setAdminStatus(AdminStatus.INACTIVE.getName());
 
         // Construct VxLan Interface
         List<NeVxlanInterface> vxlanInterfaceList = buildNeVxlanInterface(localEpg);
@@ -152,17 +154,19 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
 
         String epgType = epg.getType();
 
-        if(EndpointType.VLAN.equals(epgType)) {
+        if(EndpointType.VLAN.getName().equals(epgType)) {
             for(String vlan : epg.getEndpointList()) {
                 vxlanInterfaceList.add(buildVlanTypeInterface(epg.getNeId(), vlan));
             }
+
+            return vxlanInterfaceList;
         }
 
         for(Entry<String, List<String>> entry : epg.getPortNativeIdToVlanMap().entrySet()) {
 
-            if(EndpointType.PORT.equals(epg.getType())) {
+            if(EndpointType.PORT.getName().equals(epg.getType())) {
                 vxlanInterfaceList.add(buildPortTypeInterface(epg.getNeId(), entry.getKey()));
-            } else if(EndpointType.PORT_VLAN.equals(epg.getType())) {
+            } else if(EndpointType.PORT_VLAN.getName().equals(epg.getType())) {
                 for(String vlan : entry.getValue()) {
                     vxlanInterfaceList.add(buildPortVlanTypeInterface(epg.getNeId(), entry.getKey(), vlan));
                 }
@@ -180,6 +184,7 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
 
         NeVxlanTunnel neVxlanTunnel = buildBasicVxlanTunnel();
 
+        neVxlanTunnel.setAdminStatus(AdminStatus.INACTIVE.getName());
         neVxlanTunnel.setVni(this.vni);
         if(null != localWanSubIf) {
             neVxlanTunnel.setSourceIfId(localWanSubIf.getName());
@@ -221,6 +226,7 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
     private NeVxlanInterface buildVlanTypeInterface(String neId, String vlan) {
         NeVxlanInterface neVxlanInterface = buildBasicVxlanInterface();
 
+        neVxlanInterface.setAdminStatus(AdminStatus.INACTIVE.getName());
         neVxlanInterface.setAccessType(VxlanAccessType.DOT1Q.getName());
         neVxlanInterface.setDeviceId(neId);
         neVxlanInterface.setDot1qVlanBitmap(vlan);
@@ -231,6 +237,7 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
     private NeVxlanInterface buildPortTypeInterface(String neId, String portNativeId) {
         NeVxlanInterface neVxlanInterface = buildBasicVxlanInterface();
 
+        neVxlanInterface.setAdminStatus(AdminStatus.INACTIVE.getName());
         neVxlanInterface.setAccessType(VxlanAccessType.PORT.getName());
         neVxlanInterface.setDeviceId(neId);
         neVxlanInterface.setPortId(portNativeId);
@@ -241,6 +248,7 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
     private NeVxlanInterface buildPortVlanTypeInterface(String neId, String portNativeId, String vlan) {
         NeVxlanInterface neVxlanInterface = buildBasicVxlanInterface();
 
+        neVxlanInterface.setAdminStatus(AdminStatus.INACTIVE.getName());
         neVxlanInterface.setAccessType(VxlanAccessType.DOT1Q.getName());
         neVxlanInterface.setDeviceId(neId);
         neVxlanInterface.setPortId(portNativeId);

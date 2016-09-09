@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -35,6 +36,7 @@ import javax.ws.rs.core.MediaType;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.overlayvpn.brs.model.ControllerMO;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
+import org.openo.sdno.overlayvpn.consts.HttpCode;
 import org.openo.sdno.overlayvpn.errorcode.ErrorCode;
 import org.openo.sdno.overlayvpn.model.common.enums.TechnologyType;
 import org.openo.sdno.overlayvpn.model.netmodel.vxlan.NeVtep;
@@ -82,6 +84,7 @@ public class VxlanSvcRoaResource {
      * Query VxLan Tunnel information from database.<br>
      * 
      * @param request - HttpServletRequest Object
+     * @param response - HttpServletResponse Object
      * @param connectionUuid - Connection Uuid
      * @return - List of Tunnel Information consisting of source and destination information
      * @throws ServiceException - when query from database throws exception
@@ -92,7 +95,8 @@ public class VxlanSvcRoaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ResultRsp<List<Tunnel>> queryTunnel(@Context HttpServletRequest request,
-            @PathParam("connectionid") String connectionUuid) throws ServiceException {
+            @Context HttpServletResponse response, @PathParam("connectionid") String connectionUuid)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.info("Query Vxlan tunnel begin.");
 
@@ -113,6 +117,7 @@ public class VxlanSvcRoaResource {
      * Create VxLAN for the OverlayVpn.<br>
      * 
      * @param request - HttpServletRequest Object
+     * @param response - HttpServletResponse Object
      * @param overlayVpn -OverlayVpn information with End point and Connection information
      * @return Create result with OverlayVPN Information
      * @throws ServiceException - when controller interface fails or input is invalid
@@ -121,8 +126,8 @@ public class VxlanSvcRoaResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResultRsp<OverlayVpn> create(@Context HttpServletRequest request, OverlayVpn overlayVpn)
-            throws ServiceException {
+    public ResultRsp<OverlayVpn> create(@Context HttpServletRequest request, @Context HttpServletResponse response,
+            OverlayVpn overlayVpn) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.info("Enter Create vxlan begin time = " + beginTime);
 
@@ -173,6 +178,8 @@ public class VxlanSvcRoaResource {
         // Check for any error and throw exception
         ThrowVxlanExcpt.checkRspThrowException(createResult);
 
+        response.setStatus(HttpCode.CREATE_OK);
+
         return createResult;
     }
 
@@ -180,6 +187,7 @@ public class VxlanSvcRoaResource {
      * Delete VxLan information from database <br>
      * 
      * @param request - HttpServletRequest Object
+     * @param response - HttpServletResponse Object
      * @param connectionUuid - Connection Uuid
      * @return - Operation result with connection information
      * @throws ServiceException - when input is invalid or database query returns failure
@@ -189,7 +197,7 @@ public class VxlanSvcRoaResource {
     @Path("/{connectionid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResultRsp<String> delete(@Context HttpServletRequest request,
+    public ResultRsp<String> delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
             @PathParam("connectionid") String connectionUuid) throws ServiceException {
         long infterEnterTime = System.currentTimeMillis();
         LOGGER.info("Enter delete method. begin time = " + infterEnterTime);

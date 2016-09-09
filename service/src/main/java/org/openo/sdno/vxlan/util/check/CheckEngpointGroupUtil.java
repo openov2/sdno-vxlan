@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.codehaus.jackson.type.TypeReference;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.framework.container.util.JsonUtil;
@@ -34,12 +33,7 @@ import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
 import org.openo.sdno.overlayvpn.consts.ValidationConsts;
 import org.openo.sdno.overlayvpn.errorcode.ErrorCode;
 import org.openo.sdno.overlayvpn.model.common.enums.EndpointType;
-import org.openo.sdno.overlayvpn.model.common.enums.topo.TopologyRole;
-import org.openo.sdno.overlayvpn.model.common.enums.topo.TopologyType;
-import org.openo.sdno.overlayvpn.model.servicemodel.Connection;
 import org.openo.sdno.overlayvpn.model.servicemodel.EndpointGroup;
-import org.openo.sdno.overlayvpn.model.servicemodel.Gateway;
-import org.openo.sdno.overlayvpn.model.servicemodel.OverlayVpn;
 import org.openo.sdno.overlayvpn.util.check.UuidUtil;
 import org.openo.sdno.vxlan.util.exception.ThrowVxlanExcpt;
 import org.slf4j.Logger;
@@ -94,31 +88,6 @@ public class CheckEngpointGroupUtil {
     }
 
     /**
-     * Check Gateway Data.<br>
-     * 
-     * @param gateway Gateway data
-     * @throws ServiceException throws when NetworkElement data is invalid
-     * @since SDNO 0.5
-     */
-    public static void checkResourceInGateway(Gateway gateway) throws ServiceException {
-        NetworkElementInvDao neDao = new NetworkElementInvDao();
-
-        NetworkElementMO tempNetworkElement = neDao.query(gateway.getNeId());
-        if(null == tempNetworkElement) {
-            LOGGER.error("ne not exist: " + gateway.getNeId());
-            ThrowVxlanExcpt.throwParmaterInvalid(ErrorCode.RESOURCE_NETWORKELEMENT_NOT_EXIST, gateway.getNeId());
-            return;
-        }
-
-        String deviceId = tempNetworkElement.getNativeID();
-        if(!StringUtils.hasLength(deviceId)) {
-            ThrowVxlanExcpt.throwParmaterInvalid("device id", tempNetworkElement.getName());
-        }
-
-        gateway.setDeviceId(deviceId);
-    }
-
-    /**
      * Check EndpointGroup data.<br>
      * 
      * @param epg EndpointGroup data
@@ -153,57 +122,6 @@ public class CheckEngpointGroupUtil {
             setLanAccess(epg);
         } else {
             checkLtpResource(epg);
-        }
-    }
-
-    /**
-     * Check TopoRole data.<br>
-     * 
-     * @param overlayVpn OverlayVpn data
-     * @throws ServiceException throws when data is wrong
-     * @since SDNO 0.5
-     */
-    @SuppressWarnings("unchecked")
-    public static void checkTopoRole(OverlayVpn overlayVpn) throws ServiceException {
-        for(Connection tempConnection : overlayVpn.getVpnConnections()) {
-            if(TopologyType.HUB_SPOKE.getName().equals(tempConnection.getTopology())) {
-                List<EndpointGroup> hubEpgs =
-                        new ArrayList<>(CollectionUtils.select(tempConnection.getEndpointGroups(), new Predicate() {
-
-                            @Override
-                            public boolean evaluate(Object arg0) {
-                                EndpointGroup epg = (EndpointGroup)arg0;
-                                return TopologyRole.HUB.getName().equals(epg.getTopologyRole());
-                            }
-                        }));
-
-                List<EndpointGroup> spokeEpgs =
-                        new ArrayList<>(CollectionUtils.select(tempConnection.getEndpointGroups(), new Predicate() {
-
-                            @Override
-                            public boolean evaluate(Object arg0) {
-                                EndpointGroup epg = (EndpointGroup)arg0;
-                                return TopologyRole.SPOKE.getName().equals(epg.getTopologyRole());
-                            }
-                        }));
-
-                if(CollectionUtils.isEmpty(hubEpgs) || hubEpgs.size() > 1) {
-                    ThrowVxlanExcpt.throwParmaterInvalid("Hub Endpointgroups",
-                            JsonUtil.toJson(hubEpgs) + " is empty or size exceeds 1");
-                }
-
-                if(CollectionUtils.isEmpty(hubEpgs)) {
-                    ThrowVxlanExcpt.throwParmaterInvalid("connection topology type no hub", "");
-                }
-
-                if(CollectionUtils.isEmpty(spokeEpgs)) {
-                    ThrowVxlanExcpt.throwParmaterInvalid("connection topology type no spoke", "");
-                }
-            } else if(TopologyType.POINT_TO_POINT.getName().equals(tempConnection.getTopology())) {
-                if(tempConnection.getEndpointGroups().size() != 2) {
-                    ThrowVxlanExcpt.throwParmaterInvalid("point_to_point connection should only contain 2 epgs", "");
-                }
-            }
         }
     }
 

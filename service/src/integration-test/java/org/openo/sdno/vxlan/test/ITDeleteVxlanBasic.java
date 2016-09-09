@@ -29,8 +29,7 @@ import org.openo.sdno.vxlan.checker.SuccessChecker;
 
 public class ITDeleteVxlanBasic extends TestManager {
 
-    private static final String DELETE_VXLAN_FAIL_TESTCASE =
-            "src/integration-test/resources/testcase/deletevxlan.json";
+    private static final String DELETE_VXLAN_FAIL_TESTCASE = "src/integration-test/resources/testcase/deletevxlan.json";
 
     @Test
     public void DeleteVxlanFailTest() throws ServiceException {

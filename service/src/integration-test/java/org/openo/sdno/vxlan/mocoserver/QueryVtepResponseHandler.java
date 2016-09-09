@@ -37,7 +37,7 @@ public class QueryVtepResponseHandler extends MocoResponseHandler {
         ResultRsp<NeVtep> resultRsp =
                 JsonUtil.fromJson(httpResponse.getData(), new TypeReference<ResultRsp<NeVtep>>() {});
         resultRsp.getData().setNeId(PathReplace.getUuidFromUrl("neid",
-                "/rest/svc/sbiadp/controller/{controller}//v1/vxlan/device/{neid}/vtep", httpRequest.getUri()));
+                "/openoapi/sbi-vxlan/v1/vxlan/device/{neid}/vtep", httpRequest.getUri()));
 
         httpResponse.setData(JsonUtil.toJson(resultRsp));
     }
