@@ -24,7 +24,7 @@ import org.openo.sdno.overlayvpn.inventory.sdk.DbOwerInfo;
 public class VxlanSvcRestModuleTest {
 
     @Test
-    public void test(){
+    public void test() {
         VxlanSvcRestModule vxlnSvcRestModule = new VxlanSvcRestModule();
         vxlnSvcRestModule.start();
         assertEquals("vxlanSvc", DbOwerInfo.getOwerInfo());

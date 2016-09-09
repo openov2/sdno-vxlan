@@ -1,9 +1,10 @@
 {
 	"request": {
-		"uri": "/rest/svc/sbiadp/controller/[a-zA-Z0-9\\-\\_]{1,36}/v1/overlay/device/[a-zA-Z0-9\\-\\_]{1,36}/wan-sub-interfaces",
+		"uri": "/openoapi/sbi-vxlan/v1/overlay/device/[a-zA-Z0-9\\-\\_]{1,36}/wan-sub-interfaces",
 		"method": "get",
 		"headers": {
-			"Content-Type": "application/json;charset=UTF-8"
+			"Content-Type": "application/json;charset=UTF-8",
+			"X-Driver-Parameter": "extSysID=123"
 		}
 	},
 	"response": {
@@ -28,8 +29,8 @@
 					"ipAddress": "192.168.1.1",
 					"mask": "255.255.255.0",
 					"mac": "00:e0:f5:26:05:15",
-					"ip6": null,
-					"mask6": null,
+					"ipv6address": null,
+					"prefixlength": null,
 					"type": null
 				},
 				{
@@ -40,8 +41,8 @@
 					"ipAddress": "192.168.1.2",
 					"mask": "255.255.255.0",
 					"mac": "00:e0:f5:26:05:16",
-					"ip6": null,
-					"mask6": null,
+					"ipv6address": null,
+					"prefixlength": null,
 					"type": null
 				}
 			]

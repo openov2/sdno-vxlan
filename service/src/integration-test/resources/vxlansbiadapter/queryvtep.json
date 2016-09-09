@@ -1,9 +1,10 @@
 {
 	"request": {
-		"uri": "/rest/svc/sbiadp/controller/[a-zA-Z0-9\\-\\_]{1,36}/v1/vxlan/device/[a-zA-Z0-9\\-\\_]{1,36}/vtep",
+		"uri": "/openoapi/sbi-vxlan/v1/vxlan/device/[a-zA-Z0-9\\-\\_]{1,36}/vtep",
 		"method": "get",
 		"headers": {
-			"Content-Type": "application/json;charset=UTF-8"
+			"Content-Type": "application/json;charset=UTF-8",
+			"X-Driver-Parameter": "extSysID=123"
 		}
 	},
 	"response": {

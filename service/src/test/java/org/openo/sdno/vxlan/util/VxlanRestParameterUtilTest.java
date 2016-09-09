@@ -34,9 +34,34 @@ public class VxlanRestParameterUtilTest {
 
     @Test
     public void testGetQueryVtepParam() {
-        RestfulParametes restfulParametes = VxlanRestParameterUtil.getQueryVtepParam("123");
+        RestfulParametes restfulParametes = VxlanRestParameterUtil.getQueryVtepParam("testUuid");
         Map<String, String> headerMap = restfulParametes.getHeaderMap();
         assertEquals(headerMap.get(HttpContext.CONTENT_TYPE_HEADER), HttpContext.MEDIA_TYPE_JSON);
+    }
+
+    @Test
+    public void testGetCreateVxlanInstanceParam() {
+
+        List<NeVxlanInstance> vxlanNeInstanceList = new ArrayList<NeVxlanInstance>();
+        NeVxlanInstance neVxlanInstance = new NeVxlanInstance();
+        neVxlanInstance.setNeId("test");
+        neVxlanInstance.setAdminStatus("active");
+        neVxlanInstance.setOperStatus("active");
+        vxlanNeInstanceList.add(neVxlanInstance);
+        String expected = "[{\"tenantId\":null,\"name\":null,\"description\":null,\"modifyMask\":\"NOMODIFY\","
+                + "\"operStatus\":\"active\",\"adminStatus\":\"active\",\"createTime\":null,\"controllerId\":null,\"vni\":null,"
+                + "\"arpProxy\":\"false\",\"arpBroadcastSuppress\":\"false\",\"neId\":\"test\","
+                + "\"vxlanInterfaceList\":null,\"vxlanTunnelList\":null,\"id\":null}]";
+
+        try {
+            RestfulParametes res = VxlanRestParameterUtil.getCreateVxlanInstanceParam(vxlanNeInstanceList, "testUuid");
+            String resRawData = res.getRawData();
+
+            assertEquals(expected, resRawData);
+        } catch(ServiceException e) {
+            fail("exception occured");
+        }
+
     }
 
     /**
@@ -55,7 +80,7 @@ public class VxlanRestParameterUtilTest {
             neVxlanInstance.setOperStatus("active");
             vxlanNeInstanceList.add(neVxlanInstance);
             RestfulParametes restfulParametes =
-                    VxlanRestParameterUtil.getDeleteInstanceParam(vxlanNeInstanceList, "123");
+                    VxlanRestParameterUtil.getDeleteInstanceParam(vxlanNeInstanceList, "testUuid");
             Map<String, String> headerMap = restfulParametes.getHeaderMap();
         } catch(ServiceException e) {
             fail("exception occured");
@@ -71,7 +96,7 @@ public class VxlanRestParameterUtilTest {
     @Test
     public void testGetQueryWanInterfaceParam() {
 
-        RestfulParametes res = VxlanRestParameterUtil.getQueryWanInterfaceParam("TestType", "123");
+        RestfulParametes res = VxlanRestParameterUtil.getQueryWanInterfaceParam("TestType", "testUuid");
 
         assertEquals("TestType", res.getParamMap().get(CommConst.DEVICE_WAN_SUB_INTERFACE_TYPE_PARAMETER));
 

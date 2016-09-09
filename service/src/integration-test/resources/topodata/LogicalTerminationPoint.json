@@ -1,0 +1,46 @@
+[
+	{
+		"name": "Ltp1",
+		"description": "Test for Ltp1",
+		"logicalType": "ETH",
+		"source": "os",
+		"nativeID": "ltp1id",
+		"ipAddress": "192.168.1.1",
+		"adminState": "active",
+		"operState": "up",
+		"neName": "Ne1"
+	},
+	{
+		"name": "Ltp2",
+		"description": "Test for Ltp2",
+		"source": "os",
+		"logicalType": "ETH",
+		"nativeID": "ltp2id",
+		"ipAddress": "192.168.1.2",
+		"adminState": "active",
+		"operState": "up",
+		"neName": "Ne1"
+	},
+	{
+		"name": "Ltp3",
+		"description": "Test for Ltp3",
+		"logicalType": "ETH",
+		"source": "os",
+		"nativeID": "ltp3id",
+		"ipAddress": "192.168.2.1",
+		"adminState": "active",
+		"operState": "up",
+		"neName": "Ne2"
+	},
+	{
+		"name": "Ltp4",
+		"description": "Test for Ltp4",
+		"source": "os",
+		"logicalType": "ETH",
+		"nativeID": "ltp4id",
+		"ipAddress": "192.168.2.2",
+		"adminState": "active",
+		"operState": "up",
+		"neName": "Ne2"
+	}
+]

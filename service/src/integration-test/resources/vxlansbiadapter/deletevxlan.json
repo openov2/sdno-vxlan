@@ -1,26 +1,26 @@
 {
-	"request":
-	{
-		"uri": "/rest/svc/sbiadp/controller/[a-zA-Z0-9\\-\\_]{1,36}/v1/vxlan/instance/[a-zA-Z0-9\\-\\_]{1,36}",
+	"request": {
+		"uri": "/openoapi/sbi-vxlan/v1/vxlan/instance/[a-zA-Z0-9\\-\\_]{1,36}",
 		"method": "delete",
-		"headers":{"Content-Type":"application/json;charset=UTF-8"}
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8",
+			"X-Driver-Parameter": "extSysID=123"
+		}
 	},
-	"response":
-	{
-		"status":200,
-		"json":
-		{
-			"errorCode":"overlayvpn.operation.success",
-			"descArg":"",
-			"reasonArg":"",
-			"detailArg":"",
-			"adviceArg":"",
-			"httpCode":200,
-			"message":"",
-			"smallErrorCodeList":null,
-			"successed":null,
-			"fail":null,
-			"data":"result"
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"httpCode": 200,
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": "result"
 		}
 	}
 }
