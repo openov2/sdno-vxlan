@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016, Huawei Technologies Co., Ltd.
+ * Copyright 2016 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,7 +56,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 /**
- * Restful Interface for VxLAN service (create, delete, get).<br/>
+ * Restful Interface for VxLAN service (create, delete, get).<br>
  * 
  * @author
  * @version SDNO 0.5 03-Jun-2016
@@ -79,7 +79,7 @@ public class VxlanSvcRoaResource {
     }
 
     /**
-     * Query VxLan Tunnel information from database.<br/>
+     * Query VxLan Tunnel information from database.<br>
      * 
      * @param request - HttpServletRequest Object
      * @param connectionUuid - Connection Uuid
@@ -110,7 +110,7 @@ public class VxlanSvcRoaResource {
     }
 
     /**
-     * Create VxLAN for the OverlayVpn.<br/>
+     * Create VxLAN for the OverlayVpn.<br>
      * 
      * @param request - HttpServletRequest Object
      * @param overlayVpn -OverlayVpn information with End point and Connection information
@@ -177,7 +177,7 @@ public class VxlanSvcRoaResource {
     }
 
     /**
-     * Delete VxLan information from database <br/>
+     * Delete VxLan information from database <br>
      * 
      * @param request - HttpServletRequest Object
      * @param connectionUuid - Connection Uuid

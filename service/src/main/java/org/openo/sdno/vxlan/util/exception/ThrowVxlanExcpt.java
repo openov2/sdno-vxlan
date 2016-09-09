@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016, Huawei Technologies Co., Ltd.
+ * Copyright 2016 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 /**
- * Utility function to handle all VxLAN service exceptions.<br/>
+ * Utility function to handle all VxLAN service exceptions.<br>
  * 
  * @author
  * @version SDNO 0.5 03-Jun-2016
@@ -40,7 +40,7 @@ public class ThrowVxlanExcpt {
     }
 
     /**
-     * Check Response and throw this exception if error <br/>
+     * Check Response and throw this exception if error <br>
      * 
      * @param result - result data
      * @throws ServiceException - when the result is failure
@@ -57,7 +57,7 @@ public class ThrowVxlanExcpt {
     }
 
     /**
-     * Resource do not exist, throw exception<br/>
+     * Resource do not exist, throw exception<br>
      * 
      * @param resName - Resource name
      * @param resDesc - resource exception
@@ -81,7 +81,7 @@ public class ThrowVxlanExcpt {
     }
 
     /**
-     * Throw this exception when tenant ID is invalid<br/>
+     * Throw this exception when tenant ID is invalid<br>
      * 
      * @param exptTenantId - Expected tenantID
      * @param realTenantId - real tenant ID
@@ -101,7 +101,7 @@ public class ThrowVxlanExcpt {
     }
 
     /**
-     * Throw when parameter is invalid<br/>
+     * Throw when parameter is invalid<br>
      * 
      * @param paraName - parameter name
      * @param parmaterPath - parameter path
@@ -124,7 +124,7 @@ public class ThrowVxlanExcpt {
     }
 
     /**
-     * Throw when vxlan mapping policy has IPsec policy<br/>
+     * Throw when vxlan mapping policy has IPsec policy<br>
      * 
      * @param mappingPolicyId - mapping policy ID
      * @throws ServiceException- when vxlan mapping policy has IPsec policy
@@ -141,7 +141,7 @@ public class ThrowVxlanExcpt {
     }
 
     /**
-     * Mapping policy is IPSec but IPSec policy do not exist<br/>
+     * Mapping policy is IPSec but IPSec policy do not exist<br>
      * 
      * @param mappingPolicyId - mapping policy ID
      * @throws ServiceException - when policy is IPsec, but do not contain IPsec policy
@@ -158,7 +158,7 @@ public class ThrowVxlanExcpt {
     }
 
     /**
-     * Exception thrown when tenant ID is missing<br/>
+     * Exception thrown when tenant ID is missing<br>
      * 
      * @param exptTenantId - expected tenant ID
      * @throws ServiceException - when tenant Id is invalid

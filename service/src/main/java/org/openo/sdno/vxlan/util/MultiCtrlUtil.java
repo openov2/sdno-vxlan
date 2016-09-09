@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016, Huawei Technologies Co., Ltd.
+ * Copyright 2016 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ import org.openo.sdno.overlayvpn.brs.model.ControllerMO;
 import org.openo.sdno.overlayvpn.model.netmodel.vxlan.NeVxlanInstance;
 
 /**
- * Utility file to deploy VxLAN service on multiple controller.<br/>
+ * Utility file to deploy VxLAN service on multiple controller.<br>
  * 
  * @author
  * @version SDNO 0.5 03-Jun-2016
@@ -40,7 +40,7 @@ public class MultiCtrlUtil {
     }
 
     /**
-     * Get controller UUID to list of NE VxLan instance<br/>
+     * Get controller UUID to list of NE VxLan instance<br>
      * 
      * @param createVxlanInstanceList - NeVxlan Instance list
      * @param neIdToCtrlMap - NE ID to controller info mapping

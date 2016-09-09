@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016, Huawei Technologies Co., Ltd.
+ * Copyright 2016 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,7 +29,7 @@ import org.openo.sdno.overlayvpn.model.tunnel.Tunnel;
 import org.openo.sdno.overlayvpn.result.ResultRsp;
 
 /**
- * Interface for VxLAN service.<br/>
+ * Interface for VxLAN service.<br>
  * 
  * @author
  * @version SDNO 0.5 2016-6-7
@@ -37,7 +37,7 @@ import org.openo.sdno.overlayvpn.result.ResultRsp;
 public interface VxlanService {
 
     /**
-     * Create VxLAN service.<br/>
+     * Create VxLAN service.<br>
      * 
      * @param overlayVpn OverlayVPN Object
      * @param tenantId tenant Id
@@ -54,7 +54,7 @@ public interface VxlanService {
             Map<String, ControllerMO> deviceIdToCtrlMap) throws ServiceException;
 
     /**
-     * Query VxLan tunnel.<br/>
+     * Query VxLan tunnel.<br>
      * 
      * @param request HTTP context
      * @param connectionUuid Connection UUID
@@ -66,7 +66,7 @@ public interface VxlanService {
     ResultRsp<List<Tunnel>> queryTunnel(String connectionUuid, String tenantId) throws ServiceException;
 
     /**
-     * Delete VxLAN service<br/>
+     * Delete VxLAN service<br>
      * 
      * @param connectionUuid Connection Id
      * @param tenantId Tenant Id
@@ -77,7 +77,7 @@ public interface VxlanService {
     ResultRsp<Connection> delete(String connectionUuid, String tenantId) throws ServiceException;
 
     /**
-     * UnDeploy VxLAN service from controller<br/>
+     * UnDeploy VxLAN service from controller<br>
      * 
      * @param connectionUuid Connection Id
      * @param tenantId Tenant Id

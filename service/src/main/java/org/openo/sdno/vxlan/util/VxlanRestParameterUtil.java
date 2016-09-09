@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016, Huawei Technologies Co., Ltd.
+ * Copyright 2016 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,7 +29,7 @@ import org.openo.sdno.overlayvpn.security.authentication.HttpContext;
 import org.openo.sdno.overlayvpn.security.authentication.TokenDataHolder;
 
 /**
- * Utility functions to fill rest parameters for different requests.<br/>
+ * Utility functions to fill rest parameters for different requests.<br>
  * 
  * @author
  * @version SDNO 0.5 03-Jun-2016
@@ -41,7 +41,7 @@ public class VxlanRestParameterUtil {
     }
 
     /**
-     * Query VTEP parameter <br/>
+     * Query VTEP parameter <br>
      * 
      * @param ctrlUuid Controller UUID
      * @return VTEP parameter in restful structure
@@ -55,7 +55,7 @@ public class VxlanRestParameterUtil {
     }
 
     /**
-     * Get create VxLAN Instance parameter<br/>
+     * Get create VxLAN Instance parameter<br>
      * 
      * @param vxlanNeInstanceList List of NeVxlanInstance need to create
      * @param ctrlUuid Controller UUID
@@ -74,7 +74,7 @@ public class VxlanRestParameterUtil {
     }
 
     /**
-     * Fill Delete Instance parameter in rest structure<br/>
+     * Fill Delete Instance parameter in rest structure<br>
      * 
      * @param vxlanInstanceList List of NeVxlanInstance need to delete
      * @param ctrlUuid Controller UUID
@@ -93,7 +93,7 @@ public class VxlanRestParameterUtil {
     }
 
     /**
-     * Fill Query Wan interface parameters in rest structure<br/>
+     * Fill Query Wan interface parameters in rest structure<br>
      * 
      * @param subInterUsedType - Sub interface type
      * @param ctrlUuid Controller UUID

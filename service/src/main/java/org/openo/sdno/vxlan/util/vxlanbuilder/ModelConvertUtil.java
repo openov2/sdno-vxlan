@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016, Huawei Technologies Co., Ltd.
+ * Copyright 2016 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,7 +42,7 @@ import org.openo.sdno.overlayvpn.res.ResourcesUtil;
 import org.openo.sdno.vxlan.util.exception.ThrowVxlanExcpt;
 
 /**
- * Utility function to convert from NBI structure to SBI structure.<br/>
+ * Utility function to convert from NBI structure to SBI structure.<br>
  * 
  * @author
  * @version SDNO 0.5 03-Jun-2016
@@ -53,7 +53,7 @@ public class ModelConvertUtil {
     }
 
     /**
-     * Convert OverlayVPN structure to NeVxlan instances<br/>
+     * Convert OverlayVPN structure to NeVxlan instances<br>
      * 
      * @param overlayVpnService - overlayVpn Data
      * @param deviceIdToNeVtepMap - Map of deviceId to Vtep
@@ -97,7 +97,7 @@ public class ModelConvertUtil {
     }
 
     /**
-     * Get VNI for Connection<br/>
+     * Get VNI for Connection<br>
      * 
      * @param connections - list of Connection
      * @param vniToConnectionIdMap - VNI to connection Id map
@@ -120,7 +120,7 @@ public class ModelConvertUtil {
     }
 
     /**
-     * Allocate VNI for Connection<br/>
+     * Allocate VNI for Connection<br>
      * 
      * @param connections - List of connection information
      * @return Map of Connection ID to VNI

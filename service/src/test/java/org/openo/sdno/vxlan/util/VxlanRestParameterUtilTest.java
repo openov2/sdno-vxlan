@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016, Huawei Technologies Co., Ltd.
+ * Copyright 2016 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ public class VxlanRestParameterUtilTest {
     }
 
     /**
-     * Tests getDeleteInstanceParam method. checks the header has X-Auth-Token <br/>
+     * Tests getDeleteInstanceParam method. checks the header has X-Auth-Token <br>
      * 
      * @since SDNO 0.5
      */
@@ -64,7 +64,7 @@ public class VxlanRestParameterUtilTest {
     }
 
     /**
-     * Tests GetQueryWanInterfaceParam method. check whether input reflects in parameter map. <br/>
+     * Tests GetQueryWanInterfaceParam method. check whether input reflects in parameter map. <br>
      * 
      * @since SDNO 0.5
      */
