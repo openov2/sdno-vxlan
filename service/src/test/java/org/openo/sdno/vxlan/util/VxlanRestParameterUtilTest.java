@@ -46,22 +46,21 @@ public class VxlanRestParameterUtilTest {
         NeVxlanInstance neVxlanInstance = new NeVxlanInstance();
         neVxlanInstance.setNeId("test");
         neVxlanInstance.setAdminStatus("active");
-        neVxlanInstance.setOperStatus("active");
+        neVxlanInstance.setOperStatus("up");
         vxlanNeInstanceList.add(neVxlanInstance);
         String expected = "[{\"tenantId\":null,\"name\":null,\"description\":null,\"modifyMask\":\"NOMODIFY\","
-                + "\"operStatus\":\"active\",\"adminStatus\":\"active\",\"createTime\":null,\"controllerId\":null,\"vni\":null,"
+                + "\"additionalInfo\":null,\"operStatus\":\"up\",\"adminStatus\":\"active\",\"actionState\":\"Normal\",\"createTime\":null,\"controllerId\":null,"
+                + "\"externalId\":null,\"connectionServiceId\":null,\"vni\":null,"
                 + "\"arpProxy\":\"false\",\"arpBroadcastSuppress\":\"false\",\"neId\":\"test\","
                 + "\"vxlanInterfaceList\":null,\"vxlanTunnelList\":null,\"id\":null}]";
 
         try {
             RestfulParametes res = VxlanRestParameterUtil.getCreateVxlanInstanceParam(vxlanNeInstanceList, "testUuid");
             String resRawData = res.getRawData();
-
             assertEquals(expected, resRawData);
         } catch(ServiceException e) {
             fail("exception occured");
         }
-
     }
 
     /**
