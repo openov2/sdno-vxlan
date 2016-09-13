@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <package.name>org.openo.sdno.vxlanservice</package.name>
+        <package.name>vxlanservice</package.name>
     </properties>
 
     <modules>

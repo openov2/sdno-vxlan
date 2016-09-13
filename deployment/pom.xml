@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>vxlanservice-deployment</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -69,7 +69,7 @@
                                 ant.copy(todir:
                                 "${deployUnzip}/webapps/ROOT") {
                                 fileset(dir:
-                                "${project.build.directory}/../../service/target/${package.name}-${project.version}")
+                                "${project.build.directory}/../../service/target/${package.name}")
                                 }
 
                                 ant.zip(destfile:
