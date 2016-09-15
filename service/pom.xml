@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.openo.sdno.vxlan</groupId>
         <artifactId>vxlanservice-root</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>org.openo.sdno.vxlanservice</artifactId>
@@ -15,7 +15,7 @@
         <dependency>
             <groupId>org.openo.sdno.overlay</groupId>
             <artifactId>org.openo.sdno.overlayvpn-cbb</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.openo.integration</groupId>
             <artifactId>org.openo.sdno.testframework</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
