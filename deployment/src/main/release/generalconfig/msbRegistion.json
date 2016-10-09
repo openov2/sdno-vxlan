@@ -1,0 +1,14 @@
+{
+  "serviceName": "sdnovxlan",
+  "version": "v1",
+  "url": "/openoapi/sdnovxlan/v1",
+  "protocol": "REST",
+  "visualRange": "1",
+  "nodes": [
+    {
+      "ip": "",
+      "port": "8512",
+      "ttl": 0
+    }
+  ]
+}
