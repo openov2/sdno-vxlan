@@ -158,12 +158,10 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
             for(String vlan : epg.getEndpointList()) {
                 vxlanInterfaceList.add(buildVlanTypeInterface(epg.getNeId(), vlan));
             }
-
             return vxlanInterfaceList;
         }
 
         for(Entry<String, List<String>> entry : epg.getPortNativeIdToVlanMap().entrySet()) {
-
             if(EndpointType.PORT.getName().equals(epg.getType())) {
                 vxlanInterfaceList.add(buildPortTypeInterface(epg.getNeId(), entry.getKey()));
             } else if(EndpointType.PORT_VLAN.getName().equals(epg.getType())) {

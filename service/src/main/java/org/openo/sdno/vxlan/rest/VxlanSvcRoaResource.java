@@ -149,7 +149,7 @@ public class VxlanSvcRoaResource {
         Map<String, NetworkElementMO> deviceIdToNeMap = new ConcurrentHashMap<String, NetworkElementMO>();
         CheckOverlayVpnUtil.check(overlayVpn, tenantId, deviceIdToNeMap);
 
-        // Query VTEP information from controller
+        // Query Vtep information from controller
         Map<String, ControllerMO> deviceIdToCtrlMap = new ConcurrentHashMap<String, ControllerMO>();
         ResultRsp<Map<String, NeVtep>> queryDeviceIdToNeVtepRsp =
                 NeInterfaceUtil.queryVtepForVxlan(deviceIdToNeMap, deviceIdToCtrlMap);
