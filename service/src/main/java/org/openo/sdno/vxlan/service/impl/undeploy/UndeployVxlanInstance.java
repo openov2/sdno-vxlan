@@ -49,7 +49,7 @@ import org.springframework.util.StringUtils;
  * UnDeploy VxLAN instance.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class UndeployVxlanInstance {
 
@@ -101,7 +101,7 @@ public class UndeployVxlanInstance {
             ctrlUuidToInstanceListMap.get(ctrlId).add(tempNeVxlanInstance);
         }
 
-        // Un-deploy from controller - send to adapter
+        // Undeploy from controller - send to adapter
         ResultRsp<String> deleteRsp = new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
         deleteRsp.setSmallErrorCodeList(new ArrayList<ErrorCodeInfo>());
 
@@ -130,7 +130,7 @@ public class UndeployVxlanInstance {
      * Delete VxLAN Instance from controller<br>
      * 
      * @param ctrlUuid - Controller UUID
-     * @param vxlanInstanceList - List of VxLAN Instance to be un-deployed
+     * @param vxlanInstanceList - List of VxLAN Instance to be undeployed
      * @param isCreateInstance - whether need to delete from database or controller
      * @return List of NEVxLAN instances and operation result of delete
      * @throws ServiceException - when input is invalid or controller rest interface fails

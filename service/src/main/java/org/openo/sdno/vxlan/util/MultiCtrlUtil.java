@@ -31,7 +31,7 @@ import org.openo.sdno.overlayvpn.model.netmodel.vxlan.NeVxlanInstance;
  * Utility file to deploy VxLAN service on multiple controller.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class MultiCtrlUtil {
 

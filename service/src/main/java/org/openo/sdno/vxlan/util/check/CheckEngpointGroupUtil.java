@@ -44,7 +44,7 @@ import org.springframework.util.StringUtils;
  * Utility function to check EngpointGroup Information.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class CheckEngpointGroupUtil {
 

@@ -47,7 +47,7 @@ import org.springframework.util.StringUtils;
  * VxLAN south bound interfaces.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class VxlanSbiAdapter {
 

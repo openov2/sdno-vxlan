@@ -32,7 +32,7 @@ import org.openo.sdno.overlayvpn.security.authentication.TokenDataHolder;
  * Utility functions to fill rest parameters for different requests.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class VxlanRestParameterUtil {
 

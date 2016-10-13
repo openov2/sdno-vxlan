@@ -45,7 +45,7 @@ import org.openo.sdno.vxlan.util.exception.ThrowVxlanExcpt;
  * Utility function to convert from NBI structure to SBI structure.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class ModelConvertUtil {
 
@@ -56,7 +56,7 @@ public class ModelConvertUtil {
      * Convert OverlayVPN structure to NeVxlan instances<br>
      * 
      * @param overlayVpnService - overlayVpn Data
-     * @param deviceIdToNeVtepMap - Map of deviceId to Vtep
+     * @param deviceIdToNeVtepMap - Map of deviceId to VTEP
      * @param deviceIdToWansubInfMap - Map of deviceId to WAN sub interface
      * @param vniToConnectionIdMap - Map of VNI to connection ID
      * @return VxlanProducer - which convert from overlayVPN to NEVxlan instances

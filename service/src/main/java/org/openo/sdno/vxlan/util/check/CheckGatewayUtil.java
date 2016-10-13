@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
  * Utility function to check Gateway information.<br>
  * 
  * @author
- * @version SDNO 0.5 Aug 22, 2016
+ * @version SDNO 0.5 August 22, 2016
  */
 public class CheckGatewayUtil {
 

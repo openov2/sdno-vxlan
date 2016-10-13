@@ -34,7 +34,7 @@ import org.openo.sdno.overlayvpn.model.netmodel.vxlan.NeVxlanTunnel;
  * Utility function to support VxLAN service deployment.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class CheckVxlanServiceUtil {
 
@@ -67,8 +67,10 @@ public class CheckVxlanServiceUtil {
 
         InventoryDao<NeVxlanTunnel> vxlanTunnelDao = new InventoryDaoUtil<NeVxlanTunnel>().getInventoryDao();
         List<NeVxlanTunnel> dbQueryTunnels =
-                vxlanTunnelDao.queryByFilter(NeVxlanTunnel.class, filter,
-                        "connectionServiceId,vxlanInstanceId,neId,sourceAddress,peerNeId,destAddress").getData();
+                vxlanTunnelDao
+                        .queryByFilter(NeVxlanTunnel.class, filter,
+                                "connectionServiceId,vxlanInstanceId,neId,sourceAddress,peerNeId,destAddress")
+                        .getData();
 
         Map<String, NeVxlanTunnel> tunnelUniqueIdToTunnelMap = new HashMap<String, NeVxlanTunnel>();
         for(NeVxlanTunnel dbTunnel : dbQueryTunnels) {

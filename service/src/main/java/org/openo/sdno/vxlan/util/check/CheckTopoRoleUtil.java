@@ -31,10 +31,10 @@ import org.openo.sdno.overlayvpn.model.servicemodel.OverlayVpn;
 import org.openo.sdno.vxlan.util.exception.ThrowVxlanExcpt;
 
 /**
- * Utility function to check topo role information.<br>
+ * Utility function to check topology role information.<br>
  * 
  * @author
- * @version SDNO 0.5 Aug 22, 2016
+ * @version SDNO 0.5 August 22, 2016
  */
 public class CheckTopoRoleUtil {
 

@@ -25,7 +25,7 @@ import org.openo.sdno.overlayvpn.model.netmodel.vxlan.NeVxlanInstance;
  * Interface Class of VxLAN builder.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public interface VxlanBuilder {
 
@@ -40,7 +40,7 @@ public interface VxlanBuilder {
     /**
      * Get VxLAN instances.<br>
      * 
-     * @return list of Oper VxLAN instances
+     * @return list of Operational VxLAN instances
      * @since SDNO 0.5
      */
     List<NeVxlanInstance> getOperVxlanInstances();

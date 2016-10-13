@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * Query VxLAN service.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class QueryVxlanService {
 

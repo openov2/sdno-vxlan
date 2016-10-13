@@ -61,7 +61,7 @@ import org.springframework.util.StringUtils;
  * Restful Interface for VxLAN service (create, delete, get).<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 @Service
 @Path("/sdnovxlan/v1/vxlans")
@@ -85,7 +85,7 @@ public class VxlanSvcRoaResource {
      * 
      * @param request - HttpServletRequest Object
      * @param response - HttpServletResponse Object
-     * @param connectionUuid - Connection Uuid
+     * @param connectionUuid - Connection UUID
      * @return - List of Tunnel Information consisting of source and destination information
      * @throws ServiceException - when query from database throws exception
      * @since SDNO 0.5
@@ -188,7 +188,7 @@ public class VxlanSvcRoaResource {
      * 
      * @param request - HttpServletRequest Object
      * @param response - HttpServletResponse Object
-     * @param connectionUuid - Connection Uuid
+     * @param connectionUuid - Connection UUID
      * @return - Operation result with connection information
      * @throws ServiceException - when input is invalid or database query returns failure
      * @since SDNO 0.5

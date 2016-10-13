@@ -36,7 +36,7 @@ import org.springframework.util.StringUtils;
  * Utility function to check Overlay VPN information.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class CheckOverlayVpnUtil {
 
@@ -100,7 +100,7 @@ public class CheckOverlayVpnUtil {
             ThrowVxlanExcpt.throwParmaterInvalid("Connection", "empty");
         }
 
-        // check epg data
+        // check EPG data
         for(Connection connection : overlayVpn.getVpnConnections()) {
             for(EndpointGroup epg : connection.getEndpointGroups()) {
                 if(!StringUtils.hasLength(epg.getNeId())) {

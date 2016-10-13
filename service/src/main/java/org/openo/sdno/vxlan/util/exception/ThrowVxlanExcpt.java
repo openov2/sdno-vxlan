@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
  * Utility function to handle all VxLAN service exceptions.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class ThrowVxlanExcpt {
 
@@ -124,17 +124,16 @@ public class ThrowVxlanExcpt {
     }
 
     /**
-     * Throw when vxlan mapping policy has IPsec policy<br>
+     * Throw when VXLAN mapping policy has IPsec policy<br>
      * 
      * @param mappingPolicyId - mapping policy ID
-     * @throws ServiceException- when vxlan mapping policy has IPsec policy
+     * @throws ServiceException- when VXLAN mapping policy has IPsec policy
      * @since SDNO 0.5
      */
     public static void throwHavingIpsecAsParmaterInvalid(String mappingPolicyId) throws ServiceException {
         String desc = ResourceUtil.getMessage("vxlan.mappingpolicy.having.desc");
-        String message =
-                ResourceUtil.getMessage("vxlan.mappingpolicy.having.reason").replace("{mappingpolicyid}",
-                        mappingPolicyId);
+        String message = ResourceUtil.getMessage("vxlan.mappingpolicy.having.reason").replace("{mappingpolicyid}",
+                mappingPolicyId);
         String advice = ResourceUtil.getMessage("vxlan.mappingpolicy.having.advice");
         SvcExcptUtil.throwBadReqSvcExptionWithInfo(ErrorCode.OVERLAYVPN_PARAMETER_INVALID, desc, message, message,
                 advice);
@@ -149,9 +148,8 @@ public class ThrowVxlanExcpt {
      */
     public static void throwNotHavingIpsecAsParmaterInvalid(String mappingPolicyId) throws ServiceException {
         String desc = ResourceUtil.getMessage("vxlan.mappingpolicy.nohaving.desc");
-        String message =
-                ResourceUtil.getMessage("vxlan.mappingpolicy.nohaving.reason").replace("{mappingpolicyid}",
-                        mappingPolicyId);
+        String message = ResourceUtil.getMessage("vxlan.mappingpolicy.nohaving.reason").replace("{mappingpolicyid}",
+                mappingPolicyId);
         String advice = ResourceUtil.getMessage("vxlan.mappingpolicy.nohaving.advice");
         SvcExcptUtil.throwBadReqSvcExptionWithInfo(ErrorCode.OVERLAYVPN_PARAMETER_INVALID, desc, message, message,
                 advice);

@@ -28,10 +28,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Un-deploy VxLAN Service.<br>
+ * Undeploy VxLAN Service.<br>
  * 
  * @author
- * @version SDNO 0.5 03-Jun-2016
+ * @version SDNO 0.5 03-June-2016
  */
 public class UndeployVxlanService {
 
@@ -43,7 +43,7 @@ public class UndeployVxlanService {
     /**
      * UnDeploy VxLan Instance - UnDeploy connection, or a single EPG<br>
      * 
-     * @param connectionUuid - Connection Uuid
+     * @param connectionUuid - Connection UUID
      * @param tenantId - Tenant Id
      * @return Operation result- Success or Failure
      * @throws ServiceException - when input is invalid or controller returns error or database
