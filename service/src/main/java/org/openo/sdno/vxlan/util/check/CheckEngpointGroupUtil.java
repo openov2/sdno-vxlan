@@ -196,7 +196,7 @@ public class CheckEngpointGroupUtil {
         LogicalTernminationPointInvDao ltpDao = new LogicalTernminationPointInvDao();
 
         Map<String, List<String>> portNativeIdToVlanMap = new HashMap<String, List<String>>();
-        String epgNeId = epg.getNeId();
+
         for(String ltpId : portIds) {
             LogicalTernminationPointMO ltp = ltpDao.query(ltpId);
             if(null == ltp) {
@@ -208,11 +208,6 @@ public class CheckEngpointGroupUtil {
             String ltpNativeId = ltp.getNativeID();
             if(!StringUtils.hasLength(ltpNativeId)) {
                 LOGGER.error("ltp:" + ltpId + " doesn't contain native id");
-                ThrowVxlanExcpt.throwParmaterInvalid("Termination Point", ltpId);
-            }
-
-            if(!epgNeId.equals(ltp.getMeID())) {
-                LOGGER.error("port id:" + ltpId + "doesn't belong to ne:" + epgNeId);
                 ThrowVxlanExcpt.throwParmaterInvalid("Termination Point", ltpId);
             }
 
