@@ -76,6 +76,8 @@ public class CheckEngpointGroupUtil {
                 epg.setPortNativeIdToVlanMap(checkEndpointsForPortVlan(endpointList));
             } else if(EndpointType.CIDR.getName().equals(epgType)) {
                 checkEndpointsForCidr(endpointList);
+            } else if(EndpointType.VLAN.equals(epgType)) {
+                checkEndpointsForVlan(endpointList);
             } else {
                 ThrowVxlanExcpt.throwParmaterInvalid("Invalid Epg Type", epgType);
             }
@@ -178,6 +180,14 @@ public class CheckEngpointGroupUtil {
         }
 
         return portIdToVlanMap;
+    }
+
+    private static void checkEndpointsForVlan(List<String> endpointList) throws ServiceException {
+        for(String endpoint : endpointList) {
+            if(!endpoint.matches(ValidationConsts.INT_RANGE_REGEX)) {
+                ThrowVxlanExcpt.throwParmaterInvalid("Endpoint ", endpoint);
+            }
+        }
     }
 
     private static void checkEndpointsForCidr(List<String> endpointList) throws ServiceException {
