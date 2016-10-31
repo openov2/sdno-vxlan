@@ -76,10 +76,10 @@ public class CheckEngpointGroupUtil {
                 epg.setPortNativeIdToVlanMap(checkEndpointsForPortVlan(endpointList));
             } else if(EndpointType.CIDR.getName().equals(epgType)) {
                 checkEndpointsForCidr(endpointList);
-            } else if(EndpointType.VLAN.equals(epgType)) {
+            } else if(EndpointType.VLAN.getName().equals(epgType)) {
                 checkEndpointsForVlan(endpointList);
             } else {
-                ThrowVxlanExcpt.throwParmaterInvalid("Invalid Epg Type", epgType);
+                ThrowVxlanExcpt.throwParmaterInvalid("Invalid Epg Type ", epgType);
             }
 
             epg.setEndpointList(endpointList);
