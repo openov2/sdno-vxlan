@@ -122,7 +122,8 @@ public class CheckEngpointGroupUtil {
 
         if(EndpointType.CIDR.getName().equals(epg.getType())) {
             setLanAccess(epg);
-        } else {
+        } else if(EndpointType.PORT.getName().equals(epg.getType())
+                || EndpointType.PORT_VLAN.getName().equals(epg.getType())) {
             checkLtpResource(epg);
         }
     }
