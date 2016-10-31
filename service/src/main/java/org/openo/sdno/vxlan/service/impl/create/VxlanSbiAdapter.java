@@ -81,7 +81,6 @@ public class VxlanSbiAdapter {
                 List<ErrorCodeInfo> errorCodeInfoLst = new ArrayList<ErrorCodeInfo>();
                 if(!tempCreateVxlanResult.isSuccess()) {
                     LOGGER.error("deploy vxlan tunnel fail, ctrl uuid: " + ctrlUuid);
-
                     errorCodeInfoLst.addAll(tempCreateVxlanResult.getSmallErrorCodeList());
                 }
 
