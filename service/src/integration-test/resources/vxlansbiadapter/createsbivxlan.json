@@ -1,0 +1,94 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-vxlan/v1/batch-create-vxlan",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": [
+			{
+				"id": "111111111",
+				"tenantId": null,
+				"name": null,
+				"description": null,
+				"modifyMask": "NOMODIFY",
+				"operStatus": "none",
+				"adminStatus": "none",
+				"createTime": null,
+				"controllerId": null,
+				"connectionServiceId": null,
+				"vni": null,
+				"arpProxy": "false",
+				"arpBroadcastSuppress": "false",
+				"neId": null,
+				"vxlanInterfaces": null,
+				"vxlanTunnels": null,
+				"vxlanInterfaceList": null,
+				"vxlanTunnelList": null
+			}
+		]
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"httpCode": 200,
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": [
+                        {
+                            "name": "vpn1",
+                            "tenantId": "tenantid",
+                            "description": "test overlayvpn instance",
+                            "deployStatus": "none",
+                            "activeStatus": "none",
+                            "runningStatus": "none",
+                            "additionalInfo": null,
+                            "deviceId": "networkwork1id",
+                            "peerDeviceId": "networkwork2id",
+                            "controllerId": "727babc8-631b-44fd-b142-191970ea9b40",
+                            "connectionId": null,
+                            "externalId": "d2de726e-7be2-4adf-a968-9e1f38cae55f",
+                            "nbiVxlanTunnelId": "vxlanid",
+                            "vni": "188",
+                            "arpProxy": null,
+                            "arpBroadcastSuppress": null,
+                            "keepAlive": null,
+                            "id": "1c3098f5-22a0-4250-b552-d859390c0dd4",
+                            "actionState": "deploying",
+                            "createTime": 0,
+                            "updateTime": 0
+                        },
+                        {
+                            "name": "vpn1",
+                            "tenantId": "tenantid",
+                            "description": "test overlayvpn instance",
+                            "deployStatus": "none",
+                            "activeStatus": "none",
+                            "runningStatus": "none",
+                            "additionalInfo": null,
+                            "deviceId": "networkwork2id",
+                            "peerDeviceId": "networkwork2id",
+                            "controllerId": "727babc8-631b-44fd-b142-191970ea9b40",
+                            "connectionId": null,
+                            "externalId": "0646697c-96c1-4712-9db3-f34ecd6ae239",
+                            "nbiVxlanTunnelId": "vxlanid",
+                            "vni": "188",
+                            "arpProxy": null,
+                            "arpBroadcastSuppress": null,
+                            "keepAlive": null,
+                            "id": "1d457e2d-1f41-45ec-b456-0218d3dec4a3",
+                            "actionState": "deploying",
+                            "createTime": 0,
+                            "updateTime": 0
+                        }
+                    ]
+                }
+            }   
+}

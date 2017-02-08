@@ -1,0 +1,48 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnovxlan/v1/vxlans",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": [{
+			"id": "vxlanid",
+			"tenantId": "tenantid",
+			"name": "vpn1",
+			"description": "test overlayvpn instance",
+			"operationStatus": "none",
+			"deployStatus": "none",
+			"connectionIds": "connectid",
+			"type": "vxlan",
+			"destNeId": "neid2",
+			"srcNeId": "neid1",
+			"destNeRole": "vpn",
+			"srcNeRole": "vpn",
+			"srcPortName": "Ltp1",
+			"destPortName": "Ltp2",
+			"vni": "188",
+			"portVlanList": "[{\"neId\":\"neid1\",\"vlan\":\"5-6\"},{\"neId\":\"neid2\",\"vlan\":\"7-8\"}]"
+		}]
+	},
+	"response": {
+		"status": 200,
+		"json": [{
+			"id": "vxlanid",
+			"tenantId": "tenantid",
+			"name": "vpn1",
+			"description": "test overlayvpn instance",
+			"operationStatus": "none",
+			"deployStatus": "none",
+			"connectionIds": "connectid",
+			"type": "vxlan",
+			"destNeId": "neid2",
+			"srcNeId": "neid1",
+			"destNeRole": "vpn",
+			"srcNeRole": "vpn",
+			"srcPortName": "Ltp1",
+			"destPortName": "Ltp2",
+			"vni": "188",
+			"portVlanList": "[{\"neId\":\"neid1\",\"vlan\":\"5-6\"},{\"neId\":\"neid2\",\"vlan\":\"7-8\"}]"
+		}]
+	}
+}

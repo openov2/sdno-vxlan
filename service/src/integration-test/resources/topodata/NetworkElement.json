@@ -1,8 +1,10 @@
 [
 	{
 		"name": "Ne1",
+		"id": "neid1",
 		"description": "TestNetworkElement",
 		"productName": "SNC",
+		"neRole": "localcpe",
 		"version": "V1R3",
 		"source": "os",
 		"logicID": "849494949",
@@ -16,8 +18,10 @@
 	},
 	{
 		"name": "Ne2",
+		"id": "neid2",
 		"description": "TestNetworkElement",
 		"productName": "SNC",
+		"neRole": "localcpe",
 		"version": "V1R3",
 		"source": "os",
 		"logicID": "849494949",

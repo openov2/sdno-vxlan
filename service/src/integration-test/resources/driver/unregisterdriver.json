@@ -1,0 +1,13 @@
+{
+	"request": {
+		"uri": "/openoapi/drivermgr/v1/drivers/sdnovxlandriver-0-1",
+		"method": "delete",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8",
+			"Accept": "application/json"
+		}
+	},
+	"response": {
+		"status": 201
+	}
+}
