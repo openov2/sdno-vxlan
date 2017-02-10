@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Huawei Technologies Co., Ltd.
+ * Copyright 2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -191,11 +191,10 @@ public class VxlanSvcResource {
             throw new ParameterServiceException("can not get the vxlan model with the given uuid.");
         }
 
-        // if(!nbiModel.getDeployStatus().equals(DeployStatus.UNDEPLOY.getName())) {
-        // LOGGER.error("can not delete deployed vxlan, must undeploy first.");
-        // throw new ParameterServiceException("can not delete deployed vxlan, must undeploy
-        // first.");
-        // }
+        if(!nbiModel.getDeployStatus().equals(DeployStatus.UNDEPLOY.getName())) {
+            LOGGER.error("can not delete deployed vxlan, must undeploy first.");
+            throw new ParameterServiceException("can not delete deployed vxlan, must undeploy first.");
+        }
         List<String> uuids = new ArrayList<String>();
         uuids.add(vxlanTunnelId);
         List<SbiNeVxlanInstance> sbiModels = VxlanTunnelDbHelper.getSbiVxlansByNbiModelId(uuids);
