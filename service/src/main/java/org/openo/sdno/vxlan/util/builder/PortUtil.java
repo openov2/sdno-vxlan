@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <br>
+ * portVlan helper class, used to build port-ip map for nbi vxlan tunnel models.<br>
  * 
  * @author
  * @version SDNO 0.5 Jan 12, 2017
@@ -41,12 +41,11 @@ public class PortUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(PortUtil.class);
 
     /**
-     * <br>
+     * build port-ip map for nbi vxlan tunnel models.<br>
      * 
-     * @param neIdToLtpMap
-     * @param vxlanTunnels
-     * @return
-     * @throws ServiceException
+     * @param vxlanTunnels nbi vxlantunnels need to deal.
+     * @return port-ip map build from given nbi vxlan models.
+     * @throws ServiceException if inner error happens.
      * @since SDNO 0.5
      */
     public static Map<String, Ip> buildPortIpMap(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {

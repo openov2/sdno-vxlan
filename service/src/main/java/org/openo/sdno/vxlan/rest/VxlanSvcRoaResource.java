@@ -177,9 +177,7 @@ public class VxlanSvcRoaResource {
 
         // Check for any error and throw exception
         ThrowVxlanExcpt.checkRspThrowException(createResult);
-
         response.setStatus(HttpCode.CREATE_OK);
-
         return createResult;
     }
 

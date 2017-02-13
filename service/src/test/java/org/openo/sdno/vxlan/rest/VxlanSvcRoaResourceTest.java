@@ -22,9 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
@@ -45,14 +42,16 @@ import org.openo.sdno.vxlan.mococlass.MockAllocIdResourceInvDao;
 import org.openo.sdno.vxlan.mococlass.MockInventoryDao;
 import org.openo.sdno.vxlan.mococlass.MockInventoryDaoUtil;
 import org.openo.sdno.vxlan.service.impl.VxlanServiceImpl;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import mockit.Mock;
 import mockit.MockUp;
 
-@RunWith(value = JMock.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath*:/spring/applicationContext.xml",
+                "classpath*:META-INF/spring/vxlanservice_service.xml", "classpath*:spring/vxlanservice_service.xml"})
 public class VxlanSvcRoaResourceTest {
-
-    Mockery mockery = new JUnit4Mockery();
 
     @Test
     public void testQueryTunnel() {

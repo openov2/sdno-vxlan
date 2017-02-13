@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <br>
+ * class to deal with Ne and controller database operation.<br>
  * 
  * @author
  * @version SDNO 0.5 Jan 12, 2017
@@ -46,6 +46,14 @@ public class NeControllerUtil {
 
     private static final NetworkElementInvDao neDao = new NetworkElementInvDao();
 
+    /**
+     * build Ne to Controller map with given neid to ne map.<br>
+     * 
+     * @param neIdToNeMap neid to ne map.
+     * @return Ne to Controller map
+     * @throws ParameterServiceException if input paramater is illegal.
+     * @since SDNO 0.5
+     */
     public static Map<NetworkElementMO, ControllerMO> getNeCtrlMap(Map<String, NetworkElementMO> neIdToNeMap)
             throws ParameterServiceException {
         Map<NetworkElementMO, ControllerMO> neToCtrlMap = new HashMap<NetworkElementMO, ControllerMO>();
@@ -80,11 +88,11 @@ public class NeControllerUtil {
     }
 
     /**
-     * <br>
+     * get controller by ne id.<br>
      * 
-     * @param neToCtrlMap
-     * @param deviceId
-     * @return
+     * @param neToCtrlMap ne to controller map.
+     * @param neId ne uuid
+     * @return controller corresponding to given neid.
      * @since SDNO 0.5
      */
     public static ControllerMO findCtrlByNeId(Map<NetworkElementMO, ControllerMO> neToCtrlMap, String neId) {

@@ -51,10 +51,10 @@ public class DateValidator {
     private static final String VLAN_RANGE_REGEX = "\\d+(-\\d+)?((,\\d+)+(-\\d+)?)*";
 
     /**
-     * <br>
+     * check whether input ne is illegal<br>
      *
-     * @param vxlanTunnels
-     * @throws ServiceException
+     * @param vxlanTunnels nbi vxlan tunnels to validate.
+     * @throws ServiceException if inner error happens
      * @since SDNO 0.5
      */
     public static Map<String, NetworkElementMO> checkInputNe(List<NbiVxlanTunnel> vxlanTunnels)
@@ -75,6 +75,13 @@ public class DateValidator {
 
     }
 
+    /**
+     * check port vlan resource is valid.<br>
+     * 
+     * @param vxlanTunnels nbi vxlan tunnels to check.
+     * @throws ServiceException if inner error happens
+     * @since SDNO 0.5
+     */
     public static void checkVlanPortResource(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
         Map<String, List<PortVlan>> tunnelIdToPortVlan = checkPortVlan(vxlanTunnels);
         writeBackPortVlanToTunnel(tunnelIdToPortVlan, vxlanTunnels);
@@ -123,10 +130,7 @@ public class DateValidator {
             LOGGER.error("native role of ne is null:" + tempId);
             throw new ParameterServiceException("native role of ne is null.");
         }
-        // if(StringUtils.isEmpty(tempNe.getAccessIpVersion())) {
-        // LOGGER.warn("AccessIpVersion of ne is null:" + tempId + "set to ipv4 as default.");
-        // tempNe.setAccessIpVersion("Ipv4");
-        // }
+
     }
 
     private static Map<String, NetworkElementMO> checkNeResouce(Set<String> neIdSet, List<NbiVxlanTunnel> vxlanTunnels)

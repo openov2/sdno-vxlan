@@ -39,7 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <br>
+ * create sbi model from nbi models.<br>
  * 
  * @author
  * @version SDNO 0.5 Jan 12, 2017
@@ -49,10 +49,10 @@ public class CreateVxlanHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateVxlanHelper.class);
 
     /**
-     * <br>
+     * fill back ip object to nbi vxlan tunnels.<br>
      * 
-     * @param neIdToIpMap
-     * @param vxlanTunnels
+     * @param neIdToIpMap ne id to ip map.
+     * @param vxlanTunnels vxlantunnels to fill ips.
      * @since SDNO 0.5
      */
     public static void fillIpBackToTunnel(Map<String, Ip> neIdToIpMap, List<NbiVxlanTunnel> vxlanTunnels) {
@@ -94,11 +94,11 @@ public class CreateVxlanHelper {
     }
 
     /**
-     * <br>
+     * build sbi models from nbi models.<br>
      * 
-     * @param neToCtrlMap
-     * @param vxlanTunnels
-     * @return
+     * @param neToCtrlMap ne to controller map.
+     * @param vxlanTunnels nbi vxlantunnels to transfer.
+     * @return list of SbiNeVxlanInstance created from given nbi models.
      * @since SDNO 0.5
      */
     public static List<SbiNeVxlanInstance> nbiToSbi(Map<NetworkElementMO, ControllerMO> neToCtrlMap,
@@ -119,15 +119,6 @@ public class CreateVxlanHelper {
         return sbivxlanList;
     }
 
-    /**
-     * <br>
-     * 
-     * @param nbiVxlan
-     * @param srcNeId
-     * @param destNeId
-     * @return
-     * @since SDNO 0.5
-     */
     private static SbiNeVxlanInstance buildNeVxlanInstance(NbiVxlanTunnel nbiVxlan, String neId, String neRole) {
         LOGGER.info("=====start building sbi model=====");
         SbiNeVxlanInstance sbiVxlanInstance = buildBasicField(nbiVxlan);
@@ -158,14 +149,6 @@ public class CreateVxlanHelper {
         return sbiVxlanInstance;
     }
 
-    /**
-     * <br>
-     * 
-     * @param nbiVxlan
-     * @param neId
-     * @return
-     * @since SDNO 0.5
-     */
     private static SbiNeVxlanTunnel buildNeVxlanTunnel(NbiVxlanTunnel nbiVxlan, String neId) {
         SbiNeVxlanTunnel neVxlanTunnel = buildBasicVxlanTunnel(nbiVxlan);
         neVxlanTunnel.setVni(nbiVxlan.getVni());
@@ -182,12 +165,6 @@ public class CreateVxlanHelper {
         return neVxlanTunnel;
     }
 
-    /**
-     * <br>
-     * 
-     * @param nbiVxlan
-     * @since SDNO 0.5
-     */
     private static SbiNeVxlanTunnel buildBasicVxlanTunnel(NbiVxlanTunnel nbiVxlan) {
         SbiNeVxlanTunnel neVxlanTunnel = new SbiNeVxlanTunnel();
         neVxlanTunnel.allocateUuid();
@@ -201,14 +178,6 @@ public class CreateVxlanHelper {
 
     }
 
-    /**
-     * <br>
-     * 
-     * @param nbiVxlan
-     * @param neId
-     * @return
-     * @since SDNO 0.5
-     */
     private static List<SbiNeVxlanInterface> buildVxlanInterfaceList(NbiVxlanTunnel nbiVxlan, String neId) {
         List<SbiNeVxlanInterface> vxlanInterfaceList = new ArrayList<SbiNeVxlanInterface>();
         if(CollectionUtils.isEmpty(nbiVxlan.getPortVlans())) {
@@ -223,16 +192,6 @@ public class CreateVxlanHelper {
         return vxlanInterfaceList;
     }
 
-    /**
-     * <br>
-     * 
-     * @param nbiVxlan
-     * @param neId
-     * @param portVlan
-     * @param vxlanInterfaceList
-     * @return
-     * @since SDNO 0.5
-     */
     private static void buildNeVxlanInterface(NbiVxlanTunnel nbiVxlan, String neId, PortVlan portVlan,
             List<SbiNeVxlanInterface> vxlanInterfaceList) {
         String portId = portVlan.getPort();
@@ -252,15 +211,6 @@ public class CreateVxlanHelper {
         }
     }
 
-    /**
-     * <br>
-     * 
-     * @param neId
-     * @param vlan
-     * @param nbiVxlan
-     * @return
-     * @since SDNO 0.5
-     */
     private static SbiNeVxlanInterface buildInterfaceAsVlan(String neId, String vlan, NbiVxlanTunnel nbiVxlan) {
         SbiNeVxlanInterface neVxlanInterface = buildBasicVxlanInterface(nbiVxlan);
         neVxlanInterface.setAccessType(VxlanAccessType.DOT1Q.getName());
@@ -269,15 +219,6 @@ public class CreateVxlanHelper {
         return neVxlanInterface;
     }
 
-    /**
-     * <br>
-     * 
-     * @param neId
-     * @param portVlan
-     * @param nbiVxlan
-     * @return
-     * @since SDNO 0.5
-     */
     private static SbiNeVxlanInterface buildInterfaceAsPort(String neId, PortVlan portVlan, NbiVxlanTunnel nbiVxlan) {
         SbiNeVxlanInterface neVxlanInterface = buildBasicVxlanInterface(nbiVxlan);
         neVxlanInterface.setAccessType(VxlanAccessType.PORT.getName());
@@ -287,16 +228,6 @@ public class CreateVxlanHelper {
         return neVxlanInterface;
     }
 
-    /**
-     * <br>
-     * 
-     * @param neId
-     * @param portVlan
-     * @param vlan
-     * @param nbiVxlan
-     * @return
-     * @since SDNO 0.5
-     */
     private static SbiNeVxlanInterface buildInterfaceAsPortVlan(String neId, PortVlan portVlan, String vlan,
             NbiVxlanTunnel nbiVxlan) {
         SbiNeVxlanInterface neVxlanInterface = buildBasicVxlanInterface(nbiVxlan);
@@ -308,13 +239,6 @@ public class CreateVxlanHelper {
         return neVxlanInterface;
     }
 
-    /**
-     * <br>
-     * 
-     * @param nbiVxlan
-     * @return
-     * @since SDNO 0.5
-     */
     private static SbiNeVxlanInterface buildBasicVxlanInterface(NbiVxlanTunnel nbiVxlan) {
         SbiNeVxlanInterface neVxlanInterface = new SbiNeVxlanInterface();
         neVxlanInterface.allocateUuid();
@@ -327,13 +251,6 @@ public class CreateVxlanHelper {
         return neVxlanInterface;
     }
 
-    /**
-     * build basic fields of sbiVxlanInstance from nbi model.<br>
-     * 
-     * @param nbiVxlan nbi model.
-     * @return
-     * @since SDNO 0.5
-     */
     private static SbiNeVxlanInstance buildBasicField(NbiVxlanTunnel nbiVxlan) {
         SbiNeVxlanInstance sbiVxlanInstance = new SbiNeVxlanInstance();
         sbiVxlanInstance.allocateUuid();
@@ -347,10 +264,10 @@ public class CreateVxlanHelper {
     }
 
     /**
-     * <br>
+     * replace ne id with device id before sent to adapter.<br>
      * 
-     * @param sbivxlan
-     * @param keySet
+     * @param sbivxlan sbi vxlan model to change.
+     * @param keySet ne set.
      * @since SDNO 0.5
      */
     public static void replaceNeIdWithDeviceId(SbiNeVxlanInstance sbivxlan, Collection<NetworkElementMO> keySet) {
@@ -374,13 +291,6 @@ public class CreateVxlanHelper {
 
     }
 
-    /**
-     * <br>
-     * 
-     * @param keySet
-     * @return
-     * @since SDNO 0.5
-     */
     private static Map<String, String> buildNeIdToDeviceId(Collection<NetworkElementMO> keySet) {
         Map<String, String> neIdToDeviceId = new HashMap<String, String>();
         for(NetworkElementMO ne : keySet) {

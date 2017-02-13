@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +26,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,26 +53,31 @@ import org.openo.sdno.vxlan.mockdata.OverlayVpnData;
 import org.openo.sdno.vxlan.mococlass.MockAllocIdResourceInvDao;
 import org.openo.sdno.vxlan.mococlass.MockInventoryDao;
 import org.openo.sdno.vxlan.mococlass.MockInventoryDaoUtil;
-import org.openo.sdno.vxlan.service.impl.VxlanServiceImpl;
 import org.openo.sdno.vxlan.service.impl.create.CreateVxlanService;
 import org.openo.sdno.vxlan.util.NeInterfaceUtil;
 import org.openo.sdno.vxlan.util.WanSubInterfaceUtil;
 import org.openo.sdno.vxlan.util.vxlanbuilder.VxlanProducer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import mockit.Mock;
 import mockit.MockUp;
 import mockit.Mocked;
 
-@RunWith(value = JMock.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath*:/spring/applicationContext.xml",
+                "classpath*:META-INF/spring/vxlanservice_service.xml", "classpath*:spring/vxlanservice_service.xml"})
 public class VxlanSvcRoaResourceCreateTest {
-
-    Mockery mockery = new JUnit4Mockery();
 
     @Mocked
     HttpServletRequest request;
 
     @Mocked
     HttpServletResponse response;
+
+    @Autowired
+    VxlanSvcRoaResource roa;
 
     @Before
     public void setUp() throws Exception {
@@ -101,19 +103,13 @@ public class VxlanSvcRoaResourceCreateTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws ServiceException {
 
         OverlayVpn overlayVpn = JsonUtil.fromJson(OverlayVpnData.getCreateFullMeshVpnDataString(), OverlayVpn.class);
 
-        VxlanSvcRoaResource roa = new VxlanSvcRoaResource();
-        roa.setVxlanService(new VxlanServiceImpl());
+        ResultRsp<OverlayVpn> resultRsp = roa.create(request, response, overlayVpn);
+        assertEquals(resultRsp.getErrorCode(), ErrorCode.OVERLAYVPN_SUCCESS);
 
-        try {
-            ResultRsp<OverlayVpn> resultRsp = roa.create(request, response, overlayVpn);
-            assertEquals(resultRsp.getErrorCode(), ErrorCode.OVERLAYVPN_SUCCESS);
-        } catch(ServiceException e) {
-            e.printStackTrace();
-        }
     }
 
     public final class MockNeDao extends MockUp<NetworkElementInvDao> {

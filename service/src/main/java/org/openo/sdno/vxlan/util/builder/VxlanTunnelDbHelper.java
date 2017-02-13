@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 import net.sf.json.JSONObject;
 
 /**
- * <br>
+ * This class is used to do all database operation of vxlan models.<br>
  * 
  * @author
  * @version SDNO 0.5 Jan 12, 2017
@@ -52,6 +52,13 @@ public class VxlanTunnelDbHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VxlanTunnelDbHelper.class);
 
+    /**
+     * batch insert NbiVxlanTunnel models into database.<br>
+     * 
+     * @param vxlanTunnels nbi vxlantunnels to insert.
+     * @throws ServiceException if inner error happens
+     * @since SDNO 0.5
+     */
     public static void insertNbiVxlanTunnelList(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
         LOGGER.info("=====insert NbiVxlanTunnel list:" + JsonUtil.toJson(vxlanTunnels));
         for(NbiVxlanTunnel nbimodel : vxlanTunnels) {
@@ -85,10 +92,10 @@ public class VxlanTunnelDbHelper {
     }
 
     /**
-     * <br>
+     * batch insert SbiNeVxlanInstance models into database.<br>
      * 
-     * @param sbiVxlans
-     * @throws ServiceException
+     * @param sbiVxlans data to insert
+     * @throws ServiceException if inner error happens
      * @since SDNO 0.5
      */
     public static void insertSbiVxlanInstanceList(List<SbiNeVxlanInstance> sbiVxlans) throws ServiceException {
@@ -107,10 +114,10 @@ public class VxlanTunnelDbHelper {
     }
 
     /**
-     * <br>
+     * get sbi models by nbi uuids.<br>
      * 
-     * @return
-     * @throws ServiceException
+     * @return sbi models of the given uuid list of nbi models.
+     * @throws ServiceException if inner error happens
      * @since SDNO 0.5
      */
     public static List<SbiNeVxlanInstance> getSbiVxlansByNbiModelId(List<String> deploy) throws ServiceException {
@@ -127,11 +134,11 @@ public class VxlanTunnelDbHelper {
     }
 
     /**
-     * <br>
+     * get nbi models by uuids.<br>
      * 
-     * @param deploy
-     * @return
-     * @throws ServiceException
+     * @param uuids uuid list of nbi models.
+     * @return list of nbi model of the given uuid list.
+     * @throws ServiceException if inner error happens
      * @since SDNO 0.5
      */
     public static List<NbiVxlanTunnel> getNbiVxlanById(List<String> uuids) throws ServiceException {
@@ -143,11 +150,11 @@ public class VxlanTunnelDbHelper {
     }
 
     /**
-     * <br>
+     * get nbi vxlantunnel filled with portvlan models.<br>
      * 
-     * @param vxlanTunnelId
-     * @return
-     * @throws ServiceException
+     * @param vxlanTunnelId uuid of nbi vxlantunnel.
+     * @return nbi vxlan tunnel with portvlan list.
+     * @throws ServiceException if inner error happens
      * @since SDNO 0.5
      */
     public static NbiVxlanTunnel getComplexNbiVxlanById(String vxlanTunnelId) throws ServiceException {
@@ -163,13 +170,6 @@ public class VxlanTunnelDbHelper {
 
     }
 
-    /**
-     * <br>
-     * 
-     * @param asList
-     * @throws ServiceException
-     * @since SDNO 0.5
-     */
     private static void fillePortVxlan(List<NbiVxlanTunnel> sbiVxlans) throws ServiceException {
         List<String> uuids = new ArrayList<String>();
         for(NbiVxlanTunnel sbiVxlan : sbiVxlans) {
@@ -188,13 +188,6 @@ public class VxlanTunnelDbHelper {
 
     }
 
-    /**
-     * <br>
-     * 
-     * @param sbiVxlans
-     * @param ips
-     * @since SDNO 0.5
-     */
     private static void fillIpToTunnel(List<NbiVxlanTunnel> sbiVxlans, List<Ip> ips) {
         for(Ip ip : ips) {
             for(NbiVxlanTunnel sbiVxlan : sbiVxlans) {
@@ -217,13 +210,6 @@ public class VxlanTunnelDbHelper {
 
     }
 
-    /**
-     * <br>
-     * 
-     * @param sbiVxlans
-     * @param portVlans
-     * @since SDNO 0.5
-     */
     @SuppressWarnings("unchecked")
     private static void fillPortVlanToTunnel(List<NbiVxlanTunnel> sbiVxlans, List<PortVlan> portVlans) {
         for(NbiVxlanTunnel sbiVxlan : sbiVxlans) {
@@ -244,10 +230,10 @@ public class VxlanTunnelDbHelper {
     }
 
     /**
-     * <br>
+     * fill SbiNeVxlanInstance with SbiNeVxlanInterface list and SbiNeVxlanTunnel list.<br>
      * 
-     * @param sbiModels
-     * @throws ServiceException
+     * @param sbiModel sbi model to fill with sub objects.
+     * @throws ServiceException if inner error happens
      * @since SDNO 0.5
      */
     public static void fillComplexSbiModel(SbiNeVxlanInstance sbiModel) throws ServiceException {
@@ -275,7 +261,7 @@ public class VxlanTunnelDbHelper {
      * 
      * @param nbiModel sbi model to delete.
      * @param sbiModels nbi model to delete.
-     * @throws ServiceException
+     * @throws ServiceException if inner error happens
      * @since SDNO 0.5
      */
     public static void deleteNbiAndSbi(NbiVxlanTunnel nbiModel, List<SbiNeVxlanInstance> sbiModels)
@@ -289,13 +275,6 @@ public class VxlanTunnelDbHelper {
         deleteComplexNbiModel(nbiModel);
     }
 
-    /**
-     * <br>
-     * 
-     * @param nbiModel
-     * @throws ServiceException
-     * @since SDNO 0.5
-     */
     private static void deleteComplexNbiModel(NbiVxlanTunnel nbiModel) throws ServiceException {
 
         List<PortVlan> portvlans = nbiModel.getPortVlans();
@@ -318,13 +297,6 @@ public class VxlanTunnelDbHelper {
         new InventoryDaoUtil<Ip>().getInventoryDao().batchDelete(Ip.class, uuids);
     }
 
-    /**
-     * <br>
-     * 
-     * @param portvlans
-     * @throws ServiceException
-     * @since SDNO 0.5
-     */
     private static void deletPortVlans(List<PortVlan> portvlans) throws ServiceException {
 
         LOGGER.info("=====start delete port=====");
@@ -337,13 +309,6 @@ public class VxlanTunnelDbHelper {
 
     }
 
-    /**
-     * <br>
-     * 
-     * @param sbiNeVxlanInstance
-     * @throws ServiceException
-     * @since SDNO 0.5
-     */
     private static void deleteComplexSbiModel(SbiNeVxlanInstance sbiNeVxlanInstance) throws ServiceException {
 
         LOGGER.info("=====Deleting SBI tunnels=====");
@@ -358,13 +323,6 @@ public class VxlanTunnelDbHelper {
 
     }
 
-    /**
-     * <br>
-     * 
-     * @param sbiInterfaces
-     * @throws ServiceException
-     * @since SDNO 0.5
-     */
     private static void deleteInterfaces(List<SbiNeVxlanInterface> sbiInterfaces) throws ServiceException {
 
         List<String> uuids = new ArrayList<String>();
@@ -375,13 +333,6 @@ public class VxlanTunnelDbHelper {
 
     }
 
-    /**
-     * <br>
-     * 
-     * @param sbiTunnels
-     * @throws ServiceException
-     * @since SDNO 0.5
-     */
     private static void deleteTunnels(List<SbiNeVxlanTunnel> sbiTunnels) throws ServiceException {
 
         List<String> neTunnelIds = new ArrayList<String>();
@@ -392,6 +343,15 @@ public class VxlanTunnelDbHelper {
         new InventoryDaoUtil<SbiNeVxlanTunnel>().getInventoryDao().batchDelete(SbiNeVxlanTunnel.class, neTunnelIds);
     }
 
+    /**
+     * update deploy status of vxlan.<br>
+     * 
+     * @param vxlanTunnels nbi models to update deploy status.
+     * @param sbiVxlans sbi models to update deploy status.
+     * @param isDeployed new status need update.
+     * @throws ServiceException if inner error happens
+     * @since SDNO 0.5
+     */
     public static void updateDeployStatus(List<NbiVxlanTunnel> vxlanTunnels, List<SbiNeVxlanInstance> sbiVxlans,
             boolean isDeployed) throws ServiceException {
         String newDeployStatus = isDeployed ? DeployStatus.DEPLOY.getName() : DeployStatus.UNDEPLOY.getName();

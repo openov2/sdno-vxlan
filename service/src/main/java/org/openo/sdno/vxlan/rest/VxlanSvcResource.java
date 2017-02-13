@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,6 +32,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.httpclient.HttpStatus;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.exception.ParameterServiceException;
 import org.openo.sdno.framework.container.util.JsonUtil;
@@ -62,16 +63,24 @@ import org.springframework.stereotype.Service;
  * @version SDNO 0.5 03-June-2016
  */
 @Service
-@Path("/sdnovxlan/v1/vxlans")
+@Path("/sdnovxlan/v1")
 public class VxlanSvcResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VxlanSvcResource.class);
 
+    /**
+     * health check interface.<br>
+     * 
+     * @param resp http servlet response object.
+     * @throws ServiceException if inner error happens.
+     * @since SDNO 0.5
+     */
     @GET
+    @Path("/healthcheck")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String test(@Context HttpServletRequest request) throws ServiceException {
-        return "/sdnovxlan/v1/vxlans";
+    public void healthCheck(@Context HttpServletResponse resp) throws ServiceException {
+        resp.setStatus(HttpStatus.SC_OK);
     }
 
     /**
@@ -79,11 +88,11 @@ public class VxlanSvcResource {
      * 
      * @param vxlanTunnelId uuid of the vxlan to query.
      * @return NbiVxlanTunnel model of the given uuid.
-     * @throws ServiceException if inner error happens.
+     * @throws ServiceException if inner error happens. if inner error happens.
      * @since SDNO 0.5
      */
     @GET
-    @Path("/{vxlanTunnelId}")
+    @Path("/vxlans/{vxlanTunnelId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public NbiVxlanTunnel query(@PathParam("vxlanTunnelId") String vxlanTunnelId) throws ServiceException {
@@ -95,11 +104,11 @@ public class VxlanSvcResource {
      * 
      * @param vxlanTunnelIds list of uuids of the vxlan to query.
      * @return list of NbiVxlanTunnel of the given uuids.
-     * @throws ServiceException
+     * @throws ServiceException if inner error happens.
      * @since SDNO 0.5
      */
     @POST
-    @Path("/batch-query")
+    @Path("/vxlans/batch-query")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<NbiVxlanTunnel> batchquery(List<String> vxlanTunnelIds) throws ServiceException {
@@ -111,10 +120,11 @@ public class VxlanSvcResource {
      * 
      * @param vxlanTunnels vxlantunnel models to create.
      * @return vxlantunnel models created.
-     * @throws ServiceException
+     * @throws ServiceException if inner error happens.
      * @since SDNO 0.5
      */
     @POST
+    @Path("/vxlans")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<NbiVxlanTunnel> create(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
@@ -173,12 +183,12 @@ public class VxlanSvcResource {
      * delete vxlan tunnel by uuid.<br>
      * 
      * @param vxlanTunnelId uuid of vxlantunnel to delete.
-     * @return the uuid of
-     * @throws ServiceException
+     * @return the uuid of deleted vxlan model.
+     * @throws ServiceException if inner error happens.
      * @since SDNO 0.5
      */
     @DELETE
-    @Path("/{vxlanTunnelId}")
+    @Path("/vxlans/{vxlanTunnelId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String delete(@PathParam("vxlanTunnelId") String vxlanTunnelId) throws ServiceException {
@@ -211,15 +221,15 @@ public class VxlanSvcResource {
     }
 
     /**
-     * <br>
+     * deploy/undeploy interface of vxlan.<br>
      * 
-     * @param actionModel action model,
-     * @return
-     * @throws ServiceException
+     * @param actionModel action model, contain deploy/undeploy uuid list.
+     * @return uuid list of the success deploy/undeploy models.
+     * @throws ServiceException if inner error happens.
      * @since SDNO 0.5
      */
     @POST
-    @Path("/action")
+    @Path("/vxlans/action")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> action(ActionModel actionModel) throws ServiceException {
