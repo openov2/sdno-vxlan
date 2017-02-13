@@ -28,7 +28,6 @@ import org.apache.commons.collections.Predicate;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.framework.container.util.JsonUtil;
 import org.openo.sdno.framework.container.util.UuidUtils;
-import org.openo.sdno.overlayvpn.dao.common.InventoryDao;
 import org.openo.sdno.overlayvpn.inventory.sdk.util.InventoryDaoUtil;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.Ip;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.NbiVxlanTunnel;
@@ -53,21 +52,6 @@ public class VxlanTunnelDbHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VxlanTunnelDbHelper.class);
 
-    private static InventoryDao<NbiVxlanTunnel> nbiVxlanDao = new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao();
-
-    private static InventoryDao<PortVlan> portVlanDao = new InventoryDaoUtil<PortVlan>().getInventoryDao();
-
-    private static InventoryDao<Ip> ipDao = new InventoryDaoUtil<Ip>().getInventoryDao();
-
-    private static InventoryDao<SbiNeVxlanInstance> sbiVxlanDao =
-            new InventoryDaoUtil<SbiNeVxlanInstance>().getInventoryDao();
-
-    private static InventoryDao<SbiNeVxlanInterface> vxlanInterfaceDao =
-            new InventoryDaoUtil<SbiNeVxlanInterface>().getInventoryDao();
-
-    private static InventoryDao<SbiNeVxlanTunnel> vxlanTunnelDao =
-            new InventoryDaoUtil<SbiNeVxlanTunnel>().getInventoryDao();
-
     public static void insertNbiVxlanTunnelList(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
         LOGGER.info("=====insert NbiVxlanTunnel list:" + JsonUtil.toJson(vxlanTunnels));
         for(NbiVxlanTunnel nbimodel : vxlanTunnels) {
@@ -75,7 +59,7 @@ public class VxlanTunnelDbHelper {
         }
         insertIp(vxlanTunnels);
         insertPortVlans(vxlanTunnels);
-        nbiVxlanDao.batchInsert(vxlanTunnels);
+        new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao().batchInsert(vxlanTunnels);
     }
 
     private static void insertPortVlans(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
@@ -85,7 +69,7 @@ public class VxlanTunnelDbHelper {
             portvlans.addAll(vxlan.getPortVlans());
         }
         LOGGER.info("=====insert portVlan list:" + JsonUtil.toJson(portvlans));
-        portVlanDao.batchInsert(portvlans);
+        new InventoryDaoUtil<PortVlan>().getInventoryDao().batchInsert(portvlans);
 
     }
 
@@ -96,7 +80,7 @@ public class VxlanTunnelDbHelper {
             ips.add(vxlan.getSrcIp());
         }
         LOGGER.info("=====insert Ip list:" + JsonUtil.toJson(ips));
-        ipDao.batchInsert(ips);
+        new InventoryDaoUtil<Ip>().getInventoryDao().batchInsert(ips);
 
     }
 
@@ -112,12 +96,12 @@ public class VxlanTunnelDbHelper {
         for(SbiNeVxlanInstance sbiVxlan : sbiVxlans) {
             sbiVxlan.setExternalId(UuidUtils.createUuid());
         }
-        sbiVxlanDao.batchInsert(sbiVxlans);
+        new InventoryDaoUtil<SbiNeVxlanInstance>().getInventoryDao().batchInsert(sbiVxlans);
         for(SbiNeVxlanInstance vxlanIns : sbiVxlans) {
-            vxlanInterfaceDao.batchInsert(vxlanIns.getVxlanInterfaceList());
+            new InventoryDaoUtil<SbiNeVxlanInterface>().getInventoryDao().batchInsert(vxlanIns.getVxlanInterfaceList());
         }
         for(SbiNeVxlanInstance vxlanIns : sbiVxlans) {
-            vxlanTunnelDao.batchInsert(vxlanIns.getVxlanTunnelList());
+            new InventoryDaoUtil<SbiNeVxlanTunnel>().getInventoryDao().batchInsert(vxlanIns.getVxlanTunnelList());
         }
         LOGGER.info("=====finish insert SBI models=====");
     }
@@ -134,8 +118,8 @@ public class VxlanTunnelDbHelper {
         filterMap.put("nbiVxlanTunnelId", deploy);
         LOGGER.info("=====get sbi model by nbi uuid:" + deploy.get(0));
         String filter = JSONObject.fromObject(filterMap).toString();
-        List<SbiNeVxlanInstance> sbiModels =
-                sbiVxlanDao.queryByFilter(SbiNeVxlanInstance.class, filter, null).getData();
+        List<SbiNeVxlanInstance> sbiModels = new InventoryDaoUtil<SbiNeVxlanInstance>().getInventoryDao()
+                .queryByFilter(SbiNeVxlanInstance.class, filter, null).getData();
         for(SbiNeVxlanInstance sbiModel : sbiModels) {
             fillComplexSbiModel(sbiModel);
         }
@@ -154,7 +138,8 @@ public class VxlanTunnelDbHelper {
         Map<String, Object> filterMap = new HashMap<String, Object>();
         filterMap.put("uuid", uuids);
         String filter = JSONObject.fromObject(filterMap).toString();
-        return nbiVxlanDao.queryByFilter(NbiVxlanTunnel.class, filter, null).getData();
+        return new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao()
+                .queryByFilter(NbiVxlanTunnel.class, filter, null).getData();
     }
 
     /**
@@ -166,7 +151,8 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     public static NbiVxlanTunnel getComplexNbiVxlanById(String vxlanTunnelId) throws ServiceException {
-        ResultRsp<NbiVxlanTunnel> result = nbiVxlanDao.query(NbiVxlanTunnel.class, vxlanTunnelId, null);
+        ResultRsp<NbiVxlanTunnel> result = new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao()
+                .query(NbiVxlanTunnel.class, vxlanTunnelId, null);
         if(!result.isValid()) {
             LOGGER.error("get nbi complex model failed.");
             return null;
@@ -192,9 +178,10 @@ public class VxlanTunnelDbHelper {
         Map<String, Object> filterMap = new HashMap<String, Object>();
         filterMap.put("vxlanTunnelId", uuids);
         String filter = JSONObject.fromObject(filterMap).toString();
-        List<PortVlan> portVlans = portVlanDao.batchQuery(PortVlan.class, filter).getData();
+        List<PortVlan> portVlans =
+                new InventoryDaoUtil<PortVlan>().getInventoryDao().batchQuery(PortVlan.class, filter).getData();
         LOGGER.info("query portvlans for nbi model:" + JsonUtil.toJson(portVlans));
-        List<Ip> ips = ipDao.batchQuery(Ip.class, filter).getData();
+        List<Ip> ips = new InventoryDaoUtil<Ip>().getInventoryDao().batchQuery(Ip.class, filter).getData();
         LOGGER.info("query ips for nbi model::" + JsonUtil.toJson(ips));
         fillPortVlanToTunnel(sbiVxlans, portVlans);
         fillIpToTunnel(sbiVxlans, ips);
@@ -264,20 +251,19 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     public static void fillComplexSbiModel(SbiNeVxlanInstance sbiModel) throws ServiceException {
-        if(null == sbiModel) {
-            return;
-        }
+
         List<String> uuids = new ArrayList<String>();
         uuids.add(sbiModel.getUuid());
         Map<String, Object> filterMap = new HashMap<String, Object>();
         filterMap.put("vxlanInstanceId", uuids);
         String filter = JSONObject.fromObject(filterMap).toString();
-        List<SbiNeVxlanInterface> interfaces =
-                vxlanInterfaceDao.batchQuery(SbiNeVxlanInterface.class, filter).getData();
+        List<SbiNeVxlanInterface> interfaces = new InventoryDaoUtil<SbiNeVxlanInterface>().getInventoryDao()
+                .batchQuery(SbiNeVxlanInterface.class, filter).getData();
         if(interfaces != null) {
             sbiModel.setVxlanInterfaceList(interfaces);
         }
-        List<SbiNeVxlanTunnel> tunnels = vxlanTunnelDao.batchQuery(SbiNeVxlanTunnel.class, filter).getData();
+        List<SbiNeVxlanTunnel> tunnels = new InventoryDaoUtil<SbiNeVxlanTunnel>().getInventoryDao()
+                .batchQuery(SbiNeVxlanTunnel.class, filter).getData();
         if(tunnels != null) {
 
             sbiModel.setVxlanTunnelList(tunnels);
@@ -311,31 +297,25 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     private static void deleteComplexNbiModel(NbiVxlanTunnel nbiModel) throws ServiceException {
-        if(nbiModel == null) {
-            return;
-        }
+
         List<PortVlan> portvlans = nbiModel.getPortVlans();
         List<Ip> ips = new ArrayList<Ip>();
         ips.add(nbiModel.getDestIp());
         ips.add(nbiModel.getSrcIp());
         deleteIps(ips);
         deletPortVlans(portvlans);
-        nbiVxlanDao.delete(NbiVxlanTunnel.class, nbiModel.getUuid());
+        new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao().delete(NbiVxlanTunnel.class, nbiModel.getUuid());
 
     }
 
     private static void deleteIps(List<Ip> ips) throws ServiceException {
-        if(CollectionUtils.isEmpty(ips)) {
-            return;
-        }
-
         List<String> uuids = new ArrayList<String>();
         for(Ip ip : ips) {
             uuids.add(ip.getUuid());
         }
         LOGGER.info("=====start delete ip=====:");
         LOGGER.info("=====uuids:" + JsonUtil.toJson(uuids));
-        ipDao.batchDelete(Ip.class, uuids);
+        new InventoryDaoUtil<Ip>().getInventoryDao().batchDelete(Ip.class, uuids);
     }
 
     /**
@@ -346,16 +326,14 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     private static void deletPortVlans(List<PortVlan> portvlans) throws ServiceException {
-        if(CollectionUtils.isEmpty(portvlans)) {
-            return;
-        }
+
         LOGGER.info("=====start delete port=====");
         List<String> uuids = new ArrayList<String>();
         for(PortVlan portvlan : portvlans) {
             uuids.add(portvlan.getUuid());
         }
         LOGGER.info("=====uuids:" + JsonUtil.toJson(uuids));
-        portVlanDao.batchDelete(PortVlan.class, uuids);
+        new InventoryDaoUtil<PortVlan>().getInventoryDao().batchDelete(PortVlan.class, uuids);
 
     }
 
@@ -367,9 +345,6 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     private static void deleteComplexSbiModel(SbiNeVxlanInstance sbiNeVxlanInstance) throws ServiceException {
-        if(sbiNeVxlanInstance == null) {
-            return;
-        }
 
         LOGGER.info("=====Deleting SBI tunnels=====");
         deleteTunnels(sbiNeVxlanInstance.getVxlanTunnelList());
@@ -378,7 +353,8 @@ public class VxlanTunnelDbHelper {
         deleteInterfaces(sbiNeVxlanInstance.getVxlanInterfaceList());
 
         LOGGER.info("=====Deleting SBI instances=====");
-        sbiVxlanDao.delete(SbiNeVxlanInstance.class, sbiNeVxlanInstance.getUuid());
+        new InventoryDaoUtil<SbiNeVxlanInstance>().getInventoryDao().delete(SbiNeVxlanInstance.class,
+                sbiNeVxlanInstance.getUuid());
 
     }
 
@@ -390,14 +366,12 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     private static void deleteInterfaces(List<SbiNeVxlanInterface> sbiInterfaces) throws ServiceException {
-        if(CollectionUtils.isEmpty(sbiInterfaces)) {
-            return;
-        }
+
         List<String> uuids = new ArrayList<String>();
         for(SbiNeVxlanInterface sbiinterface : sbiInterfaces) {
             uuids.add(sbiinterface.getUuid());
         }
-        vxlanInterfaceDao.batchDelete(SbiNeVxlanInterface.class, uuids);
+        new InventoryDaoUtil<SbiNeVxlanInterface>().getInventoryDao().batchDelete(SbiNeVxlanInterface.class, uuids);
 
     }
 
@@ -409,15 +383,13 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     private static void deleteTunnels(List<SbiNeVxlanTunnel> sbiTunnels) throws ServiceException {
-        if(CollectionUtils.isEmpty(sbiTunnels)) {
-            return;
-        }
+
         List<String> neTunnelIds = new ArrayList<String>();
         for(SbiNeVxlanTunnel tunnel : sbiTunnels) {
             neTunnelIds.add(tunnel.getUuid());
         }
         LOGGER.info("=====Updating SbiNeVxlanTunnel status=====");
-        vxlanTunnelDao.batchDelete(SbiNeVxlanTunnel.class, neTunnelIds);
+        new InventoryDaoUtil<SbiNeVxlanTunnel>().getInventoryDao().batchDelete(SbiNeVxlanTunnel.class, neTunnelIds);
     }
 
     public static void updateDeployStatus(List<NbiVxlanTunnel> vxlanTunnels, List<SbiNeVxlanInstance> sbiVxlans,
@@ -427,7 +399,8 @@ public class VxlanTunnelDbHelper {
         for(NbiVxlanTunnel nbimodel : vxlanTunnels) {
             nbimodel.setDeployStatus(newDeployStatus);
         }
-        nbiVxlanDao.update(NbiVxlanTunnel.class, vxlanTunnels, "deployStatus");
+        new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao().update(NbiVxlanTunnel.class, vxlanTunnels,
+                "deployStatus");
 
         List<SbiNeVxlanInterface> interfaceList = new ArrayList<SbiNeVxlanInterface>();
         List<SbiNeVxlanTunnel> tunnelList = new ArrayList<SbiNeVxlanTunnel>();
@@ -445,11 +418,14 @@ public class VxlanTunnelDbHelper {
             }
         }
         LOGGER.info("=====Updating SbiNeVxlanInstance deploy status=====");
-        sbiVxlanDao.update(SbiNeVxlanInstance.class, sbiVxlans, "deployStatus");
+        new InventoryDaoUtil<SbiNeVxlanInstance>().getInventoryDao().update(SbiNeVxlanInstance.class, sbiVxlans,
+                "deployStatus");
         LOGGER.info("=====Updating SbiNeVxlanInterface deploy status=====");
-        vxlanInterfaceDao.update(SbiNeVxlanInterface.class, interfaceList, "deployStatus");
+        new InventoryDaoUtil<SbiNeVxlanInterface>().getInventoryDao().update(SbiNeVxlanInterface.class, interfaceList,
+                "deployStatus");
         LOGGER.info("=====Updating SbiNeVxlanTunnel deploy status=====");
-        vxlanTunnelDao.update(SbiNeVxlanTunnel.class, tunnelList, "deployStatus");
+        new InventoryDaoUtil<SbiNeVxlanTunnel>().getInventoryDao().update(SbiNeVxlanTunnel.class, tunnelList,
+                "deployStatus");
 
     }
 }

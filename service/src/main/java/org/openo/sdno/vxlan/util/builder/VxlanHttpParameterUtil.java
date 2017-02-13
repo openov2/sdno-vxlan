@@ -17,16 +17,12 @@
 package org.openo.sdno.vxlan.util.builder;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.baseservice.roa.util.restclient.RestfulParametes;
 import org.openo.sdno.framework.container.util.JsonUtil;
-import org.openo.sdno.overlayvpn.consts.CommConst;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.SbiNeVxlanInstance;
 import org.openo.sdno.overlayvpn.security.authentication.HttpContext;
-import org.openo.sdno.overlayvpn.security.authentication.TokenDataHolder;
 
 /**
  * Utility functions to fill rest parameters for different requests.<br>
@@ -38,20 +34,6 @@ public class VxlanHttpParameterUtil {
 
     private VxlanHttpParameterUtil() {
 
-    }
-
-    /**
-     * Query VTEP parameter <br>
-     * 
-     * @param ctrlUuid Controller UUID
-     * @return VTEP parameter in restful structure
-     * @since SDNO 0.5
-     */
-    public static RestfulParametes getQueryVtepParam(String ctrlUuid) {
-        RestfulParametes restfulParametes = new RestfulParametes();
-        restfulParametes.putHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER, HttpContext.MEDIA_TYPE_JSON);
-        restfulParametes.putHttpContextHeader("X-Driver-Parameter", "extSysID=" + ctrlUuid);
-        return restfulParametes;
     }
 
     /**
@@ -90,27 +72,6 @@ public class VxlanHttpParameterUtil {
         String strJsonReq = JsonUtil.toJson(vxlanInstanceList);
         restParametes.setRawData(strJsonReq);
         return restParametes;
-    }
-
-    /**
-     * Fill Query Wan interface parameters in rest structure<br>
-     * 
-     * @param subInterUsedType - Sub interface type
-     * @param ctrlUuid Controller UUID
-     * @return Restful structure with delete parameters filled
-     * @since SDNO 0.5
-     */
-    public static RestfulParametes getQueryWanInterfaceParam(String subInterUsedType, String ctrlUuid) {
-        RestfulParametes restfulParametes = new RestfulParametes();
-        restfulParametes.putHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER, HttpContext.MEDIA_TYPE_JSON);
-        restfulParametes.putHttpContextHeader("X-Driver-Parameter", "extSysID=" + ctrlUuid);
-        TokenDataHolder.addToken2HttpRequest(restfulParametes);
-
-        Map<String, String> queryParamMap = new ConcurrentHashMap<String, String>();
-        queryParamMap.put(CommConst.DEVICE_WAN_SUB_INTERFACE_TYPE_PARAMETER, subInterUsedType);
-        restfulParametes.setParamMap(queryParamMap);
-
-        return restfulParametes;
     }
 
 }
