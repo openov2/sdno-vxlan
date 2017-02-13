@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,17 @@ import org.openo.sdno.testframework.moco.MocoHttpServer;
 
 public class SbiAdapterSuccessServer extends MocoHttpServer {
 
-    private static final String CREATE_VXLAN_FILE = "src/integration-test/resources/vxlansbiadapter/createvxlan.json";
+    private static final String CREATE_VXLAN_FILE =
+            "src/integration-test/resources/vxlansbiadapter/createsbivxlan.json";
 
-    private static final String DELETE_VXLAN_FILE = "src/integration-test/resources/vxlansbiadapter/deletevxlan.json";
+    private static final String DELETE_VXLAN_FILE =
+            "src/integration-test/resources/vxlansbiadapter/deletesbivxlan.json";
+
+    private static final String CREATE_VXLAN_FILE_OLD =
+            "src/integration-test/resources/vxlansbiadapter/createvxlan.json";
+
+    private static final String DELETE_VXLAN_FILE_OLD =
+            "src/integration-test/resources/vxlansbiadapter/deletevxlan.json";
 
     private static final String QUERY_WANSUBINF_FILE =
             "src/integration-test/resources/vxlansbiadapter/querywansubinterface.json";
@@ -32,13 +40,18 @@ public class SbiAdapterSuccessServer extends MocoHttpServer {
     @Override
     public void addRequestResponsePairs() {
 
-        this.addRequestResponsePair(CREATE_VXLAN_FILE, new CreateVxlanResponseHandler());
+        this.addRequestResponsePair(CREATE_VXLAN_FILE, new CreateSbiVxlanResponseHandler());
 
-        this.addRequestResponsePair(DELETE_VXLAN_FILE, new DeleteVxlanResponseHandler());
+        this.addRequestResponsePair(DELETE_VXLAN_FILE, new CreateSbiVxlanResponseHandler());
+
+        this.addRequestResponsePair(CREATE_VXLAN_FILE_OLD, new CreateVxlanResponseHandler());
+
+        this.addRequestResponsePair(DELETE_VXLAN_FILE_OLD, new CreateVxlanResponseHandler());
 
         this.addRequestResponsePair(QUERY_WANSUBINF_FILE);
 
         this.addRequestResponsePair(QUERY_VTEP_FILE, new QueryVtepResponseHandler());
+
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,11 @@ public class SbiAdapterFailServer extends MocoHttpServer {
     private static final String CREATE_VXLAN_FAIL_FILE =
             "src/integration-test/resources/vxlansbiadapter/createvxlanfail.json";
 
-    private static final String DELETE_VXLAN_FILE = "src/integration-test/resources/vxlansbiadapter/deletevxlan.json";
+    private static final String DELETE_VXLAN_FILE =
+            "src/integration-test/resources/vxlansbiadapter/deletesbivxlan.json";
+
+    private static final String DELETE_VXLAN_FILE_OLD =
+            "src/integration-test/resources/vxlansbiadapter/deletevxlan.json";
 
     private static final String QUERY_WANSUBINF_FILE =
             "src/integration-test/resources/vxlansbiadapter/querywansubinterface.json";
@@ -35,6 +39,8 @@ public class SbiAdapterFailServer extends MocoHttpServer {
         this.addRequestResponsePair(CREATE_VXLAN_FAIL_FILE);
 
         this.addRequestResponsePair(DELETE_VXLAN_FILE, new DeleteVxlanResponseHandler());
+
+        this.addRequestResponsePair(DELETE_VXLAN_FILE_OLD, new DeleteVxlanResponseHandler());
 
         this.addRequestResponsePair(QUERY_WANSUBINF_FILE);
 
