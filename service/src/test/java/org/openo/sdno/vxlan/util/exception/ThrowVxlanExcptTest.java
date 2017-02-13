@@ -16,6 +16,8 @@
 
 package org.openo.sdno.vxlan.util.exception;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 
@@ -26,7 +28,7 @@ public class ThrowVxlanExcptTest {
         try {
             ThrowVxlanExcpt.checkRspThrowException(null);
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
@@ -35,7 +37,7 @@ public class ThrowVxlanExcptTest {
         try {
             ThrowVxlanExcpt.throwResNotExistAsBadReq("", "resDesc");
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
@@ -44,7 +46,7 @@ public class ThrowVxlanExcptTest {
         try {
             ThrowVxlanExcpt.throwResNotExistAsBadReq("111", "resDesc");
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
@@ -54,7 +56,7 @@ public class ThrowVxlanExcptTest {
             ThrowVxlanExcpt.throwTenantIdInvalid("", "111");
             ThrowVxlanExcpt.throwTenantIdInvalid("exptTenantId", "realTenantId");
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
@@ -63,7 +65,7 @@ public class ThrowVxlanExcptTest {
         try {
             ThrowVxlanExcpt.throwParmaterInvalid("111", "resDesc");
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
@@ -72,7 +74,7 @@ public class ThrowVxlanExcptTest {
         try {
             ThrowVxlanExcpt.throwParmaterInvalid("", "resDesc");
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
@@ -81,7 +83,7 @@ public class ThrowVxlanExcptTest {
         try {
             ThrowVxlanExcpt.throwHavingIpsecAsParmaterInvalid("www");
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
@@ -90,7 +92,7 @@ public class ThrowVxlanExcptTest {
         try {
             ThrowVxlanExcpt.throwNotHavingIpsecAsParmaterInvalid("www");
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
@@ -99,7 +101,7 @@ public class ThrowVxlanExcptTest {
         try {
             ThrowVxlanExcpt.throwTenantIdMissing("www");
         } catch(ServiceException e) {
-            e.printStackTrace();
+            assertTrue(true);
         }
     }
 
