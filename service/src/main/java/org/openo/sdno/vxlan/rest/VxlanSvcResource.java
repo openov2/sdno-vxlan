@@ -170,8 +170,7 @@ public class VxlanSvcResource {
             CreateVxlanHelper.replaceNeIdWithDeviceId(sbivxlan, neToCtrlMap.keySet());
         }
         LOGGER.info("=====call adapter api=====");
-        List<SbiNeVxlanInstance> result = new ArrayList<SbiNeVxlanInstance>();
-        result = CallSbiApi.create(sbiVxlans).getData();
+        CallSbiApi.create(sbiVxlans).getData();
         boolean isDeployed = true;
         VxlanTunnelDbHelper.updateDeployStatus(vxlanTunnels, sbiVxlans, isDeployed);
 
@@ -205,7 +204,7 @@ public class VxlanSvcResource {
             LOGGER.error("can not delete deployed vxlan, must undeploy first.");
             throw new ParameterServiceException("can not delete deployed vxlan, must undeploy first.");
         }
-        List<String> uuids = new ArrayList<String>();
+        List<String> uuids = new ArrayList<>();
         uuids.add(vxlanTunnelId);
         List<SbiNeVxlanInstance> sbiModels = VxlanTunnelDbHelper.getSbiVxlansByNbiModelId(uuids);
         if(sbiModels.isEmpty()) {

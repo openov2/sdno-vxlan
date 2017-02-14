@@ -16,33 +16,26 @@
 
 package org.openo.sdno.vxlan.constant;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 /**
- * vxlan access type constant class<br>
+ * vxlan access type numeratin class.<br>
  * 
  * @author
- * @version SDNO 0.5 Jan 13, 2017
+ * @version SDNO 0.5 Feb 14, 2017
  */
-public enum VxlanAccessType {
-    PORT(0), DOT1Q(1);
+public class VxlanAccessTypeTest {
 
-    private int value;
+    VxlanAccessType demo1 = VxlanAccessType.DOT1Q;
 
-    /**
-     * Constructor<br>
-     * 
-     * @param value
-     * @since SDNO 0.5
-     */
-    VxlanAccessType(int value) {
-        this.value = value;
-    }
+    VxlanAccessType demo2 = VxlanAccessType.PORT;
 
-    public String getName() {
-        if(value == 0) {
-            return "port";
-        } else {
-            return "dot1q";
-        }
+    @Test
+    public void test() {
+        assertTrue(demo1.getName().equals("dot1q"));
+        assertTrue(demo2.getName().equals("port"));
     }
 
 }

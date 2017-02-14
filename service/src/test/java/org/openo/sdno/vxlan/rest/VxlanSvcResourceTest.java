@@ -21,6 +21,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,6 +39,8 @@ import org.openo.sdno.vxlan.util.builder.VxlanTunnelDbHelper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import mockit.Mocked;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:/spring/applicationContext.xml",
                 "classpath*:META-INF/spring/service.xml", "classpath*:spring/service.xml"})
@@ -45,6 +49,9 @@ public class VxlanSvcResourceTest {
     VxlanSvcResource demo = new VxlanSvcResource();
 
     VxlanTunnelDbHelper helper = new VxlanTunnelDbHelper();
+
+    @Mocked
+    HttpServletResponse resp;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -101,6 +108,12 @@ public class VxlanSvcResourceTest {
         action.setDeploy(Arrays.asList("vxlanid"));
         List<String> uuids = demo.action(action);
         assertTrue(uuids.get(0).equals("vxlanid"));
+    }
+
+    @Test
+    public void testHealthCheck() throws ServiceException {
+        demo.healthCheck(resp);
+        assertTrue(true);
     }
 
 }

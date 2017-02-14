@@ -47,11 +47,11 @@ public enum VxlanSvcType {
         switch(value) {
             case 0:
                 return "vxlan";
-            case 2:
+            case 1:
                 return "ipv6 over ipv4";
+            case 2:
+                return "ipv4 over ipv6";
             case 3:
-                return "ipv4 over ipv4";
-            case 4:
                 return "l3-gw-vxlan";
             default:
                 return "";

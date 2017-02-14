@@ -16,33 +16,26 @@
 
 package org.openo.sdno.vxlan.constant;
 
-/**
- * vxlan access type constant class<br>
- * 
- * @author
- * @version SDNO 0.5 Jan 13, 2017
- */
-public enum VxlanAccessType {
-    PORT(0), DOT1Q(1);
+import static org.junit.Assert.assertTrue;
 
-    private int value;
+import org.junit.Test;
 
-    /**
-     * Constructor<br>
-     * 
-     * @param value
-     * @since SDNO 0.5
-     */
-    VxlanAccessType(int value) {
-        this.value = value;
-    }
+public class VxlanSvcTypeTest {
 
-    public String getName() {
-        if(value == 0) {
-            return "port";
-        } else {
-            return "dot1q";
-        }
+    VxlanSvcType demo1 = VxlanSvcType.IPV4_OVER_IPV6;
+
+    VxlanSvcType demo2 = VxlanSvcType.IPV6_OVER_IPV4;
+
+    VxlanSvcType demo3 = VxlanSvcType.L3_GW_VXLAN;
+
+    VxlanSvcType demo4 = VxlanSvcType.VXLAN;
+
+    @Test
+    public void test() {
+        assertTrue(demo1.getName().equals("ipv4 over ipv6"));
+        assertTrue(demo2.getName().equals("ipv6 over ipv4"));
+        assertTrue(demo3.getName().equals("l3-gw-vxlan"));
+        assertTrue(demo4.getName().equals("vxlan"));
     }
 
 }
