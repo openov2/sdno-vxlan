@@ -65,7 +65,7 @@ public class DateValidator {
             isNeRoleLegal(vxlanTunnel);
         }
 
-        Set<String> neIdSet = new HashSet<String>();
+        Set<String> neIdSet = new HashSet<>();
         for(NbiVxlanTunnel vxlanTunnel : vxlanTunnels) {
             neIdSet.add(vxlanTunnel.getSrcNeId());
             neIdSet.add(vxlanTunnel.getDestNeId());
@@ -97,11 +97,11 @@ public class DateValidator {
 
     private static Map<String, List<PortVlan>> checkPortVlan(List<NbiVxlanTunnel> vxlanTunnels)
             throws ParameterServiceException {
-        Map<String, List<PortVlan>> tunnelIdToPortVlan = new HashMap<String, List<PortVlan>>();
+        Map<String, List<PortVlan>> tunnelIdToPortVlan = new HashMap<>();
 
         for(NbiVxlanTunnel vxlanTunnel : vxlanTunnels) {
             String tempId = vxlanTunnel.getUuid();
-            List<PortVlan> portList = new ArrayList<PortVlan>();
+            List<PortVlan> portList = new ArrayList<>();
             portList = JsonUtil.fromJson(vxlanTunnel.getPortVlanList(), new TypeReference<List<PortVlan>>() {});
 
             if(CollectionUtils.isEmpty(portList)) {
@@ -140,11 +140,11 @@ public class DateValidator {
             LOGGER.error("ne list id empty.");
             throw new ParameterServiceException("ne list id empty.");
         }
-        List<NetworkElementMO> neFromBrs = new ArrayList<NetworkElementMO>();
+        List<NetworkElementMO> neFromBrs = new ArrayList<>();
 
         neFromBrs = NeControllerUtil.getAllFullNe();
 
-        Map<String, NetworkElementMO> idToNeMap = new HashMap<String, NetworkElementMO>();
+        Map<String, NetworkElementMO> idToNeMap = new HashMap<>();
 
         for(String tempId : neIdSet) {
             NetworkElementMO tempNe = null;
@@ -170,7 +170,7 @@ public class DateValidator {
 
     private static void checkNeRole(Map<String, NetworkElementMO> idToNeMap, List<NbiVxlanTunnel> vxlanTunnels)
             throws ParameterServiceException {
-        Map<String, String> check = new HashMap<String, String>();
+        Map<String, String> check = new HashMap<>();
         for(NbiVxlanTunnel tunnel : vxlanTunnels) {
             check.put(tunnel.getSrcNeId(), tunnel.getSrcNeRole());
             check.put(tunnel.getDestNeId(), tunnel.getDestNeRole());

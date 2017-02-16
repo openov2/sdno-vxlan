@@ -81,7 +81,7 @@ public class QueryVxlanService {
 
     private static ResultRsp<List<Tunnel>> convertNeVxlanTunnel(ResultRsp<List<NeVxlanTunnel>> neVxlanTunnelRsp) {
 
-        List<Tunnel> tunnelList = new ArrayList<Tunnel>();
+        List<Tunnel> tunnelList = new ArrayList<>();
 
         for(NeVxlanTunnel neTunnel : neVxlanTunnelRsp.getData()) {
             boolean isExist = false;
@@ -115,7 +115,7 @@ public class QueryVxlanService {
     }
 
     private static String getFilter(String tenantId, String connectionUuid) {
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put(CONNECTION_ID_KEY, Arrays.asList(connectionUuid));
 
         if(StringUtils.isNotEmpty(tenantId)) {

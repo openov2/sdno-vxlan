@@ -43,7 +43,7 @@ public class CheckConnectionUtil {
      * @since SDNO 0.5
      */
     public List<EndpointGroup> checkConnection(OverlayVpn overlayVpn) throws ServiceException {
-        List<EndpointGroup> epgList = new ArrayList<EndpointGroup>();
+        List<EndpointGroup> epgList = new ArrayList<>();
         for(Connection curConnection : overlayVpn.getVpnConnections()) {
             List<EndpointGroup> curEndpointGroups = curConnection.getEndpointGroups();
             if(CollectionUtils.isEmpty(curEndpointGroups)) {

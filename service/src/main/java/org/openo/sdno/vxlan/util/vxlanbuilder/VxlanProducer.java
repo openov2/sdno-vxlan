@@ -31,11 +31,11 @@ import org.openo.sdno.overlayvpn.model.netmodel.vxlan.NeVxlanInstance;
  */
 public class VxlanProducer {
 
-    private List<CommonVxlanBuilder> vxlanBuilders = new ArrayList<CommonVxlanBuilder>();
+    private List<CommonVxlanBuilder> vxlanBuilders = new ArrayList<>();
 
-    private List<NeVxlanInstance> operVxlanInstances = new ArrayList<NeVxlanInstance>();
+    private List<NeVxlanInstance> operVxlanInstances = new ArrayList<>();
 
-    private List<NeVxlanInstance> otherVxlanInstances = new ArrayList<NeVxlanInstance>();
+    private List<NeVxlanInstance> otherVxlanInstances = new ArrayList<>();
 
     VxlanProducer(List<CommonVxlanBuilder> vxlanBuilders) {
         if(CollectionUtils.isNotEmpty(vxlanBuilders)) {
@@ -72,7 +72,7 @@ public class VxlanProducer {
      * @since SDNO 0.5
      */
     public List<NeVxlanInstance> getAllVxlanInstances() {
-        List<NeVxlanInstance> allVxlanInstances = new ArrayList<NeVxlanInstance>();
+        List<NeVxlanInstance> allVxlanInstances = new ArrayList<>();
         allVxlanInstances.addAll(this.operVxlanInstances);
         allVxlanInstances.addAll(this.otherVxlanInstances);
         return allVxlanInstances;

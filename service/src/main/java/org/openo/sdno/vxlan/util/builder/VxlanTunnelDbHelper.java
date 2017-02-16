@@ -71,7 +71,7 @@ public class VxlanTunnelDbHelper {
 
     private static void insertPortVlans(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
 
-        List<PortVlan> portvlans = new ArrayList<PortVlan>();
+        List<PortVlan> portvlans = new ArrayList<>();
         for(NbiVxlanTunnel vxlan : vxlanTunnels) {
             portvlans.addAll(vxlan.getPortVlans());
         }
@@ -81,7 +81,7 @@ public class VxlanTunnelDbHelper {
     }
 
     private static void insertIp(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
-        List<Ip> ips = new ArrayList<Ip>();
+        List<Ip> ips = new ArrayList<>();
         for(NbiVxlanTunnel vxlan : vxlanTunnels) {
             ips.add(vxlan.getDestIp());
             ips.add(vxlan.getSrcIp());
@@ -121,7 +121,7 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     public static List<SbiNeVxlanInstance> getSbiVxlansByNbiModelId(List<String> deploy) throws ServiceException {
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("nbiVxlanTunnelId", deploy);
         LOGGER.info("=====get sbi model by nbi uuid:" + deploy.get(0));
         String filter = JSONObject.fromObject(filterMap).toString();
@@ -142,7 +142,7 @@ public class VxlanTunnelDbHelper {
      * @since SDNO 0.5
      */
     public static List<NbiVxlanTunnel> getNbiVxlanById(List<String> uuids) throws ServiceException {
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("uuid", uuids);
         String filter = JSONObject.fromObject(filterMap).toString();
         return new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao()
@@ -171,11 +171,11 @@ public class VxlanTunnelDbHelper {
     }
 
     private static void fillePortVxlan(List<NbiVxlanTunnel> sbiVxlans) throws ServiceException {
-        List<String> uuids = new ArrayList<String>();
+        List<String> uuids = new ArrayList<>();
         for(NbiVxlanTunnel sbiVxlan : sbiVxlans) {
             uuids.add(sbiVxlan.getUuid());
         }
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("vxlanTunnelId", uuids);
         String filter = JSONObject.fromObject(filterMap).toString();
         List<PortVlan> portVlans =
@@ -238,9 +238,9 @@ public class VxlanTunnelDbHelper {
      */
     public static void fillComplexSbiModel(SbiNeVxlanInstance sbiModel) throws ServiceException {
 
-        List<String> uuids = new ArrayList<String>();
+        List<String> uuids = new ArrayList<>();
         uuids.add(sbiModel.getUuid());
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("vxlanInstanceId", uuids);
         String filter = JSONObject.fromObject(filterMap).toString();
         List<SbiNeVxlanInterface> interfaces = new InventoryDaoUtil<SbiNeVxlanInterface>().getInventoryDao()
@@ -278,7 +278,7 @@ public class VxlanTunnelDbHelper {
     private static void deleteComplexNbiModel(NbiVxlanTunnel nbiModel) throws ServiceException {
 
         List<PortVlan> portvlans = nbiModel.getPortVlans();
-        List<Ip> ips = new ArrayList<Ip>();
+        List<Ip> ips = new ArrayList<>();
         ips.add(nbiModel.getDestIp());
         ips.add(nbiModel.getSrcIp());
         deleteIps(ips);
@@ -288,7 +288,7 @@ public class VxlanTunnelDbHelper {
     }
 
     private static void deleteIps(List<Ip> ips) throws ServiceException {
-        List<String> uuids = new ArrayList<String>();
+        List<String> uuids = new ArrayList<>();
         for(Ip ip : ips) {
             uuids.add(ip.getUuid());
         }
@@ -300,7 +300,7 @@ public class VxlanTunnelDbHelper {
     private static void deletPortVlans(List<PortVlan> portvlans) throws ServiceException {
 
         LOGGER.info("=====start delete port=====");
-        List<String> uuids = new ArrayList<String>();
+        List<String> uuids = new ArrayList<>();
         for(PortVlan portvlan : portvlans) {
             uuids.add(portvlan.getUuid());
         }
@@ -325,7 +325,7 @@ public class VxlanTunnelDbHelper {
 
     private static void deleteInterfaces(List<SbiNeVxlanInterface> sbiInterfaces) throws ServiceException {
 
-        List<String> uuids = new ArrayList<String>();
+        List<String> uuids = new ArrayList<>();
         for(SbiNeVxlanInterface sbiinterface : sbiInterfaces) {
             uuids.add(sbiinterface.getUuid());
         }
@@ -335,7 +335,7 @@ public class VxlanTunnelDbHelper {
 
     private static void deleteTunnels(List<SbiNeVxlanTunnel> sbiTunnels) throws ServiceException {
 
-        List<String> neTunnelIds = new ArrayList<String>();
+        List<String> neTunnelIds = new ArrayList<>();
         for(SbiNeVxlanTunnel tunnel : sbiTunnels) {
             neTunnelIds.add(tunnel.getUuid());
         }
@@ -362,8 +362,8 @@ public class VxlanTunnelDbHelper {
         new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao().update(NbiVxlanTunnel.class, vxlanTunnels,
                 "deployStatus");
 
-        List<SbiNeVxlanInterface> interfaceList = new ArrayList<SbiNeVxlanInterface>();
-        List<SbiNeVxlanTunnel> tunnelList = new ArrayList<SbiNeVxlanTunnel>();
+        List<SbiNeVxlanInterface> interfaceList = new ArrayList<>();
+        List<SbiNeVxlanTunnel> tunnelList = new ArrayList<>();
 
         for(SbiNeVxlanInstance sbivxlan : sbiVxlans) {
             sbivxlan.setDeployStatus(newDeployStatus);

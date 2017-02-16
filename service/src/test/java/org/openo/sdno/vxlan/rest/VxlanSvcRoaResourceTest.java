@@ -61,7 +61,7 @@ public class VxlanSvcRoaResourceTest {
         roa.setVxlanService(new VxlanServiceImpl());
 
         try {
-            ResultRsp<List<Tunnel>> resultRsp = roa.queryTunnel(null, null, "uuid");
+            ResultRsp<List<Tunnel>> resultRsp = roa.queryTunnel("uuid");
             assertEquals(resultRsp.getErrorCode(), ErrorCode.OVERLAYVPN_SUCCESS);
         } catch(ServiceException e) {
             e.printStackTrace();
@@ -99,7 +99,7 @@ public class VxlanSvcRoaResourceTest {
         roa.setVxlanService(new VxlanServiceImpl());
 
         try {
-            ResultRsp<String> resultRsp = roa.delete(null, null, "sdf");
+            ResultRsp<String> resultRsp = roa.delete("sdf");
             assertEquals(resultRsp.getErrorCode(), ErrorCode.OVERLAYVPN_SUCCESS);
         } catch(ServiceException e) {
             e.printStackTrace();

@@ -53,7 +53,7 @@ public class CheckVxlanServiceUtil {
     public static List<NeVxlanTunnel> checkSameTunnelInDb(String tenantId, List<NeVxlanTunnel> createVxlanServiceList)
             throws ServiceException {
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("connectionServiceId", CollectionUtils.collect(createVxlanServiceList, new Transformer() {
 
             @Override
@@ -72,14 +72,14 @@ public class CheckVxlanServiceUtil {
                                 "connectionServiceId,vxlanInstanceId,neId,sourceAddress,peerNeId,destAddress")
                         .getData();
 
-        Map<String, NeVxlanTunnel> tunnelUniqueIdToTunnelMap = new HashMap<String, NeVxlanTunnel>();
+        Map<String, NeVxlanTunnel> tunnelUniqueIdToTunnelMap = new HashMap<>();
         for(NeVxlanTunnel dbTunnel : dbQueryTunnels) {
             tunnelUniqueIdToTunnelMap.put(dbTunnel.generateUniqueServiceId(dbTunnel), dbTunnel);
         }
 
-        List<NeVxlanTunnel> tunnelToInsertDb = new ArrayList<NeVxlanTunnel>();
-        List<NeVxlanTunnel> tunnelToAbandon = new ArrayList<NeVxlanTunnel>();
-        List<NeVxlanTunnel> sameTunnelInDb = new ArrayList<NeVxlanTunnel>();
+        List<NeVxlanTunnel> tunnelToInsertDb = new ArrayList<>();
+        List<NeVxlanTunnel> tunnelToAbandon = new ArrayList<>();
+        List<NeVxlanTunnel> sameTunnelInDb = new ArrayList<>();
         for(NeVxlanTunnel tunnelToCreate : createVxlanServiceList) {
             String vxlanTunnelUniqueId = tunnelToCreate.generateUniqueServiceId(tunnelToCreate);
 

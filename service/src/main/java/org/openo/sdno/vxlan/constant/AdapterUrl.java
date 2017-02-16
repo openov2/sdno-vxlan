@@ -24,14 +24,14 @@ package org.openo.sdno.vxlan.constant;
  */
 public class AdapterUrl {
 
-    private AdapterUrl() {
-        // private constructor
-    }
-
     public static final String VXLAN_ADAPTER_BASE_URL = "/openoapi/sbi-vxlan";
 
     public static final String BATCH_CREATE_VXLAN_INSTANCE = "/v1/batch-create-vxlan";
 
     public static final String BATCH_DELETE_VXLAN_INSTANCE = "/v1/device/{0}/batch-delete-vxlan";
+
+    private AdapterUrl() {
+        // private constructor
+    }
 
 }

@@ -70,9 +70,9 @@ public class CreateVxlanService {
                 VxlanSbiAdapter.deployVxlanInstanceByCtrl(ctrlUuidToVxlanListMap);
 
         // For all successfully deployed instances, change the status to active and update database
-        List<NeVxlanInstance> createSuccVxlanInstances = new ArrayList<NeVxlanInstance>();
-        List<NeVxlanTunnel> createSuccVxlanTunnels = new ArrayList<NeVxlanTunnel>();
-        List<NeVxlanInterface> createSuccVxlanInterfaces = new ArrayList<NeVxlanInterface>();
+        List<NeVxlanInstance> createSuccVxlanInstances = new ArrayList<>();
+        List<NeVxlanTunnel> createSuccVxlanTunnels = new ArrayList<>();
+        List<NeVxlanInterface> createSuccVxlanInterfaces = new ArrayList<>();
 
         for(List<NeVxlanInstance> createVxlanInstances : deployResult.getData().values()) {
             if(CollectionUtils.isEmpty(createVxlanInstances)) {
@@ -126,8 +126,8 @@ public class CreateVxlanService {
 
         setIdAndStatus(vxlanInstanceList, deviceIdToCtrlMap);
 
-        List<NeVxlanTunnel> vxlanTunnelList = new ArrayList<NeVxlanTunnel>();
-        List<NeVxlanInterface> vxlanInterfaceList = new ArrayList<NeVxlanInterface>();
+        List<NeVxlanTunnel> vxlanTunnelList = new ArrayList<>();
+        List<NeVxlanInterface> vxlanInterfaceList = new ArrayList<>();
 
         for(NeVxlanInstance tmpVxlanInstanceVpn : vxlanInstanceList) {
             vxlanTunnelList.addAll(
@@ -139,7 +139,7 @@ public class CreateVxlanService {
         (new InventoryDaoUtil<NeVxlanInterface>()).getInventoryDao().batchInsert(vxlanInterfaceList);
         (new InventoryDaoUtil<NeVxlanTunnel>()).getInventoryDao().batchInsert(vxlanTunnelList);
 
-        return deployVxlanComponents(tenantId, deviceIdToCtrlMap, vxlanInstanceList);
+        return deployVxlanComponents(deviceIdToCtrlMap, vxlanInstanceList);
     }
 
     private static void setIdAndStatus(List<NeVxlanInstance> createVxlanInstanceList,
@@ -172,24 +172,22 @@ public class CreateVxlanService {
     /**
      * Deploy VxLan Components.<br>
      * 
-     * @param tenantId Tenant Id
      * @param deviceIdToCtrlMap Map of Device Id to Controller
      * @param createVxlanInstances VxLan Instance need to deploy
      * @return operation result with OverlayVpn data
      * @throws ServiceException throws when operate failed
      * @since SDNO 0.5
      */
-    public static ResultRsp<OverlayVpn> deployVxlanComponents(String tenantId,
-            Map<String, ControllerMO> deviceIdToCtrlMap, List<NeVxlanInstance> createVxlanInstances)
-            throws ServiceException {
+    public static ResultRsp<OverlayVpn> deployVxlanComponents(Map<String, ControllerMO> deviceIdToCtrlMap,
+            List<NeVxlanInstance> createVxlanInstances) throws ServiceException {
 
         ResultRsp<Map<String, List<NeVxlanInstance>>> createInstanceRsp =
                 CreateVxlanService.deployVxlanInstance(createVxlanInstances, deviceIdToCtrlMap);
         if(!createInstanceRsp.isSuccess()) {
-            return new ResultRsp<OverlayVpn>(createInstanceRsp);
+            return new ResultRsp<>(createInstanceRsp);
         }
 
-        return new ResultRsp<OverlayVpn>(ErrorCode.OVERLAYVPN_SUCCESS);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
     }
 
 }

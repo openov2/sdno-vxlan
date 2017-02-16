@@ -78,7 +78,7 @@ public class VxlanSbiAdapter {
             try {
                 // Deploy the VxLAN instance on the controller
                 ResultRsp<List<NeVxlanInstance>> tempCreateVxlanResult = deployVxlanInstance(ctrlUuid, vlanIns);
-                List<ErrorCodeInfo> errorCodeInfoLst = new ArrayList<ErrorCodeInfo>();
+                List<ErrorCodeInfo> errorCodeInfoLst = new ArrayList<>();
                 if(!tempCreateVxlanResult.isSuccess()) {
                     LOGGER.error("deploy vxlan tunnel fail, ctrl uuid: " + ctrlUuid);
                     errorCodeInfoLst.addAll(tempCreateVxlanResult.getSmallErrorCodeList());
@@ -92,7 +92,7 @@ public class VxlanSbiAdapter {
                 List<NeVxlanInstance> createRspInstanceTunnelList = tempCreateVxlanResult.getData();
 
                 // Populate the successful vxlan instances
-                List<NeVxlanInstance> tempCreateOkTunnelList = new ArrayList<NeVxlanInstance>();
+                List<NeVxlanInstance> tempCreateOkTunnelList = new ArrayList<>();
                 for(NeVxlanInstance tempVxlanNeVpnNeVpn : createRspInstanceTunnelList) {
                     if((StringUtils.hasLength(tempVxlanNeVpnNeVpn.getExternalId()))
                             && (StringUtils.hasLength(tempVxlanNeVpnNeVpn.getName()))) {

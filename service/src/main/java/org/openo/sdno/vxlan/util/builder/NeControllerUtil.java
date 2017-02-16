@@ -56,7 +56,7 @@ public class NeControllerUtil {
      */
     public static Map<NetworkElementMO, ControllerMO> getNeCtrlMap(Map<String, NetworkElementMO> neIdToNeMap)
             throws ParameterServiceException {
-        Map<NetworkElementMO, ControllerMO> neToCtrlMap = new HashMap<NetworkElementMO, ControllerMO>();
+        Map<NetworkElementMO, ControllerMO> neToCtrlMap = new HashMap<>();
         LOGGER.error("===============getNeCtrlMap1");
         for(NetworkElementMO ne : neIdToNeMap.values()) {
             try {
@@ -106,7 +106,7 @@ public class NeControllerUtil {
 
     public static List<NetworkElementMO> getAllFullNe() throws ServiceException {
         List<NetworkElementMO> nes = neDao.getAllMO();
-        List<NetworkElementMO> fullNes = new ArrayList<NetworkElementMO>();
+        List<NetworkElementMO> fullNes = new ArrayList<>();
         for(NetworkElementMO ne : nes) {
             NetworkElementMO newne = neDao.query(ne.getId());
             fullNes.add(newne);

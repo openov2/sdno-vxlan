@@ -56,11 +56,11 @@ public class UndeployVxlanService {
 
     private static ResultRsp<String> undeployConnectionOrEpg(String connectionUuid, String tenantId, String deviceId)
             throws ServiceException {
-        ResultRsp<String> totalResult = new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+        ResultRsp<String> totalResult = new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
 
-        ResultRsp<String> resultRsp = new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+        ResultRsp<String> resultRsp = new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
 
-        List<ErrorCodeInfo> smallErrorList = new ArrayList<ErrorCodeInfo>();
+        List<ErrorCodeInfo> smallErrorList = new ArrayList<>();
 
         resultRsp = UndeployVxlanInstance.undeployInstance(tenantId, connectionUuid, deviceId);
         if(!resultRsp.isSuccess()) {

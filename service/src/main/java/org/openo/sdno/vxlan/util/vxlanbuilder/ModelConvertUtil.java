@@ -67,7 +67,7 @@ public class ModelConvertUtil {
             Map<String, NeVtep> deviceIdToNeVtepMap, Map<String, WanSubInterface> deviceIdToWansubInfMap,
             Map<String, String> vniToConnectionIdMap) throws ServiceException {
 
-        List<CommonVxlanBuilder> vxlanBuilders = new ArrayList<CommonVxlanBuilder>();
+        List<CommonVxlanBuilder> vxlanBuilders = new ArrayList<>();
 
         for(Connection conn : overlayVpnService.getVpnConnections()) {
             String strVNI = vniToConnectionIdMap.get(conn.getUuid());
@@ -129,7 +129,7 @@ public class ModelConvertUtil {
      */
     public static Map<String, String> allocVniForConn(List<Connection> connections) throws ServiceException {
         InventoryDao<NeVxlanInstance> neVxlanInstanceDao = new InventoryDaoUtil<NeVxlanInstance>().getInventoryDao();
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
 
         filterMap.put("connectionServiceId", CollectionUtils.collect(connections, new Transformer() {
 
@@ -150,7 +150,7 @@ public class ModelConvertUtil {
             }
         }
 
-        List<Connection> connectionsWithoutVni = new ArrayList<Connection>();
+        List<Connection> connectionsWithoutVni = new ArrayList<>();
         for(Connection connection : connections) {
             if(!connectionIdToVniMap.containsKey(connection.getUuid())) {
                 connectionsWithoutVni.add(connection);

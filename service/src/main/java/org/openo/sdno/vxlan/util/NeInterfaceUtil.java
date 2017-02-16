@@ -67,7 +67,7 @@ public class NeInterfaceUtil {
         ResultRsp<Map<String, NeVtep>> rsp = new ResultRsp<Map<String, NeVtep>>();
 
         // Make NE UUID list
-        List<String> neUuidList = new ArrayList<String>(deviceIdToNeMap.size());
+        List<String> neUuidList = new ArrayList<>(deviceIdToNeMap.size());
         for(NetworkElementMO tempNeMo : deviceIdToNeMap.values()) {
             neUuidList.add(tempNeMo.getId());
         }

@@ -49,7 +49,7 @@ public class PortUtil {
      * @since SDNO 0.5
      */
     public static Map<String, Ip> buildPortIpMap(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
-        Map<String, String> neIdToPortNameMap = new HashMap<String, String>();
+        Map<String, String> neIdToPortNameMap = new HashMap<>();
         for(NbiVxlanTunnel tempVxlan : vxlanTunnels) {
             neIdToPortNameMap.put(tempVxlan.getSrcNeId(), tempVxlan.getSrcPortName());
             neIdToPortNameMap.put(tempVxlan.getDestNeId(), tempVxlan.getDestPortName());
@@ -58,7 +58,7 @@ public class PortUtil {
     }
 
     private static Map<String, Ip> buildNeIdToIp(Map<String, String> neIdToPortNameMap) throws ServiceException {
-        Map<String, Ip> neIdToIp = new HashMap<String, Ip>();
+        Map<String, Ip> neIdToIp = new HashMap<>();
         List<LogicalTernminationPointMO> ltpMos = new LogicalTernminationPointInvDao().getAllMO();
         for(String neId : neIdToPortNameMap.keySet()) {
             String portName = neIdToPortNameMap.get(neId);

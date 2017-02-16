@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -83,8 +82,6 @@ public class VxlanSvcRoaResource {
     /**
      * Query VxLan Tunnel information from database.<br>
      * 
-     * @param request - HttpServletRequest Object
-     * @param response - HttpServletResponse Object
      * @param connectionUuid - Connection UUID
      * @return - List of Tunnel Information consisting of source and destination information
      * @throws ServiceException - when query from database throws exception
@@ -94,8 +91,7 @@ public class VxlanSvcRoaResource {
     @Path("/{connectionid}/vxlantunnels")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResultRsp<List<Tunnel>> queryTunnel(@Context HttpServletRequest request,
-            @Context HttpServletResponse response, @PathParam("connectionid") String connectionUuid)
+    public ResultRsp<List<Tunnel>> queryTunnel(@PathParam("connectionid") String connectionUuid)
             throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.info("Query Vxlan tunnel begin.");
@@ -116,7 +112,6 @@ public class VxlanSvcRoaResource {
     /**
      * Create VxLAN for the OverlayVpn.<br>
      * 
-     * @param request - HttpServletRequest Object
      * @param response - HttpServletResponse Object
      * @param overlayVpn -OverlayVpn information with End point and Connection information
      * @return Create result with OverlayVPN Information
@@ -126,8 +121,8 @@ public class VxlanSvcRoaResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResultRsp<OverlayVpn> create(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            OverlayVpn overlayVpn) throws ServiceException {
+    public ResultRsp<OverlayVpn> create(@Context HttpServletResponse response, OverlayVpn overlayVpn)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.info("Enter Create vxlan begin time = " + beginTime);
 
@@ -146,11 +141,11 @@ public class VxlanSvcRoaResource {
         }
 
         // Validate the Input and get mapping from NEID and NE Information
-        Map<String, NetworkElementMO> deviceIdToNeMap = new ConcurrentHashMap<String, NetworkElementMO>();
+        Map<String, NetworkElementMO> deviceIdToNeMap = new ConcurrentHashMap<>();
         CheckOverlayVpnUtil.check(overlayVpn, tenantId, deviceIdToNeMap);
 
         // Query Vtep information from controller
-        Map<String, ControllerMO> deviceIdToCtrlMap = new ConcurrentHashMap<String, ControllerMO>();
+        Map<String, ControllerMO> deviceIdToCtrlMap = new ConcurrentHashMap<>();
         ResultRsp<Map<String, NeVtep>> queryDeviceIdToNeVtepRsp =
                 NeInterfaceUtil.queryVtepForVxlan(deviceIdToNeMap, deviceIdToCtrlMap);
         if(!queryDeviceIdToNeVtepRsp.isSuccess()) {
@@ -184,8 +179,6 @@ public class VxlanSvcRoaResource {
     /**
      * Delete VxLan information from database <br>
      * 
-     * @param request - HttpServletRequest Object
-     * @param response - HttpServletResponse Object
      * @param connectionUuid - Connection UUID
      * @return - Operation result with connection information
      * @throws ServiceException - when input is invalid or database query returns failure
@@ -195,8 +188,7 @@ public class VxlanSvcRoaResource {
     @Path("/{connectionid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResultRsp<String> delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("connectionid") String connectionUuid) throws ServiceException {
+    public ResultRsp<String> delete(@PathParam("connectionid") String connectionUuid) throws ServiceException {
         long infterEnterTime = System.currentTimeMillis();
         LOGGER.info("Enter delete method. begin time = " + infterEnterTime);
 
@@ -207,7 +199,7 @@ public class VxlanSvcRoaResource {
         ResultRsp<String> unDeployResult = vxlanService.undeploy(connectionUuid, null);
         if(!unDeployResult.isSuccess()) {
             LOGGER.error("Undeploy VxLan failed");
-            return new ResultRsp<String>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         // Delete VxLan from Database
@@ -216,6 +208,6 @@ public class VxlanSvcRoaResource {
 
         // Check for any error and throw exception if any
         ThrowVxlanExcpt.checkRspThrowException(resultRsp);
-        return new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
     }
 }

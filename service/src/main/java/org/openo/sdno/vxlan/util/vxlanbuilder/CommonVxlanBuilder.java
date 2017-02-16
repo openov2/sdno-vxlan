@@ -48,15 +48,15 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
 
     protected Map<String, WanSubInterface> deviceIdToWansubInfMap;
 
-    protected List<EndpointGroup> originalEpgs = new ArrayList<EndpointGroup>();
+    protected List<EndpointGroup> originalEpgs = new ArrayList<>();
 
-    protected List<EndpointGroup> operEpgs = new ArrayList<EndpointGroup>();
+    protected List<EndpointGroup> operEpgs = new ArrayList<>();
 
-    protected List<EndpointGroup> allEpgs = new ArrayList<EndpointGroup>();
+    protected List<EndpointGroup> allEpgs = new ArrayList<>();
 
-    protected List<NeVxlanInstance> operVxlanInstances = new ArrayList<NeVxlanInstance>();
+    protected List<NeVxlanInstance> operVxlanInstances = new ArrayList<>();
 
-    protected List<NeVxlanInstance> otherVxlanInstances = new ArrayList<NeVxlanInstance>();
+    protected List<NeVxlanInstance> otherVxlanInstances = new ArrayList<>();
 
     protected String vni;
 
@@ -120,7 +120,7 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
      */
     protected List<NeVxlanInstance> buildLocalNeVxlanInstances(EndpointGroup localEpg,
             List<EndpointGroup> epgsInPeerNes) throws ServiceException {
-        List<NeVxlanInstance> vxlanInstanceList = new ArrayList<NeVxlanInstance>();
+        List<NeVxlanInstance> vxlanInstanceList = new ArrayList<>();
         if(CollectionUtils.isEmpty(epgsInPeerNes)) {
             return vxlanInstanceList;
         }
@@ -150,7 +150,7 @@ public abstract class CommonVxlanBuilder implements VxlanBuilder {
 
     private List<NeVxlanInterface> buildNeVxlanInterface(EndpointGroup epg) throws ServiceException {
 
-        List<NeVxlanInterface> vxlanInterfaceList = new ArrayList<NeVxlanInterface>();
+        List<NeVxlanInterface> vxlanInterfaceList = new ArrayList<>();
 
         String epgType = epg.getType();
 

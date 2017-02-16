@@ -50,9 +50,9 @@ public class HubSpokeVxlanBuilder extends CommonVxlanBuilder {
 
     private List<EndpointGroup> oriSpokeEpgs;
 
-    private List<EndpointGroup> hubEpgs = new ArrayList<EndpointGroup>();
+    private List<EndpointGroup> hubEpgs = new ArrayList<>();
 
-    private List<EndpointGroup> spokeEpgs = new ArrayList<EndpointGroup>();
+    private List<EndpointGroup> spokeEpgs = new ArrayList<>();
 
     /**
      * Constructor<br>

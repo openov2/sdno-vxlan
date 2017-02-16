@@ -107,7 +107,7 @@ public class VxlanSvcRoaResourceCreateTest {
 
         OverlayVpn overlayVpn = JsonUtil.fromJson(OverlayVpnData.getCreateFullMeshVpnDataString(), OverlayVpn.class);
 
-        ResultRsp<OverlayVpn> resultRsp = roa.create(request, response, overlayVpn);
+        ResultRsp<OverlayVpn> resultRsp = roa.create(response, overlayVpn);
         assertEquals(resultRsp.getErrorCode(), ErrorCode.OVERLAYVPN_SUCCESS);
 
     }

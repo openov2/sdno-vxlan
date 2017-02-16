@@ -102,7 +102,7 @@ public class UndeployVxlanInstance {
         }
 
         // Undeploy from controller - send to adapter
-        ResultRsp<String> deleteRsp = new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+        ResultRsp<String> deleteRsp = new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
         deleteRsp.setSmallErrorCodeList(new ArrayList<ErrorCodeInfo>());
 
         for(Entry<String, List<NeVxlanInstance>> tempEntry : ctrlUuidToInstanceListMap.entrySet()) {
@@ -141,9 +141,9 @@ public class UndeployVxlanInstance {
         ResultRsp<List<NeVxlanInstance>> deleteRsp = new ResultRsp<List<NeVxlanInstance>>();
         deleteRsp.setData(vxlanInstanceList);
 
-        List<ErrorCodeInfo> smallErrorCodeList = new ArrayList<ErrorCodeInfo>();
-        List<NeVxlanInstance> deleteVxlanInstanceFailedList = new ArrayList<NeVxlanInstance>();
-        List<NeVxlanInstance> deleteVxlanInstanceOkList = new ArrayList<NeVxlanInstance>();
+        List<ErrorCodeInfo> smallErrorCodeList = new ArrayList<>();
+        List<NeVxlanInstance> deleteVxlanInstanceFailedList = new ArrayList<>();
+        List<NeVxlanInstance> deleteVxlanInstanceOkList = new ArrayList<>();
 
         for(NeVxlanInstance vxlanInstance : vxlanInstanceList) {
 
@@ -204,7 +204,7 @@ public class UndeployVxlanInstance {
 
     private static String getVxlanInsFilter(String tenantId, String connectionUuid, String deviceId) {
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
 
         filterMap.put("connectionServiceId", Arrays.asList(connectionUuid));
         if(StringUtils.hasLength(tenantId)) {

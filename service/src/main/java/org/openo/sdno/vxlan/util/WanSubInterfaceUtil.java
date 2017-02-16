@@ -70,10 +70,10 @@ public class WanSubInterfaceUtil {
             Map<String, NetworkElementMO> deviceIdToNeMap, Map<String, ControllerMO> deviceIdToCtrlMap)
             throws ServiceException {
         deviceIdToCtrlMap.clear();
-        ResultRsp<Map<String, WanSubInterface>> rsp = new ResultRsp<Map<String, WanSubInterface>>();
+        ResultRsp<Map<String, WanSubInterface>> rsp = new ResultRsp<>();
 
         // Make UUID list
-        List<String> neUuidList = new ArrayList<String>(deviceIdToNeMap.size());
+        List<String> neUuidList = new ArrayList<>(deviceIdToNeMap.size());
         for(NetworkElementMO tempNeMo : deviceIdToNeMap.values()) {
             neUuidList.add(tempNeMo.getId());
         }

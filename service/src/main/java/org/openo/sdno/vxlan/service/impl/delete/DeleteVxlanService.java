@@ -65,7 +65,7 @@ public class DeleteVxlanService {
      * @since SDNO 0.5
      */
     public static ResultRsp<Connection> delete(String connectionUuid, String tenantId) throws ServiceException {
-        ResultRsp<String> resultRsp = new ResultRsp<String>();
+        ResultRsp<String> resultRsp = new ResultRsp<>();
         boolean isDelSuccess = true;
 
         // Delete Interface Data
@@ -93,11 +93,11 @@ public class DeleteVxlanService {
             resultRsp.setErrorCode(ErrorCode.OVERLAYVPN_FAILED);
         }
 
-        return new ResultRsp<Connection>(resultRsp);
+        return new ResultRsp<>(resultRsp);
     }
 
     private static void freeVniRes(List<NeVxlanInstance> deleteVxlanInstanceList) throws ServiceException {
-        List<Long> vniipList = new ArrayList<Long>();
+        List<Long> vniipList = new ArrayList<>();
         for(NeVxlanInstance instance : deleteVxlanInstanceList) {
             vniipList.add(Long.valueOf(instance.getVni()));
         }
@@ -126,14 +126,13 @@ public class DeleteVxlanService {
         }
 
         @SuppressWarnings("unchecked")
-        List<String> deleteInfUuidList =
-                new ArrayList<String>(CollectionUtils.collect(vxlanInterfaceList, new Transformer() {
+        List<String> deleteInfUuidList = new ArrayList<>(CollectionUtils.collect(vxlanInterfaceList, new Transformer() {
 
-                    @Override
-                    public Object transform(Object arg0) {
-                        return ((NeVxlanInterface)arg0).getUuid();
-                    }
-                }));
+            @Override
+            public Object transform(Object arg0) {
+                return ((NeVxlanInterface)arg0).getUuid();
+            }
+        }));
 
         return neVxlanInterfaceDao.batchDelete(NeVxlanInterface.class, deleteInfUuidList);
     }
@@ -206,7 +205,7 @@ public class DeleteVxlanService {
     }
 
     private static String getFilter(String connectionUuid, String tenantId) {
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("connectionServiceId", Arrays.asList(connectionUuid));
         if(StringUtils.isNotEmpty(tenantId)) {
             filterMap.put("tenantId", Arrays.asList(tenantId));

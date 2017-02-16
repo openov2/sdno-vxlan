@@ -129,7 +129,7 @@ public class CheckEngpointGroupUtil {
     }
 
     private static Map<String, List<String>> checkEndpointsForPort(List<String> endpointList) throws ServiceException {
-        Map<String, List<String>> portIdToVlanMap = new HashMap<String, List<String>>();
+        Map<String, List<String>> portIdToVlanMap = new HashMap<>();
         for(String portId : endpointList) {
             if(!UuidUtil.validate(portId)) {
                 ThrowVxlanExcpt.throwParmaterInvalid("PortId", portId);
@@ -143,7 +143,7 @@ public class CheckEngpointGroupUtil {
 
     private static Map<String, List<String>> checkEndpointsForPortVlan(List<String> endpointList)
             throws ServiceException {
-        Map<String, List<String>> portIdToVlanMap = new HashMap<String, List<String>>();
+        Map<String, List<String>> portIdToVlanMap = new HashMap<>();
         for(String endpoint : endpointList) {
             String[] portIdAndVlan = endpoint.split("/");
             if(null == portIdAndVlan || portIdAndVlan.length != 2) {
@@ -161,7 +161,7 @@ public class CheckEngpointGroupUtil {
 
             String vlanRangesStr = portIdAndVlan[1];
             String[] vlanRanges = vlanRangesStr.split(",");
-            List<String> vlans = new ArrayList<String>();
+            List<String> vlans = new ArrayList<>();
             for(String vlanRange : vlanRanges) {
                 if(!StringUtils.hasLength(vlanRange)) {
                     ThrowVxlanExcpt.throwParmaterInvalid("vlan", vlanRangesStr);
@@ -202,11 +202,11 @@ public class CheckEngpointGroupUtil {
     private static void checkLtpResource(EndpointGroup epg) throws ServiceException {
 
         Map<String, List<String>> portIdToVlanMap = epg.getPortNativeIdToVlanMap();
-        List<String> portIds = new ArrayList<String>(portIdToVlanMap.keySet());
+        List<String> portIds = new ArrayList<>(portIdToVlanMap.keySet());
 
         LogicalTernminationPointInvDao ltpDao = new LogicalTernminationPointInvDao();
 
-        Map<String, List<String>> portNativeIdToVlanMap = new HashMap<String, List<String>>();
+        Map<String, List<String>> portNativeIdToVlanMap = new HashMap<>();
 
         for(String ltpId : portIds) {
             LogicalTernminationPointMO ltp = ltpDao.query(ltpId);

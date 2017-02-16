@@ -104,7 +104,7 @@ public class CreateVxlanHelper {
     public static List<SbiNeVxlanInstance> nbiToSbi(Map<NetworkElementMO, ControllerMO> neToCtrlMap,
             List<NbiVxlanTunnel> vxlanTunnels) {
         LOGGER.info("=====start transfer nbi model to sbi model=====");
-        List<SbiNeVxlanInstance> sbivxlanList = new ArrayList<SbiNeVxlanInstance>();
+        List<SbiNeVxlanInstance> sbivxlanList = new ArrayList<>();
 
         for(NbiVxlanTunnel nbiVxlan : vxlanTunnels) {
             SbiNeVxlanInstance srcVxlanInstance =
@@ -179,7 +179,7 @@ public class CreateVxlanHelper {
     }
 
     private static List<SbiNeVxlanInterface> buildVxlanInterfaceList(NbiVxlanTunnel nbiVxlan, String neId) {
-        List<SbiNeVxlanInterface> vxlanInterfaceList = new ArrayList<SbiNeVxlanInterface>();
+        List<SbiNeVxlanInterface> vxlanInterfaceList = new ArrayList<>();
         if(CollectionUtils.isEmpty(nbiVxlan.getPortVlans())) {
             return vxlanInterfaceList;
         }
@@ -292,7 +292,7 @@ public class CreateVxlanHelper {
     }
 
     private static Map<String, String> buildNeIdToDeviceId(Collection<NetworkElementMO> keySet) {
-        Map<String, String> neIdToDeviceId = new HashMap<String, String>();
+        Map<String, String> neIdToDeviceId = new HashMap<>();
         for(NetworkElementMO ne : keySet) {
             String neId = ne.getId();
             if(!neIdToDeviceId.containsKey(neId)) {
