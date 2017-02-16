@@ -46,6 +46,9 @@ public class NeControllerUtil {
 
     private static final NetworkElementInvDao neDao = new NetworkElementInvDao();
 
+    private NeControllerUtil() {
+    }
+
     /**
      * build Ne to Controller map with given neid to ne map.<br>
      * 
@@ -64,7 +67,7 @@ public class NeControllerUtil {
                     neToCtrlMap.put(ne, getController(ctrlId));
                 }
             } catch(ServiceException e) {
-                LOGGER.error("controller of ne is missing, ne id is" + ne.getId());
+                LOGGER.error("controller of ne is missing, ne id is" + ne.getId(), e);
                 throw new ParameterServiceException("controller of ne is missing.");
             }
         }

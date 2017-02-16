@@ -44,11 +44,14 @@ import org.slf4j.LoggerFactory;
  * @author
  * @version SDNO 0.5 Jan 11, 2017
  */
-public class DateValidator {
+public class DataValidator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DateValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataValidator.class);
 
     private static final String VLAN_RANGE_REGEX = "\\d+(-\\d+)?((,\\d+)+(-\\d+)?)*";
+
+    private DataValidator() {
+    }
 
     /**
      * check whether input ne is illegal<br>
@@ -116,8 +119,7 @@ public class DateValidator {
 
     }
 
-    private static void checkNeBaseData(Map<String, NetworkElementMO> idToNeMap, String tempId, NetworkElementMO tempNe)
-            throws ParameterServiceException {
+    private static void checkNeBaseData(String tempId, NetworkElementMO tempNe) throws ParameterServiceException {
         if(null == tempNe) {
             LOGGER.error("missing ne id is:" + tempId);
             throw new ParameterServiceException("missing ne.");
@@ -155,7 +157,7 @@ public class DateValidator {
                 }
             }
 
-            checkNeBaseData(idToNeMap, tempId, tempNe);
+            checkNeBaseData(tempId, tempNe);
 
             if(!idToNeMap.containsKey(tempNe.getId())) {
                 idToNeMap.put(tempNe.getId(), tempNe);

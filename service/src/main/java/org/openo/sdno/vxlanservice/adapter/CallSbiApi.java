@@ -46,6 +46,9 @@ public class CallSbiApi {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CallSbiApi.class);
 
+    private CallSbiApi() {
+    }
+
     /**
      * <br>
      * 
@@ -70,13 +73,12 @@ public class CallSbiApi {
         }
 
         try {
-            LOGGER.info("==========return from adapter" + JsonUtil.toJson(response));
+            LOGGER.info("create return from adapter" + JsonUtil.toJson(response));
             String rspContent = ResponseUtils.transferResponse(response);
-            LOGGER.info("==========return from adapter" + JsonUtil.toJson(rspContent));
             ResultRsp<List<SbiNeVxlanInstance>> restResult =
                     JsonUtil.fromJson(rspContent, new TypeReference<ResultRsp<List<SbiNeVxlanInstance>>>() {});
             LOGGER.info("Vxlan. creat Vxlan service finish, result = " + restResult.toString());
-            return new ResultRsp<List<SbiNeVxlanInstance>>(restResult, restResult.getData());
+            return new ResultRsp<>(restResult, restResult.getData());
         } catch(ServiceException e) {
             LOGGER.error("Vxlan. except info: ", e);
             throw e;
@@ -107,12 +109,11 @@ public class CallSbiApi {
 
         try {
             String rspContent = ResponseUtils.transferResponse(response);
-            LOGGER.info("==========return from adapter" + JsonUtil.toJson(response));
-            LOGGER.info("==========return from adapter" + JsonUtil.toJson(rspContent));
+            LOGGER.info("delete return from adapter" + JsonUtil.toJson(response));
             ResultRsp<List<SbiNeVxlanInstance>> restResult =
                     JsonUtil.fromJson(rspContent, new TypeReference<ResultRsp<List<SbiNeVxlanInstance>>>() {});
             LOGGER.info("Vxlan. delete Vxlan service finish, result = " + restResult.toString());
-            return new ResultRsp<List<SbiNeVxlanInstance>>(restResult, restResult.getData());
+            return new ResultRsp<>(restResult, restResult.getData());
         } catch(ServiceException e) {
             LOGGER.error("Vxlan. except info: ", e);
             throw e;

@@ -42,6 +42,9 @@ public class DeployService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DeployService.class);
 
+    private DeployService() {
+    }
+
     /**
      * deploy the vxlan of the given uuids.<br>
      * 

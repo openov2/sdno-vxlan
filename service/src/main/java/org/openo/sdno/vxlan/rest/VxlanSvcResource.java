@@ -46,7 +46,7 @@ import org.openo.sdno.overlayvpn.model.v2.vxlan.SbiNeVxlanInterface;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.SbiNeVxlanTunnel;
 import org.openo.sdno.vxlan.constant.DeployStatus;
 import org.openo.sdno.vxlan.util.builder.CreateVxlanHelper;
-import org.openo.sdno.vxlan.util.builder.DateValidator;
+import org.openo.sdno.vxlan.util.builder.DataValidator;
 import org.openo.sdno.vxlan.util.builder.DeployService;
 import org.openo.sdno.vxlan.util.builder.NeControllerUtil;
 import org.openo.sdno.vxlan.util.builder.PortUtil;
@@ -134,9 +134,9 @@ public class VxlanSvcResource {
         for(NbiVxlanTunnel tunnel : vxlanTunnels) {
             tunnel.allocateUuid();
         }
-        Map<String, NetworkElementMO> neIdToNeMap = DateValidator.checkInputNe(vxlanTunnels);
+        Map<String, NetworkElementMO> neIdToNeMap = DataValidator.checkInputNe(vxlanTunnels);
         LOGGER.info("neIdToNeMap: " + JsonUtil.toJson(neIdToNeMap));
-        DateValidator.checkVlanPortResource(vxlanTunnels);
+        DataValidator.checkVlanPortResource(vxlanTunnels);
         Map<NetworkElementMO, ControllerMO> neToCtrlMap = NeControllerUtil.getNeCtrlMap(neIdToNeMap);
         LOGGER.info("neToCtrlMap:" + JsonUtil.toJson(neToCtrlMap));
         Map<String, Ip> neIdToIpMap = PortUtil.buildPortIpMap(vxlanTunnels);
@@ -144,7 +144,7 @@ public class VxlanSvcResource {
 
         VxlanTunnelDbHelper.insertNbiVxlanTunnelList(vxlanTunnels);
 
-        List<SbiNeVxlanInstance> sbiVxlans = CreateVxlanHelper.nbiToSbi(neToCtrlMap, vxlanTunnels);
+        List<SbiNeVxlanInstance> sbiVxlans = CreateVxlanHelper.nbiToSbi(vxlanTunnels);
         for(SbiNeVxlanInstance sbivxlan : sbiVxlans) {
             sbivxlan.setDeployStatus(DeployStatus.UNDEPLOY.getName());
             ControllerMO controller = NeControllerUtil.findCtrlByNeId(neToCtrlMap, sbivxlan.getDeviceId());

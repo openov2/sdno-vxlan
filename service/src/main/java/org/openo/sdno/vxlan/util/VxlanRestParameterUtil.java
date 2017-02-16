@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,10 @@ import org.openo.sdno.overlayvpn.security.authentication.TokenDataHolder;
  */
 public class VxlanRestParameterUtil {
 
+    private static String X_DRIVER_PARAMETER = "X-Driver-Parameter";
+
+    private static String EXT_SYS_ID = "extSysID=";
+
     private VxlanRestParameterUtil() {
 
     }
@@ -50,7 +54,7 @@ public class VxlanRestParameterUtil {
     public static RestfulParametes getQueryVtepParam(String ctrlUuid) {
         RestfulParametes restfulParametes = new RestfulParametes();
         restfulParametes.putHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER, HttpContext.MEDIA_TYPE_JSON);
-        restfulParametes.putHttpContextHeader("X-Driver-Parameter", "extSysID=" + ctrlUuid);
+        restfulParametes.putHttpContextHeader(X_DRIVER_PARAMETER, EXT_SYS_ID + ctrlUuid);
         return restfulParametes;
     }
 
@@ -68,7 +72,7 @@ public class VxlanRestParameterUtil {
         RestfulParametes restParametes = new RestfulParametes();
         String strJsonReq = JsonUtil.toJson(vxlanNeInstanceList);
         restParametes.putHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER, HttpContext.MEDIA_TYPE_JSON);
-        restParametes.putHttpContextHeader("X-Driver-Parameter", "extSysID=" + ctrlUuid);
+        restParametes.putHttpContextHeader(X_DRIVER_PARAMETER, EXT_SYS_ID + ctrlUuid);
         restParametes.setRawData(strJsonReq);
         return restParametes;
     }
@@ -86,7 +90,7 @@ public class VxlanRestParameterUtil {
             throws ServiceException {
         RestfulParametes restParametes = new RestfulParametes();
         restParametes.putHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER, HttpContext.MEDIA_TYPE_JSON);
-        restParametes.putHttpContextHeader("X-Driver-Parameter", "extSysID=" + ctrlUuid);
+        restParametes.putHttpContextHeader(X_DRIVER_PARAMETER, EXT_SYS_ID + ctrlUuid);
         String strJsonReq = JsonUtil.toJson(vxlanInstanceList);
         restParametes.setRawData(strJsonReq);
         return restParametes;
@@ -103,10 +107,10 @@ public class VxlanRestParameterUtil {
     public static RestfulParametes getQueryWanInterfaceParam(String subInterUsedType, String ctrlUuid) {
         RestfulParametes restfulParametes = new RestfulParametes();
         restfulParametes.putHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER, HttpContext.MEDIA_TYPE_JSON);
-        restfulParametes.putHttpContextHeader("X-Driver-Parameter", "extSysID=" + ctrlUuid);
+        restfulParametes.putHttpContextHeader(X_DRIVER_PARAMETER, EXT_SYS_ID + ctrlUuid);
         TokenDataHolder.addToken2HttpRequest(restfulParametes);
 
-        Map<String, String> queryParamMap = new ConcurrentHashMap<String, String>();
+        Map<String, String> queryParamMap = new ConcurrentHashMap<>();
         queryParamMap.put(CommConst.DEVICE_WAN_SUB_INTERFACE_TYPE_PARAMETER, subInterUsedType);
         restfulParametes.setParamMap(queryParamMap);
 

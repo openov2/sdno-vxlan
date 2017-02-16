@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,12 +86,11 @@ public class UndeployVxlanInstance {
 
         if(CollectionUtils.isEmpty(undeployVxlanInstances)) {
             LOGGER.warn("Vxlan. undeployInstance queryByFilter return empty.");
-            return new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
         }
 
         // Make the map - Controller UUID to NeVxlan Instance list
-        Map<String, List<NeVxlanInstance>> ctrlUuidToInstanceListMap =
-                new ConcurrentHashMap<String, List<NeVxlanInstance>>();
+        Map<String, List<NeVxlanInstance>> ctrlUuidToInstanceListMap = new ConcurrentHashMap<>();
         for(NeVxlanInstance tempNeVxlanInstance : undeployVxlanInstances) {
             String ctrlId = tempNeVxlanInstance.getControllerId();
             if(CollectionUtils.isEmpty(ctrlUuidToInstanceListMap.get(ctrlId))) {
@@ -138,7 +137,7 @@ public class UndeployVxlanInstance {
      */
     public static ResultRsp<List<NeVxlanInstance>> deleteVxlanInstanceFromAdapter(String ctrlUuid,
             List<NeVxlanInstance> vxlanInstanceList, boolean isCreateInstance) throws ServiceException {
-        ResultRsp<List<NeVxlanInstance>> deleteRsp = new ResultRsp<List<NeVxlanInstance>>();
+        ResultRsp<List<NeVxlanInstance>> deleteRsp = new ResultRsp<>();
         deleteRsp.setData(vxlanInstanceList);
 
         List<ErrorCodeInfo> smallErrorCodeList = new ArrayList<>();

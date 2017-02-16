@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -163,24 +163,29 @@ public class CheckEngpointGroupUtil {
             String[] vlanRanges = vlanRangesStr.split(",");
             List<String> vlans = new ArrayList<>();
             for(String vlanRange : vlanRanges) {
-                if(!StringUtils.hasLength(vlanRange)) {
-                    ThrowVxlanExcpt.throwParmaterInvalid("vlan", vlanRangesStr);
-                }
-
-                String[] vlanBoundary = vlanRange.split("-");
-                if(vlanBoundary.length == 1) {
-                    vlans.add(vlanBoundary[0]);
-                } else if(vlanBoundary.length == 2) {
-                    for(int i = Integer.parseInt(vlanBoundary[0]); i <= Integer.parseInt(vlanBoundary[1]); i++) {
-                        vlans.add(String.valueOf(i));
-                    }
-                }
+                buildVlans(vlanRange, vlans);
             }
 
             portIdToVlanMap.get(portId).addAll(vlans);
         }
 
         return portIdToVlanMap;
+    }
+
+    private static void buildVlans(String vlanRange, List<String> vlans) throws ServiceException {
+        if(!StringUtils.hasLength(vlanRange)) {
+            ThrowVxlanExcpt.throwParmaterInvalid("vlan", vlanRange);
+        }
+
+        String[] vlanBoundary = vlanRange.split("-");
+        if(vlanBoundary.length == 1) {
+            vlans.add(vlanBoundary[0]);
+        } else if(vlanBoundary.length == 2) {
+            for(int i = Integer.parseInt(vlanBoundary[0]); i <= Integer.parseInt(vlanBoundary[1]); i++) {
+                vlans.add(String.valueOf(i));
+            }
+        }
+
     }
 
     private static void checkEndpointsForVlan(List<String> endpointList) throws ServiceException {

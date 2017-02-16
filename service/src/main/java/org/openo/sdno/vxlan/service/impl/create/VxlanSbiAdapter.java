@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,11 +66,9 @@ public class VxlanSbiAdapter {
      */
     public static ResultRsp<Map<String, List<NeVxlanInstance>>>
             deployVxlanInstanceByCtrl(Map<String, List<NeVxlanInstance>> ctrlIdToVxlanListMap) throws ServiceException {
-        ResultRsp<Map<String, List<NeVxlanInstance>>> totalResult =
-                new ResultRsp<Map<String, List<NeVxlanInstance>>>(ErrorCode.OVERLAYVPN_SUCCESS);
+        ResultRsp<Map<String, List<NeVxlanInstance>>> totalResult = new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
 
-        Map<String, List<NeVxlanInstance>> ctrlIdToVxlanInsSuccMap =
-                new ConcurrentHashMap<String, List<NeVxlanInstance>>();
+        Map<String, List<NeVxlanInstance>> ctrlIdToVxlanInsSuccMap = new ConcurrentHashMap<>();
         for(Entry<String, List<NeVxlanInstance>> tempEntry : ctrlIdToVxlanListMap.entrySet()) {
             String ctrlUuid = tempEntry.getKey();
             List<NeVxlanInstance> vlanIns = tempEntry.getValue();
@@ -92,13 +90,8 @@ public class VxlanSbiAdapter {
                 List<NeVxlanInstance> createRspInstanceTunnelList = tempCreateVxlanResult.getData();
 
                 // Populate the successful vxlan instances
-                List<NeVxlanInstance> tempCreateOkTunnelList = new ArrayList<>();
-                for(NeVxlanInstance tempVxlanNeVpnNeVpn : createRspInstanceTunnelList) {
-                    if((StringUtils.hasLength(tempVxlanNeVpnNeVpn.getExternalId()))
-                            && (StringUtils.hasLength(tempVxlanNeVpnNeVpn.getName()))) {
-                        tempCreateOkTunnelList.add(tempVxlanNeVpnNeVpn);
-                    }
-                }
+                List<NeVxlanInstance> tempCreateOkTunnelList = fillTempCreateOkTunnelList(createRspInstanceTunnelList);
+
                 // Need to update database for all teh successful vxlan instances
                 ctrlIdToVxlanInsSuccMap.put(ctrlUuid, tempCreateOkTunnelList);
 
@@ -107,8 +100,7 @@ public class VxlanSbiAdapter {
                     undeployVxlanInstanceByCtrl(ctrlIdToVxlanInsSuccMap);
                 }
 
-                ResultRsp<Map<String, List<NeVxlanInstance>>> rsp =
-                        new ResultRsp<Map<String, List<NeVxlanInstance>>>(e);
+                ResultRsp<Map<String, List<NeVxlanInstance>>> rsp = new ResultRsp<>(e);
                 rsp.setData(ctrlIdToVxlanInsSuccMap);
                 return rsp;
             }
@@ -117,6 +109,17 @@ public class VxlanSbiAdapter {
         totalResult.setData(ctrlIdToVxlanInsSuccMap);
 
         return totalResult;
+    }
+
+    private static List<NeVxlanInstance> fillTempCreateOkTunnelList(List<NeVxlanInstance> createRspInstanceTunnelList) {
+        List<NeVxlanInstance> tempCreateOkTunnelList = new ArrayList<>();
+        for(NeVxlanInstance tempVxlanNeVpnNeVpn : createRspInstanceTunnelList) {
+            if((StringUtils.hasLength(tempVxlanNeVpnNeVpn.getExternalId()))
+                    && (StringUtils.hasLength(tempVxlanNeVpnNeVpn.getName()))) {
+                tempCreateOkTunnelList.add(tempVxlanNeVpnNeVpn);
+            }
+        }
+        return tempCreateOkTunnelList;
     }
 
     private static ResultRsp<List<NeVxlanInstance>> deployVxlanInstance(String ctrlUuid,
@@ -139,7 +142,7 @@ public class VxlanSbiAdapter {
             ResultRsp<List<NeVxlanInstance>> restResult =
                     JsonUtil.fromJson(rspContent, new TypeReference<ResultRsp<List<NeVxlanInstance>>>() {});
             LOGGER.info("Vxlan. creat Vxlan service finish, result = " + restResult.toString());
-            return new ResultRsp<List<NeVxlanInstance>>(restResult, restResult.getData());
+            return new ResultRsp<>(restResult, restResult.getData());
         } catch(ServiceException e) {
             LOGGER.error("Vxlan. except info: ", e);
             throw e;
@@ -148,7 +151,7 @@ public class VxlanSbiAdapter {
 
     private static void undeployVxlanInstanceByCtrl(Map<String, List<NeVxlanInstance>> ctrlUuidToVxlanMap)
             throws ServiceException {
-        Map<String, List<NeVxlanInstance>> deleteFailedMap = new ConcurrentHashMap<String, List<NeVxlanInstance>>();
+        Map<String, List<NeVxlanInstance>> deleteFailedMap = new ConcurrentHashMap<>();
         List<String> deleteSuccessCtrlIds = new ArrayList<>();
         for(Entry<String, List<NeVxlanInstance>> tempEntry : ctrlUuidToVxlanMap.entrySet()) {
             String ctrlUuid = tempEntry.getKey();

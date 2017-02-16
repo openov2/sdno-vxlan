@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ public class WanSubInterfaceUtil {
         }
 
         // Get NE WAN Interface information for each device
-        Map<String, WanSubInterface> deviceIdToWanSubInfMap = new ConcurrentHashMap<String, WanSubInterface>();
+        Map<String, WanSubInterface> deviceIdToWanSubInfMap = new ConcurrentHashMap<>();
         for(Entry<String, ControllerMO> entry : deviceIdToCtrlMap.entrySet()) {
             String ctrlUuid = entry.getValue().getObjectId();
             String deviceId = entry.getKey();
@@ -97,7 +97,7 @@ public class WanSubInterfaceUtil {
                     getNeWanSubInterface(ctrlUuid, deviceId, WanInterfaceUsedType.VXLAN.getName());
             if(!queryResult.isSuccess() || CollectionUtils.isEmpty(queryResult.getData())) {
                 LOGGER.error("failed to query wan sub interface for deviceid:" + deviceId);
-                return new ResultRsp<Map<String, WanSubInterface>>(ErrorCode.OVERLAYVPN_FAILED, deviceIdToWanSubInfMap);
+                return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED, deviceIdToWanSubInfMap);
             }
 
             WanSubInterface tempWanSubInterface = queryResult.getData().get(0);
@@ -139,7 +139,7 @@ public class WanSubInterfaceUtil {
             return result;
         } catch(ServiceException e) {
             LOGGER.error("get Wan Interface except info: ", e);
-            return new ResultRsp<List<WanSubInterface>>(e.getId(), e.getExceptionArgs());
+            return new ResultRsp<>(e.getId(), e.getExceptionArgs());
         }
     }
 

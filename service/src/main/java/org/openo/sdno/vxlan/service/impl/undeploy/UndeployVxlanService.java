@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,6 @@ public class UndeployVxlanService {
 
     private static ResultRsp<String> undeployConnectionOrEpg(String connectionUuid, String tenantId, String deviceId)
             throws ServiceException {
-        ResultRsp<String> totalResult = new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
 
         ResultRsp<String> resultRsp = new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
 
@@ -69,10 +68,10 @@ public class UndeployVxlanService {
         }
 
         if(CollectionUtils.isNotEmpty(smallErrorList)) {
-            totalResult.setSmallErrorCodeList(smallErrorList);
-            totalResult.setErrorCode(ErrorCode.OVERLAYVPN_FAILED);
+            resultRsp.setSmallErrorCodeList(smallErrorList);
+            resultRsp.setErrorCode(ErrorCode.OVERLAYVPN_FAILED);
         }
 
-        return totalResult;
+        return resultRsp;
     }
 }

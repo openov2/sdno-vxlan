@@ -40,6 +40,9 @@ public class PortUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PortUtil.class);
 
+    private PortUtil() {
+    }
+
     /**
      * build port-ip map for nbi vxlan tunnel models.<br>
      * 

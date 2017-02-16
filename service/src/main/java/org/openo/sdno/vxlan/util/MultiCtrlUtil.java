@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,8 +56,7 @@ public class MultiCtrlUtil {
             throw new ServiceException("Instance List is empty or neIdToCtrlMap is empty");
         }
 
-        Map<String, List<NeVxlanInstance>> ctrlUuidToVxlanListMap =
-                new ConcurrentHashMap<String, List<NeVxlanInstance>>();
+        Map<String, List<NeVxlanInstance>> ctrlUuidToVxlanListMap = new ConcurrentHashMap<>();
         for(NeVxlanInstance tempVxlanInstance : createVxlanInstanceList) {
             ControllerMO tempControllerMO = neIdToCtrlMap.get(tempVxlanInstance.getNeId());
             if(null == tempControllerMO) {

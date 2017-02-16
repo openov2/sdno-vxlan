@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class NeInterfaceUtil {
      */
     public static ResultRsp<Map<String, NeVtep>> queryVtepForVxlan(Map<String, NetworkElementMO> deviceIdToNeMap,
             Map<String, ControllerMO> deviceIdToCtrlMap) throws ServiceException {
-        ResultRsp<Map<String, NeVtep>> rsp = new ResultRsp<Map<String, NeVtep>>();
+        ResultRsp<Map<String, NeVtep>> rsp = new ResultRsp<>();
 
         // Make NE UUID list
         List<String> neUuidList = new ArrayList<>(deviceIdToNeMap.size());
@@ -82,7 +82,7 @@ public class NeInterfaceUtil {
         }
 
         // Query VTEP information
-        Map<String, NeVtep> deviceIdToWanSubInfMap = new ConcurrentHashMap<String, NeVtep>();
+        Map<String, NeVtep> deviceIdToWanSubInfMap = new ConcurrentHashMap<>();
         for(Entry<String, ControllerMO> entry : deviceIdToCtrlMap.entrySet()) {
             String ctrlUuid = entry.getValue().getObjectId();
             String deviceId = entry.getKey();
@@ -91,7 +91,7 @@ public class NeInterfaceUtil {
             ResultRsp<NeVtep> queryResult = getNeVtep(ctrlUuid, deviceId);
             if(!queryResult.isValid()) {
                 LOGGER.error("failed to query vtep ip for deviceid:" + deviceId);
-                return new ResultRsp<Map<String, NeVtep>>(ErrorCode.OVERLAYVPN_FAILED, deviceIdToWanSubInfMap);
+                return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED, deviceIdToWanSubInfMap);
             }
 
             deviceIdToWanSubInfMap.put(deviceId, queryResult.getData());
@@ -123,7 +123,7 @@ public class NeInterfaceUtil {
             return result;
         } catch(ServiceException e) {
             LOGGER.error("query vtep except info: ", e);
-            return new ResultRsp<NeVtep>(e.getId(), e.getExceptionArgs());
+            return new ResultRsp<>(e.getId(), e.getExceptionArgs());
         }
     }
 

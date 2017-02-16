@@ -52,6 +52,11 @@ public class VxlanTunnelDbHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VxlanTunnelDbHelper.class);
 
+    private static final String DEPLOY_STATUS = "deployStatus";
+
+    private VxlanTunnelDbHelper() {
+    }
+
     /**
      * batch insert NbiVxlanTunnel models into database.<br>
      * 
@@ -360,7 +365,7 @@ public class VxlanTunnelDbHelper {
             nbimodel.setDeployStatus(newDeployStatus);
         }
         new InventoryDaoUtil<NbiVxlanTunnel>().getInventoryDao().update(NbiVxlanTunnel.class, vxlanTunnels,
-                "deployStatus");
+                DEPLOY_STATUS);
 
         List<SbiNeVxlanInterface> interfaceList = new ArrayList<>();
         List<SbiNeVxlanTunnel> tunnelList = new ArrayList<>();
@@ -379,13 +384,13 @@ public class VxlanTunnelDbHelper {
         }
         LOGGER.info("=====Updating SbiNeVxlanInstance deploy status=====");
         new InventoryDaoUtil<SbiNeVxlanInstance>().getInventoryDao().update(SbiNeVxlanInstance.class, sbiVxlans,
-                "deployStatus");
+                DEPLOY_STATUS);
         LOGGER.info("=====Updating SbiNeVxlanInterface deploy status=====");
         new InventoryDaoUtil<SbiNeVxlanInterface>().getInventoryDao().update(SbiNeVxlanInterface.class, interfaceList,
-                "deployStatus");
+                DEPLOY_STATUS);
         LOGGER.info("=====Updating SbiNeVxlanTunnel deploy status=====");
         new InventoryDaoUtil<SbiNeVxlanTunnel>().getInventoryDao().update(SbiNeVxlanTunnel.class, tunnelList,
-                "deployStatus");
+                DEPLOY_STATUS);
 
     }
 }

@@ -25,7 +25,6 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.openo.sdno.overlayvpn.brs.model.ControllerMO;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
 import org.openo.sdno.overlayvpn.model.common.enums.vxlan.VxlanAccessType;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.Ip;
@@ -47,6 +46,9 @@ import org.slf4j.LoggerFactory;
 public class CreateVxlanHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateVxlanHelper.class);
+
+    private CreateVxlanHelper() {
+    }
 
     /**
      * fill back ip object to nbi vxlan tunnels.<br>
@@ -101,8 +103,7 @@ public class CreateVxlanHelper {
      * @return list of SbiNeVxlanInstance created from given nbi models.
      * @since SDNO 0.5
      */
-    public static List<SbiNeVxlanInstance> nbiToSbi(Map<NetworkElementMO, ControllerMO> neToCtrlMap,
-            List<NbiVxlanTunnel> vxlanTunnels) {
+    public static List<SbiNeVxlanInstance> nbiToSbi(List<NbiVxlanTunnel> vxlanTunnels) {
         LOGGER.info("=====start transfer nbi model to sbi model=====");
         List<SbiNeVxlanInstance> sbivxlanList = new ArrayList<>();
 

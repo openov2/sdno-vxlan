@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@ public class DeleteVxlanService {
         List<NeVxlanInterface> vxlanInterfaceList = vxlanInfResultRsp.getData();
         if(CollectionUtils.isEmpty(vxlanInterfaceList)) {
             LOGGER.warn("Query Vxlan Interface return empty!!");
-            return new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
         }
 
         @SuppressWarnings("unchecked")
@@ -151,17 +151,16 @@ public class DeleteVxlanService {
         List<NeVxlanTunnel> vxlanTunnelList = vxlanTunnelResultRsp.getData();
         if(CollectionUtils.isEmpty(vxlanTunnelList)) {
             LOGGER.warn("Query Vxlan Tunnel return empty!!");
-            return new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
         }
 
-        List<String> deleteTunnelUuidList =
-                new ArrayList<String>(CollectionUtils.collect(vxlanTunnelList, new Transformer() {
+        List<String> deleteTunnelUuidList = new ArrayList<>(CollectionUtils.collect(vxlanTunnelList, new Transformer() {
 
-                    @Override
-                    public Object transform(Object arg0) {
-                        return ((NeVxlanTunnel)arg0).getUuid();
-                    }
-                }));
+            @Override
+            public Object transform(Object arg0) {
+                return ((NeVxlanTunnel)arg0).getUuid();
+            }
+        }));
 
         return neVxlanTunnelDao.batchDelete(NeVxlanTunnel.class, deleteTunnelUuidList);
     }
@@ -180,7 +179,7 @@ public class DeleteVxlanService {
         List<NeVxlanInstance> vxlanInstanceList = vxlanInstanceResultRsp.getData();
         if(CollectionUtils.isEmpty(vxlanInstanceList)) {
             LOGGER.warn("Query Vxlan Instance return empty!!");
-            return new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
         }
 
         List<String> deleteInstanceUuidList =

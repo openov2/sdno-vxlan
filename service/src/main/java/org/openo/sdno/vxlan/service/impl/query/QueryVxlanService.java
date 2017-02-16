@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ public class QueryVxlanService {
      */
     @SuppressWarnings("unchecked")
     public static ResultRsp<List<Tunnel>> query(String tenantId, String connectionUuid) throws ServiceException {
-        ResultRsp<List<Tunnel>> resultRsp = new ResultRsp<List<Tunnel>>();
+        ResultRsp<List<Tunnel>> resultRsp = new ResultRsp<>();
 
         String filter = getFilter(tenantId, connectionUuid);
 

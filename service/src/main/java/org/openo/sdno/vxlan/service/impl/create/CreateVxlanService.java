@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,8 @@ import org.openo.sdno.vxlan.util.vxlanbuilder.VxlanProducer;
  * @version SDNO 0.5 03-June-2016
  */
 public class CreateVxlanService {
+
+    private static String UPDATE_FIELDS_AFTER_CREATE = "adminStatus,actionState,externalId";
 
     private CreateVxlanService() {
     }
@@ -100,11 +102,11 @@ public class CreateVxlanService {
         }
 
         (new InventoryDaoUtil<NeVxlanInstance>()).getInventoryDao().update(NeVxlanInstance.class,
-                createSuccVxlanInstances, "adminStatus,actionState,externalId");
+                createSuccVxlanInstances, UPDATE_FIELDS_AFTER_CREATE);
         (new InventoryDaoUtil<NeVxlanTunnel>()).getInventoryDao().update(NeVxlanTunnel.class, createSuccVxlanTunnels,
-                "adminStatus,actionState,externalId");
+                UPDATE_FIELDS_AFTER_CREATE);
         (new InventoryDaoUtil<NeVxlanInterface>()).getInventoryDao().update(NeVxlanInterface.class,
-                createSuccVxlanInterfaces, "adminStatus,actionState,externalId");
+                createSuccVxlanInterfaces, UPDATE_FIELDS_AFTER_CREATE);
 
         return deployResult;
     }

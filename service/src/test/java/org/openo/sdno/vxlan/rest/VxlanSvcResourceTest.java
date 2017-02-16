@@ -35,7 +35,6 @@ import org.openo.sdno.vxlan.mococlass.MockLogicalTernminationPointInvDao;
 import org.openo.sdno.vxlan.mococlass.MockNetworkElementInvDao;
 import org.openo.sdno.vxlan.mococlass.MockRestfulProxy;
 import org.openo.sdno.vxlan.mococlass.MockSdnControllerDao;
-import org.openo.sdno.vxlan.util.builder.VxlanTunnelDbHelper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -48,8 +47,6 @@ public class VxlanSvcResourceTest {
 
     VxlanSvcResource demo = new VxlanSvcResource();
 
-    VxlanTunnelDbHelper helper = new VxlanTunnelDbHelper();
-
     @Mocked
     HttpServletResponse resp;
 
@@ -60,7 +57,6 @@ public class VxlanSvcResourceTest {
         new MockNetworkElementInvDao();
         new MockSdnControllerDao();
         new MockRestfulProxy();
-        VxlanTunnelDbHelper helper = new VxlanTunnelDbHelper();
     }
 
     @AfterClass

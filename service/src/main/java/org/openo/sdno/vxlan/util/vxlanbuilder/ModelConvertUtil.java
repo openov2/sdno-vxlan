@@ -142,7 +142,7 @@ public class ModelConvertUtil {
         List<NeVxlanInstance> dbQueryVxlanInstances =
                 neVxlanInstanceDao.queryByFilter(NeVxlanInstance.class, filter, "connectionServiceId,vni").getData();
 
-        Map<String, String> connectionIdToVniMap = new ConcurrentHashMap<String, String>();
+        Map<String, String> connectionIdToVniMap = new ConcurrentHashMap<>();
         for(NeVxlanInstance dbVxlanInstance : dbQueryVxlanInstances) {
             String connectionId = dbVxlanInstance.getConnectionServiceId();
             if(!connectionIdToVniMap.containsKey(connectionId)) {
