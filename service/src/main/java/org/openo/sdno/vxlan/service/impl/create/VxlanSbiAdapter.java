@@ -129,7 +129,7 @@ public class VxlanSbiAdapter {
         RestfulResponse response = RestfulProxy.post(
                 UrlAdapterConst.VXLAN_ADAPTER_BASE_URL + UrlAdapterConst.BATCH_CREATE_VXLAN_INSTANCE, restfulParametes);
         if(response.getStatus() == HttpCode.NOT_FOUND) {
-            return new ResultRsp<List<NeVxlanInstance>>(ErrorCode.RESTFUL_COMMUNICATION_FAILED);
+            return new ResultRsp<>(ErrorCode.RESTFUL_COMMUNICATION_FAILED);
         }
 
         if(!HttpCode.isSucess(response.getStatus())) {

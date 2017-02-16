@@ -45,7 +45,7 @@ import org.openo.sdno.vxlan.util.vxlanbuilder.VxlanProducer;
  */
 public class CreateVxlanService {
 
-    private static String UPDATE_FIELDS_AFTER_CREATE = "adminStatus,actionState,externalId";
+    private static final String UPDATE_FIELDS_AFTER_CREATE = "adminStatus,actionState,externalId";
 
     private CreateVxlanService() {
     }

@@ -28,7 +28,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.exception.InnerErrorServiceException;
 import org.openo.sdno.exception.ParameterServiceException;
 import org.openo.sdno.framework.container.util.JsonUtil;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
@@ -99,7 +98,7 @@ public class DataValidator {
     }
 
     private static Map<String, List<PortVlan>> checkPortVlan(List<NbiVxlanTunnel> vxlanTunnels)
-            throws ParameterServiceException {
+            throws ServiceException {
         Map<String, List<PortVlan>> tunnelIdToPortVlan = new HashMap<>();
 
         for(NbiVxlanTunnel vxlanTunnel : vxlanTunnels) {
@@ -149,7 +148,7 @@ public class DataValidator {
         Map<String, NetworkElementMO> idToNeMap = new HashMap<>();
 
         for(String tempId : neIdSet) {
-            NetworkElementMO tempNe = null;
+            NetworkElementMO tempNe = new NetworkElementMO();
             for(NetworkElementMO tempNeMo : neFromBrs) {
                 if(tempId.equals(tempNeMo.getId())) {
                     tempNe = tempNeMo;
@@ -178,8 +177,8 @@ public class DataValidator {
             check.put(tunnel.getDestNeId(), tunnel.getDestNeRole());
         }
 
-        for(String id : check.keySet()) {
-            if(!check.get(id).equals(idToNeMap.get(id).getNeRole())) {
+        for(Map.Entry<String, String> entry : check.entrySet()) {
+            if(!entry.getValue().equals(idToNeMap.get(entry.getKey()).getNeRole())) {
                 LOGGER.error("ne role from brs is not same as in vxlanTunnel model.");
                 throw new ParameterServiceException("ne role from brs is not same as in vxlanTunnel model.");
             }
@@ -187,21 +186,13 @@ public class DataValidator {
         }
     }
 
-    private static void checkPortVlanBase(NbiVxlanTunnel vxlanTunnel, List<PortVlan> portList)
-            throws ParameterServiceException {
+    private static void checkPortVlanBase(NbiVxlanTunnel vxlanTunnel, List<PortVlan> portList) throws ServiceException {
         String srcNeId = vxlanTunnel.getSrcNeId();
         String destNeId = vxlanTunnel.getDestNeId();
         for(PortVlan port : portList) {
             port.setVxlanTunnelId(vxlanTunnel.getUuid());
-            if(!port.getNeId().equals(srcNeId) && !port.getNeId().equals(destNeId)) {
-                LOGGER.error("Ne id do not match srcId/destId in vxlantunnel." + port.getNeId());
-                throw new ParameterServiceException("Ne id do not match srcId/destId in vxlantunnel.");
-            }
+            checkBasicPort(srcNeId, destNeId, port);
 
-            if(StringUtils.isEmpty(port.getVlan()) && StringUtils.isEmpty(port.getPort())) {
-                LOGGER.error("both vlan and port of portvlan is empty." + port.getNeId());
-                throw new ParameterServiceException("both vlan and port of portvlan is empty.");
-            }
             if(!StringUtils.isEmpty(port.getVlan())) {
                 checkVlan(port);
             }
@@ -212,6 +203,19 @@ public class DataValidator {
         }
         if(NeRoleType.LOCALCPE.getName().equals(vxlanTunnel.getSrcNeRole())) {
             checkTunnelHasVlan(portList, destNeId);
+        }
+
+    }
+
+    private static void checkBasicPort(String srcNeId, String destNeId, PortVlan port) throws ServiceException {
+        if(!port.getNeId().equals(srcNeId) && !port.getNeId().equals(destNeId)) {
+            LOGGER.error("Ne id do not match srcId/destId in vxlantunnel." + port.getNeId());
+            throw new ParameterServiceException("Ne id do not match srcId/destId in vxlantunnel.");
+        }
+
+        if(StringUtils.isEmpty(port.getVlan()) && StringUtils.isEmpty(port.getPort())) {
+            LOGGER.error("both vlan and port of portvlan is empty." + port.getNeId());
+            throw new ParameterServiceException("both vlan and port of portvlan is empty.");
         }
 
     }
@@ -248,27 +252,32 @@ public class DataValidator {
         }
 
         for(String vlanRange : vlanRanges) {
-            String[] vlanRangeBound = vlanRange.split("-");
-            try {
-                int vlanLBound = Integer.parseInt(vlanRangeBound[0]);
-                int vlanUBound = Integer.parseInt(vlanRangeBound[vlanRangeBound.length - 1]);
+            buildVlan(port, vlanRange);
+        }
 
-                if(vlanLBound > vlanUBound || (vlanRange.contains("-") && vlanLBound == vlanUBound)) {
-                    LOGGER.error("invalid vlan bound of lower bound:{0} and upper bound:{1}." + port.getPortName());
-                    throw new ParameterServiceException("invalid vlan bound of lower bound:{0} and upper bound:{1}.");
-                } else if(vlanLBound < 1 || vlanUBound > 4094) {
-                    LOGGER.error("vlan out of bound: 1-4094l." + port.getPortName());
-                    throw new ParameterServiceException("vlan out of bound: 1-4094.");
-                }
+    }
 
-                for(int vlan = vlanLBound; vlan < vlanUBound; vlan++) {
-                    port.getVlanList().add(String.valueOf(vlan));
-                }
+    private static void buildVlan(PortVlan port, String vlanRange) throws ParameterServiceException {
+        String[] vlanRangeBound = vlanRange.split("-");
+        try {
+            int vlanLBound = Integer.parseInt(vlanRangeBound[0]);
+            int vlanUBound = Integer.parseInt(vlanRangeBound[vlanRangeBound.length - 1]);
 
-            } catch(NumberFormatException e) {
-                LOGGER.error("vlan parse error." + e.getMessage());
-                throw new ParameterServiceException("vlan parse error.");
+            if(vlanLBound >= vlanUBound) {
+                LOGGER.error("invalid vlan bound of lower bound:{0} and upper bound:{1}." + port.getPortName());
+                throw new ParameterServiceException("invalid vlan bound of lower bound:{0} and upper bound:{1}.");
+            } else if(vlanLBound < 1 || vlanUBound > 4094) {
+                LOGGER.error("vlan out of bound: 1-4094l." + port.getPortName());
+                throw new ParameterServiceException("vlan out of bound: 1-4094.");
             }
+
+            for(int vlan = vlanLBound; vlan < vlanUBound; vlan++) {
+                port.getVlanList().add(String.valueOf(vlan));
+            }
+
+        } catch(NumberFormatException e) {
+            LOGGER.error("vlan parse error." + e.getMessage());
+            throw new ParameterServiceException("vlan parse error.");
         }
 
     }
@@ -279,16 +288,6 @@ public class DataValidator {
             throw new ParameterServiceException("srcNeId and destNeId of vxlanTunnel can not be the same.");
         }
 
-    }
-
-    private static void isNeMissing(Map<String, NetworkElementMO> idToNeMap, Set<String> neIdSet)
-            throws InnerErrorServiceException {
-        for(String id : neIdSet) {
-            if(!idToNeMap.containsKey(id)) {
-                LOGGER.error("missing ne id is:" + id);
-                throw new InnerErrorServiceException("can not find ne from vxlanTunnel model.");
-            }
-        }
     }
 
     private static void isNeRoleLegal(NbiVxlanTunnel vxlanTunnel) throws ParameterServiceException {

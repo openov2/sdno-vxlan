@@ -48,48 +48,49 @@ public class CheckTopoRoleUtil {
      * @throws ServiceException throws when data is wrong
      * @since SDNO 0.5
      */
-    @SuppressWarnings("unchecked")
     public static void checkTopoRole(OverlayVpn overlayVpn) throws ServiceException {
         for(Connection tempConnection : overlayVpn.getVpnConnections()) {
-            if(TopologyType.HUB_SPOKE.getName().equals(tempConnection.getTopology())) {
-                List<EndpointGroup> hubEpgs =
-                        new ArrayList<>(CollectionUtils.select(tempConnection.getEndpointGroups(), new Predicate() {
-
-                            @Override
-                            public boolean evaluate(Object arg0) {
-                                EndpointGroup epg = (EndpointGroup)arg0;
-                                return TopologyRole.HUB.getName().equals(epg.getTopologyRole());
-                            }
-                        }));
-
-                List<EndpointGroup> spokeEpgs =
-                        new ArrayList<>(CollectionUtils.select(tempConnection.getEndpointGroups(), new Predicate() {
-
-                            @Override
-                            public boolean evaluate(Object arg0) {
-                                EndpointGroup epg = (EndpointGroup)arg0;
-                                return TopologyRole.SPOKE.getName().equals(epg.getTopologyRole());
-                            }
-                        }));
-
-                if(CollectionUtils.isEmpty(hubEpgs) || hubEpgs.size() > 1) {
-                    ThrowVxlanExcpt.throwParmaterInvalid("Hub Endpointgroups",
-                            JsonUtil.toJson(hubEpgs) + " is empty or size exceeds 1");
-                }
-
-                if(CollectionUtils.isEmpty(hubEpgs)) {
-                    ThrowVxlanExcpt.throwParmaterInvalid("connection topology type no hub", "");
-                }
-
-                if(CollectionUtils.isEmpty(spokeEpgs)) {
-                    ThrowVxlanExcpt.throwParmaterInvalid("connection topology type no spoke", "");
-                }
-            } else if((TopologyType.POINT_TO_POINT.getName().equals(tempConnection.getTopology()))
-                    && (tempConnection.getEndpointGroups().size() != 2)) {
-
-                ThrowVxlanExcpt.throwParmaterInvalid("point_to_point connection should only contain 2 epgs", "");
-
-            }
+            checkConnection(tempConnection);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void checkConnection(Connection tempConnection) throws ServiceException {
+        if(TopologyType.HUB_SPOKE.getName().equals(tempConnection.getTopology())) {
+            List<EndpointGroup> hubEpgs =
+                    new ArrayList<>(CollectionUtils.select(tempConnection.getEndpointGroups(), new Predicate() {
+
+                        @Override
+                        public boolean evaluate(Object arg0) {
+                            EndpointGroup epg = (EndpointGroup)arg0;
+                            return TopologyRole.HUB.getName().equals(epg.getTopologyRole());
+                        }
+                    }));
+
+            List<EndpointGroup> spokeEpgs =
+                    new ArrayList<>(CollectionUtils.select(tempConnection.getEndpointGroups(), new Predicate() {
+
+                        @Override
+                        public boolean evaluate(Object arg0) {
+                            EndpointGroup epg = (EndpointGroup)arg0;
+                            return TopologyRole.SPOKE.getName().equals(epg.getTopologyRole());
+                        }
+                    }));
+
+            if(CollectionUtils.isEmpty(hubEpgs) || hubEpgs.size() > 1) {
+                ThrowVxlanExcpt.throwParmaterInvalid("Hub Endpointgroups",
+                        JsonUtil.toJson(hubEpgs) + " is empty or size exceeds 1");
+            }
+
+            if(CollectionUtils.isEmpty(spokeEpgs)) {
+                ThrowVxlanExcpt.throwParmaterInvalid("connection topology type no spoke", "");
+            }
+        } else if((TopologyType.POINT_TO_POINT.getName().equals(tempConnection.getTopology()))
+                && (tempConnection.getEndpointGroups().size() != 2)) {
+
+            ThrowVxlanExcpt.throwParmaterInvalid("point_to_point connection should only contain 2 epgs", "");
+
+        }
+
     }
 }

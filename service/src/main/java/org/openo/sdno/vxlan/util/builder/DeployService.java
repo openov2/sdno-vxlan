@@ -26,7 +26,6 @@ import org.openo.sdno.overlayvpn.brs.invdao.NetworkElementInvDao;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.NbiVxlanTunnel;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.SbiNeVxlanInstance;
-import org.openo.sdno.overlayvpn.result.ResultRsp;
 import org.openo.sdno.vxlanservice.adapter.CallSbiApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +60,7 @@ public class DeployService {
             CreateVxlanHelper.replaceNeIdWithDeviceId(sbiVxlan, neMos);
         }
         LOGGER.info("=====deploy vxlan======");
-        ResultRsp<List<SbiNeVxlanInstance>> result = CallSbiApi.create(sbiModels);
+        CallSbiApi.create(sbiModels);
         VxlanTunnelDbHelper.updateDeployStatus(nbiModels, sbiModels, true);
         return deploy;
 
@@ -86,11 +85,10 @@ public class DeployService {
             deviceIdToSbiModels.get(sbiModel.getDeviceId()).add(sbiModel);
         }
 
-        List<String> retult = new ArrayList<>();
         LOGGER.info("=====undeploy vxlan======");
-        for(String deviceId : deviceIdToSbiModels.keySet()) {
-            ResultRsp<List<SbiNeVxlanInstance>> response =
-                    CallSbiApi.delete(deviceIdToSbiModels.get(deviceId), deviceId);
+
+        for(Map.Entry<String, List<SbiNeVxlanInstance>> entry : deviceIdToSbiModels.entrySet()) {
+            CallSbiApi.delete(entry.getValue(), entry.getKey());
         }
 
         VxlanTunnelDbHelper.updateDeployStatus(nbiModels, sbiModels, false);

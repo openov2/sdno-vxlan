@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.codehaus.jackson.type.TypeReference;
@@ -90,15 +89,8 @@ public class UndeployVxlanInstance {
         }
 
         // Make the map - Controller UUID to NeVxlan Instance list
-        Map<String, List<NeVxlanInstance>> ctrlUuidToInstanceListMap = new ConcurrentHashMap<>();
-        for(NeVxlanInstance tempNeVxlanInstance : undeployVxlanInstances) {
-            String ctrlId = tempNeVxlanInstance.getControllerId();
-            if(CollectionUtils.isEmpty(ctrlUuidToInstanceListMap.get(ctrlId))) {
-                ctrlUuidToInstanceListMap.put(ctrlId, new ArrayList<NeVxlanInstance>());
-            }
-
-            ctrlUuidToInstanceListMap.get(ctrlId).add(tempNeVxlanInstance);
-        }
+        Map<String, List<NeVxlanInstance>> ctrlUuidToInstanceListMap =
+                buildCtrlUuidToInstanceMap(undeployVxlanInstances);
 
         // Undeploy from controller - send to adapter
         ResultRsp<String> deleteRsp = new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
@@ -113,9 +105,7 @@ public class UndeployVxlanInstance {
             }
         }
 
-        if(CollectionUtils.isNotEmpty(undeployVxlanInstances)) {
-            refreshDataInDb(undeployVxlanInstances);
-        }
+        refreshDataInDb(undeployVxlanInstances);
 
         if(CollectionUtils.isEmpty(deleteRsp.getSmallErrorCodeList())) {
             return deleteRsp;
@@ -123,6 +113,20 @@ public class UndeployVxlanInstance {
 
         deleteRsp.setErrorCode(ErrorCode.OVERLAYVPN_FAILED);
         return deleteRsp;
+    }
+
+    private static Map<String, List<NeVxlanInstance>>
+            buildCtrlUuidToInstanceMap(List<NeVxlanInstance> undeployVxlanInstances) {
+        Map<String, List<NeVxlanInstance>> ctrlUuidToInstanceListMap = new HashMap<>();
+        for(NeVxlanInstance tempNeVxlanInstance : undeployVxlanInstances) {
+            String ctrlId = tempNeVxlanInstance.getControllerId();
+            if(CollectionUtils.isEmpty(ctrlUuidToInstanceListMap.get(ctrlId))) {
+                ctrlUuidToInstanceListMap.put(ctrlId, new ArrayList<NeVxlanInstance>());
+            }
+
+            ctrlUuidToInstanceListMap.get(ctrlId).add(tempNeVxlanInstance);
+        }
+        return ctrlUuidToInstanceListMap;
     }
 
     /**

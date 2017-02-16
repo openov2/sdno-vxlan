@@ -101,6 +101,18 @@ public class NeInterfaceUtil {
         return rsp;
     }
 
+    private static void dealSvcException(RestfulResponse response) throws ServiceException {
+        if(null == response.getResponseContent()) {
+            return;
+        }
+
+        if(response.getResponseContent().contains("exceptionId")) {
+            LOGGER.error("Plugin deal failed! Plugin return status:" + response.getStatus() + ", exception:"
+                    + response.getResponseContent());
+            ResponseUtils.checkResonseAndThrowException(response);
+        }
+    }
+
     private static ResultRsp<NeVtep> getNeVtep(String contrUuid, String devId) throws ServiceException {
         RestfulParametes restParametes = VxlanRestParameterUtil.getQueryVtepParam(contrUuid);
         String getUrl =
@@ -127,15 +139,4 @@ public class NeInterfaceUtil {
         }
     }
 
-    private static void dealSvcException(RestfulResponse response) throws ServiceException {
-        if(null == response.getResponseContent()) {
-            return;
-        }
-
-        if(response.getResponseContent().contains("exceptionId")) {
-            LOGGER.error("Plugin deal failed! Plugin return status:" + response.getStatus() + ", exception:"
-                    + response.getResponseContent());
-            ResponseUtils.checkResonseAndThrowException(response);
-        }
-    }
 }

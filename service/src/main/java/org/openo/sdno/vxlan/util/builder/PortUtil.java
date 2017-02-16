@@ -27,6 +27,7 @@ import org.openo.sdno.overlayvpn.brs.invdao.LogicalTernminationPointInvDao;
 import org.openo.sdno.overlayvpn.brs.model.LogicalTernminationPointMO;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.Ip;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.NbiVxlanTunnel;
+import org.openo.sdno.util.ip.IpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,13 +64,14 @@ public class PortUtil {
     private static Map<String, Ip> buildNeIdToIp(Map<String, String> neIdToPortNameMap) throws ServiceException {
         Map<String, Ip> neIdToIp = new HashMap<>();
         List<LogicalTernminationPointMO> ltpMos = new LogicalTernminationPointInvDao().getAllMO();
-        for(String neId : neIdToPortNameMap.keySet()) {
-            String portName = neIdToPortNameMap.get(neId);
+
+        for(Map.Entry<String, String> entry : neIdToPortNameMap.entrySet()) {
+            String portName = entry.getValue();
             for(LogicalTernminationPointMO ltp : ltpMos) {
                 if(!ltp.getName().equals(portName)) {
                     continue;
                 }
-                neIdToIp.put(neId, getIpFromLtp(ltp));
+                neIdToIp.put(entry.getKey(), getIpFromLtp(ltp));
             }
         }
 
@@ -78,13 +80,13 @@ public class PortUtil {
 
     private static Ip getIpFromLtp(LogicalTernminationPointMO ltp) throws ParameterServiceException {
         String ipAddress = ltp.getIpAddress();
-        if(StringUtils.isEmpty(ipAddress) || ("0.0.0.0").equals(ipAddress)) {
-            LOGGER.error("ip of port:" + ltp.getName() + "is empty");
+        if(!IpUtils.isValidAddress(ipAddress)) {
+            LOGGER.error("ip of port:" + ltp.getName() + "is invalid:" + ipAddress);
             throw new ParameterServiceException("ip of port is empty.");
         }
 
         String ipMask = ltp.getIpMask();
-        int mask = StringUtils.isEmpty(ipMask) ? (32) : Integer.parseInt(ipMask);
+        int mask = StringUtils.isEmpty(ipMask) ? 32 : Integer.parseInt(ipMask);
         Ip result = new Ip();
         result.setIpMask(String.valueOf(mask));
         result.setIpv4(ipAddress);

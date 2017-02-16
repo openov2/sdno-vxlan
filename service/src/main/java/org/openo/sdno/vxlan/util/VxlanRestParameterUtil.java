@@ -36,7 +36,7 @@ import org.openo.sdno.overlayvpn.security.authentication.TokenDataHolder;
  */
 public class VxlanRestParameterUtil {
 
-    private static String X_DRIVER_PARAMETER = "X-Driver-Parameter";
+    private static final String X_DRIVER_PARAMETER = "X-Driver-Parameter";
 
     private static String EXT_SYS_ID = "extSysID=";
 

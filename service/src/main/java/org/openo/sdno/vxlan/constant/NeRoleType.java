@@ -34,21 +34,20 @@ public enum NeRoleType {
     public String getName() {
 
         switch(value) {
-            case 0: {
+            case 0:
                 return "localcpe";
-            }
-            case 1: {
+
+            case 1:
                 return "cloudcpe";
-            }
-            case 2: {
+
+            case 2:
                 return "vpc";
-            }
-            case 3: {
+
+            case 3:
                 return "dc-r";
-            }
-            default: {
+
+            default:
                 return "";
-            }
         }
     }
 }
