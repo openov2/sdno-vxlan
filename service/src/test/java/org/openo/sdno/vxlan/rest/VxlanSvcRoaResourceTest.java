@@ -17,12 +17,15 @@
 package org.openo.sdno.vxlan.rest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.baseservice.roa.util.restclient.RestfulParametes;
@@ -52,6 +55,22 @@ import mockit.MockUp;
 @ContextConfiguration(locations = {"classpath*:/spring/applicationContext.xml",
                 "classpath*:META-INF/spring/vxlanservice_service.xml", "classpath*:spring/vxlanservice_service.xml"})
 public class VxlanSvcRoaResourceTest {
+
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
+
+    @Test
+    public void testCreateFail() {
+        VxlanSvcRoaResource roa = new VxlanSvcRoaResource();
+        OverlayVpn overlayVpn = new OverlayVpn();
+        overlayVpn.setTenantId("");
+        try {
+            roa.create(null, overlayVpn);
+        } catch(ServiceException e) {
+            assertTrue(true);
+        }
+
+    }
 
     @Test
     public void testQueryTunnel() {

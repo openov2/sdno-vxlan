@@ -65,7 +65,7 @@ public class ThrowVxlanExcpt {
      * @since SDNO 0.5
      */
     public static void throwResNotExistAsBadReq(String resName, String resDesc) throws ServiceException {
-        String packName = "";
+        String packName;
         if(!StringUtils.hasLength(resName)) {
             packName = "[Name]";
         } else {
@@ -109,7 +109,7 @@ public class ThrowVxlanExcpt {
      * @since SDNO 0.5
      */
     public static void throwParmaterInvalid(String paraName, String parmaterPath) throws ServiceException {
-        String packName = "";
+        String packName;
         if(!StringUtils.hasLength(paraName)) {
             packName = "[Name]";
         } else {

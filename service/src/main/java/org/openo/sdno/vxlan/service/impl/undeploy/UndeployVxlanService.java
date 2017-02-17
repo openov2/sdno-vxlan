@@ -57,11 +57,9 @@ public class UndeployVxlanService {
     private static ResultRsp<String> undeployConnectionOrEpg(String connectionUuid, String tenantId, String deviceId)
             throws ServiceException {
 
-        ResultRsp<String> resultRsp = new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
-
         List<ErrorCodeInfo> smallErrorList = new ArrayList<>();
 
-        resultRsp = UndeployVxlanInstance.undeployInstance(tenantId, connectionUuid, deviceId);
+        ResultRsp<String> resultRsp = UndeployVxlanInstance.undeployInstance(tenantId, connectionUuid, deviceId);
         if(!resultRsp.isSuccess()) {
             LOGGER.error("undeployConnection: undeploy vxlan tunnel failed. connectionUuid:" + connectionUuid);
             smallErrorList.addAll(resultRsp.getSmallErrorCodeList());

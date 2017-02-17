@@ -38,7 +38,7 @@ public class VxlanRestParameterUtil {
 
     private static final String X_DRIVER_PARAMETER = "X-Driver-Parameter";
 
-    private static String EXT_SYS_ID = "extSysID=";
+    private static final String EXT_SYS_ID = "extSysID=";
 
     private VxlanRestParameterUtil() {
 

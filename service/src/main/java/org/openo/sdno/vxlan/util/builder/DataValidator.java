@@ -103,8 +103,8 @@ public class DataValidator {
 
         for(NbiVxlanTunnel vxlanTunnel : vxlanTunnels) {
             String tempId = vxlanTunnel.getUuid();
-            List<PortVlan> portList = new ArrayList<>();
-            portList = JsonUtil.fromJson(vxlanTunnel.getPortVlanList(), new TypeReference<List<PortVlan>>() {});
+            List<PortVlan> portList =
+                    JsonUtil.fromJson(vxlanTunnel.getPortVlanList(), new TypeReference<List<PortVlan>>() {});
 
             if(CollectionUtils.isEmpty(portList)) {
                 LOGGER.error("port list in vxlan nbi model is empty.");
@@ -141,9 +141,7 @@ public class DataValidator {
             LOGGER.error("ne list id empty.");
             throw new ParameterServiceException("ne list id empty.");
         }
-        List<NetworkElementMO> neFromBrs = new ArrayList<>();
-
-        neFromBrs = NeControllerUtil.getAllFullNe();
+        List<NetworkElementMO> neFromBrs = NeControllerUtil.getAllFullNe();
 
         Map<String, NetworkElementMO> idToNeMap = new HashMap<>();
 

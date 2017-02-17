@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Huawei Technologies Co., Ltd.
+ * Copyright 2016-2017 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ public class ModelConvertUtil {
 
         for(Connection conn : overlayVpnService.getVpnConnections()) {
             String strVNI = vniToConnectionIdMap.get(conn.getUuid());
-            CommonVxlanBuilder vxlanBuilder = null;
+            CommonVxlanBuilder vxlanBuilder;
 
             String connTopo = conn.getTopology();
             if(TopologyType.FULL_MESH.getName().equals(connTopo)) {
@@ -106,8 +106,8 @@ public class ModelConvertUtil {
      */
     public static void getVniForConn(List<Connection> connections, Map<String, String> vniToConnectionIdMap)
             throws ServiceException {
-        String connectionId = "";
-        String connectionVni = "";
+        String connectionId;
+        String connectionVni = null;
         for(Connection conn : connections) {
             connectionId = conn.getUuid();
             for(EndpointGroup epg : conn.getEndpointGroups()) {
@@ -158,6 +158,13 @@ public class ModelConvertUtil {
         }
 
         int connAmount = connectionsWithoutVni.size();
+        allocateVni(connectionIdToVniMap, connectionsWithoutVni, connAmount);
+
+        return connectionIdToVniMap;
+    }
+
+    private static void allocateVni(Map<String, String> connectionIdToVniMap, List<Connection> connectionsWithoutVni,
+            int connAmount) throws ServiceException {
         if(connAmount > 0) {
             List<Long> vniList = ResourcesUtil.requestGloabelValue(CommConst.RES_VNI_POOLNAME_VXLAN,
                     CommConst.RES_VXALN_USER_LABEL, connAmount, CommConst.VXLAN_VNI_MIN, CommConst.VXLAN_VNI_MAX);
@@ -170,6 +177,5 @@ public class ModelConvertUtil {
             }
         }
 
-        return connectionIdToVniMap;
     }
 }
