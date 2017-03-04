@@ -16,6 +16,8 @@
 
 package org.openo.sdno.vxlan.constant;
 
+import org.openo.sdno.overlayvpn.model.v2.cpe.CpeRoleType;
+
 /**
  * Ne type constant class<br>
  *
@@ -50,4 +52,23 @@ public enum NeRoleType {
                 return "";
         }
     }
+
+    /**
+     * Convert from BrsNeRoleType to NeRoleType.<br>
+     * 
+     * @param brsNeRoleType Brs NetworkElement RoleType
+     * @return NeRoleType converted
+     * @since SDNO 0.5
+     */
+    public static NeRoleType convertFromBrsNeRoleType(String brsNeRoleType) {
+
+        if(CpeRoleType.THIN_CPE.getName().equals(brsNeRoleType)) {
+            return LOCALCPE;
+        } else if(CpeRoleType.CLOUD_CPE.getName().equals(brsNeRoleType)) {
+            return CLOUDCPE;
+        }
+
+        return UNKNOWN;
+    }
+
 }

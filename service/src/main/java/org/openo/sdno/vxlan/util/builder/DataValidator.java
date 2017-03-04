@@ -176,7 +176,8 @@ public class DataValidator {
         }
 
         for(Map.Entry<String, String> entry : check.entrySet()) {
-            if(!entry.getValue().equals(idToNeMap.get(entry.getKey()).getNeRole())) {
+            NeRoleType neRoleType = NeRoleType.convertFromBrsNeRoleType(idToNeMap.get(entry.getKey()).getNeRole());
+            if(!entry.getValue().equals(neRoleType.getName())) {
                 LOGGER.error("ne role from brs is not same as in vxlanTunnel model.");
                 throw new ParameterServiceException("ne role from brs is not same as in vxlanTunnel model.");
             }

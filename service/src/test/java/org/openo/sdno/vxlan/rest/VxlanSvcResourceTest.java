@@ -82,7 +82,7 @@ public class VxlanSvcResourceTest {
         nbiTunnel.setName("vpn1");
         nbiTunnel.setDestNeId("neid2");
         nbiTunnel.setSrcNeId("neid1");
-        nbiTunnel.setDestNeRole("localcpe");
+        nbiTunnel.setDestNeRole("cloudcpe");
         nbiTunnel.setSrcNeRole("localcpe");
         nbiTunnel.setDestPortName("Ltp2");
         nbiTunnel.setSrcPortName("Ltp1");

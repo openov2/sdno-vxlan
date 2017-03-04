@@ -35,7 +35,7 @@ public class MockNetworkElementInvDao extends MockUp<NetworkElementInvDao> {
     public MockNetworkElementInvDao() {
         NetworkElementMO ne1 = new NetworkElementMO();
         ne1.setId("neid1");
-        ne1.setNeRole("localcpe");
+        ne1.setNeRole("Thin CPE");
         ne1.setIpAddress("192.168.1.1");
         ne1.setControllerID(Arrays.asList("controllerid"));
         ne1.setName("Ne1");
@@ -44,7 +44,7 @@ public class MockNetworkElementInvDao extends MockUp<NetworkElementInvDao> {
 
         NetworkElementMO ne2 = new NetworkElementMO();
         ne2.setId("neid2");
-        ne2.setNeRole("localcpe");
+        ne2.setNeRole("vCPE");
         ne2.setIpAddress("192.168.2.1");
         ne2.setControllerID(Arrays.asList("controllerid"));
         ne2.setName("Ne2");
