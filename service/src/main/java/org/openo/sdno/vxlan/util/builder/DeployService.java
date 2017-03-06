@@ -77,6 +77,13 @@ public class DeployService {
     public static List<String> undeploy(List<String> undeploy) throws ServiceException {
         List<NbiVxlanTunnel> nbiModels = VxlanTunnelDbHelper.getNbiVxlanById(undeploy);
         List<SbiNeVxlanInstance> sbiModels = VxlanTunnelDbHelper.getSbiVxlansByNbiModelId(undeploy);
+
+        // Replace NeId to DeviceId
+        List<NetworkElementMO> neMos = new NetworkElementInvDao().getAllMO();
+        for(SbiNeVxlanInstance sbiVxlan : sbiModels) {
+            CreateVxlanHelper.replaceNeIdWithDeviceId(sbiVxlan, neMos);
+        }
+
         Map<String, List<SbiNeVxlanInstance>> deviceIdToSbiModels = new HashMap<>();
         for(SbiNeVxlanInstance sbiModel : sbiModels) {
             if(CollectionUtils.isEmpty(deviceIdToSbiModels.get(sbiModel.getDeviceId()))) {
@@ -86,12 +93,12 @@ public class DeployService {
         }
 
         LOGGER.info("=====undeploy vxlan======");
-
         for(Map.Entry<String, List<SbiNeVxlanInstance>> entry : deviceIdToSbiModels.entrySet()) {
             CallSbiApi.delete(entry.getValue(), entry.getKey());
         }
 
         VxlanTunnelDbHelper.updateDeployStatus(nbiModels, sbiModels, false);
+
         return undeploy;
     }
 

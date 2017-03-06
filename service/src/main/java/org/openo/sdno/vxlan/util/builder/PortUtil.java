@@ -90,8 +90,8 @@ public class PortUtil {
         Ip result = new Ip();
         result.setIpMask(String.valueOf(mask));
         result.setIpv4(ipAddress);
-        return result;
 
+        return result;
     }
 
 }

@@ -391,6 +391,5 @@ public class VxlanTunnelDbHelper {
         LOGGER.info("=====Updating SbiNeVxlanTunnel deploy status=====");
         new InventoryDaoUtil<SbiNeVxlanTunnel>().getInventoryDao().update(SbiNeVxlanTunnel.class, tunnelList,
                 DEPLOY_STATUS);
-
     }
 }
