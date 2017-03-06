@@ -38,6 +38,7 @@ import org.openo.sdno.exception.ParameterServiceException;
 import org.openo.sdno.framework.container.util.JsonUtil;
 import org.openo.sdno.overlayvpn.brs.model.ControllerMO;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
+import org.openo.sdno.overlayvpn.consts.HttpCode;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.ActionModel;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.Ip;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.NbiVxlanTunnel;
@@ -118,7 +119,8 @@ public class VxlanSvcResource {
     /**
      * batch create vxlans.<br>
      * 
-     * @param vxlanTunnels vxlantunnel models to create.
+     * @param vxlanTunnels vxlantunnel models to create
+     * @param resp HttpServletResponse object
      * @return vxlantunnel models created.
      * @throws ServiceException if inner error happens.
      * @since SDNO 0.5
@@ -127,7 +129,8 @@ public class VxlanSvcResource {
     @Path("/vxlans")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<NbiVxlanTunnel> create(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
+    public List<NbiVxlanTunnel> create(@Context HttpServletResponse resp, List<NbiVxlanTunnel> vxlanTunnels)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.info("Enter Create vxlan begin time = " + beginTime);
         // allocate uuid
@@ -174,8 +177,9 @@ public class VxlanSvcResource {
         boolean isDeployed = true;
         VxlanTunnelDbHelper.updateDeployStatus(vxlanTunnels, sbiVxlans, isDeployed);
 
-        return vxlanTunnels;
+        resp.setStatus(HttpCode.CREATE_OK);
 
+        return vxlanTunnels;
     }
 
     /**
@@ -215,6 +219,7 @@ public class VxlanSvcResource {
         VxlanTunnelDbHelper.deleteNbiAndSbi(nbiModel, sbiModels);
         long costTime = System.currentTimeMillis() - beginTime;
         LOGGER.info("finish delete vxlan uuid: = " + vxlanTunnelId + ",cost time = " + costTime);
+
         return vxlanTunnelId;
 
     }
@@ -236,6 +241,7 @@ public class VxlanSvcResource {
             LOGGER.error("action model is empty.");
             throw new ParameterServiceException("action model is empty.");
         }
+
         if(CollectionUtils.isNotEmpty(actionModel.getDeploy())) {
             return deploy(actionModel.getDeploy());
         } else if(CollectionUtils.isNotEmpty(actionModel.getUndeploy())) {
@@ -244,7 +250,6 @@ public class VxlanSvcResource {
             LOGGER.error("adeploy and undeploy list are both empty.");
             throw new ParameterServiceException("adeploy and undeploy list are both empty.");
         }
-
     }
 
     private List<String> undeploy(List<String> undeploy) throws ServiceException {

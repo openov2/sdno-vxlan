@@ -88,7 +88,7 @@ public class VxlanSvcResourceTest {
         nbiTunnel.setSrcPortName("Ltp1");
         nbiTunnel.setVni("188");
         nbiTunnel.setPortVlanList("[{\"neId\":\"neid1\",\"vlan\":\"5-6\"},{\"neId\":\"neid2\",\"vlan\":\"7-8\"}]");
-        List<NbiVxlanTunnel> nibTunnels = demo.create(Arrays.asList(nbiTunnel));
+        List<NbiVxlanTunnel> nibTunnels = demo.create(resp, Arrays.asList(nbiTunnel));
         assertTrue(nibTunnels.get(0).getUuid().equals("vxlanid"));
     }
 
