@@ -37,7 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <br>
+ * Sbi Api class of VxLAN Service.<br>
  * 
  * @author
  * @version SDNO 0.5 Jan 16, 2017
@@ -50,15 +50,14 @@ public class CallSbiApi {
     }
 
     /**
-     * <br>
+     * Batch Create VxLAN.<br>
      * 
-     * @param sbiModels
-     * @return
-     * @throws ServiceException
+     * @param sbiModels VxLAN models need to create
+     * @return create result
+     * @throws ServiceException when create failed
      * @since SDNO 0.5
      */
-    public static ResultRsp<List<SbiNeVxlanInstance>> create(List<SbiNeVxlanInstance> sbiModels)
-            throws ServiceException {
+    public static ResultRsp<SbiNeVxlanInstance> create(List<SbiNeVxlanInstance> sbiModels) throws ServiceException {
         String ctrlUuid = sbiModels.get(0).getControllerId();
         RestfulParametes restfulParametes = VxlanHttpParameterUtil.getCreateVxlanInstanceParam(sbiModels, ctrlUuid);
         LOGGER.info("=====post adapter=====");
@@ -75,8 +74,8 @@ public class CallSbiApi {
         try {
             LOGGER.info("create return from adapter" + JsonUtil.toJson(response));
             String rspContent = ResponseUtils.transferResponse(response);
-            ResultRsp<List<SbiNeVxlanInstance>> restResult =
-                    JsonUtil.fromJson(rspContent, new TypeReference<ResultRsp<List<SbiNeVxlanInstance>>>() {});
+            ResultRsp<SbiNeVxlanInstance> restResult =
+                    JsonUtil.fromJson(rspContent, new TypeReference<ResultRsp<SbiNeVxlanInstance>>() {});
             LOGGER.info("Vxlan. creat Vxlan service finish, result = " + restResult.toString());
             return new ResultRsp<>(restResult, restResult.getData());
         } catch(ServiceException e) {
@@ -87,13 +86,15 @@ public class CallSbiApi {
     }
 
     /**
-     * <br>
+     * Batch Delete VxLAN.<br>
      * 
-     * @param sbiModels
-     * @throws ServiceException
+     * @param sbiModels VxLAN models need to delete
+     * @param deviceId Device Id
+     * @return delete result
+     * @throws ServiceException when delete failed
      * @since SDNO 0.5
      */
-    public static ResultRsp<List<SbiNeVxlanInstance>> delete(List<SbiNeVxlanInstance> sbiModels, String deviceId)
+    public static ResultRsp<SbiNeVxlanInstance> delete(List<SbiNeVxlanInstance> sbiModels, String deviceId)
             throws ServiceException {
         LOGGER.info("=====start to delete vxlan on adapter, deviceId= " + deviceId);
         String ctrlUuid = sbiModels.get(0).getControllerId();
@@ -110,8 +111,8 @@ public class CallSbiApi {
         try {
             String rspContent = ResponseUtils.transferResponse(response);
             LOGGER.info("delete return from adapter" + JsonUtil.toJson(response));
-            ResultRsp<List<SbiNeVxlanInstance>> restResult =
-                    JsonUtil.fromJson(rspContent, new TypeReference<ResultRsp<List<SbiNeVxlanInstance>>>() {});
+            ResultRsp<SbiNeVxlanInstance> restResult =
+                    JsonUtil.fromJson(rspContent, new TypeReference<ResultRsp<SbiNeVxlanInstance>>() {});
             LOGGER.info("Vxlan. delete Vxlan service finish, result = " + restResult.toString());
             return new ResultRsp<>(restResult, restResult.getData());
         } catch(ServiceException e) {

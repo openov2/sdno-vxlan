@@ -39,11 +39,10 @@ public class MockRestfulProxy extends MockUp<RestfulProxy> {
         RestfulResponse response = new RestfulResponse();
         List<SbiNeVxlanInstance> SbiNeVxlanInstanceList = new ArrayList<SbiNeVxlanInstance>();
         SbiNeVxlanInstanceList.add(new SbiNeVxlanInstance());
-        ResultRsp<List<SbiNeVxlanInstance>> sbiRsp =
-                new ResultRsp<List<SbiNeVxlanInstance>>(ErrorCode.OVERLAYVPN_SUCCESS, SbiNeVxlanInstanceList);
+        ResultRsp<SbiNeVxlanInstance> sbiRsp = new ResultRsp<SbiNeVxlanInstance>(ErrorCode.OVERLAYVPN_SUCCESS);
+        sbiRsp.setSuccessed(SbiNeVxlanInstanceList);
         response.setStatus(HttpStatus.SC_OK);
         response.setResponseJson(JsonUtil.toJson(sbiRsp));
-
         return response;
     }
 
