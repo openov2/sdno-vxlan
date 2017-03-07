@@ -33,7 +33,6 @@ import org.openo.sdno.overlayvpn.model.v2.vxlan.PortVlan;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.SbiNeVxlanInstance;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.SbiNeVxlanInterface;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.SbiNeVxlanTunnel;
-import org.openo.sdno.vxlan.constant.NeRoleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,6 +121,8 @@ public class CreateVxlanHelper {
 
     private static SbiNeVxlanInstance buildNeVxlanInstance(NbiVxlanTunnel nbiVxlan, String neId, String neRole) {
         LOGGER.info("=====start building sbi model=====");
+
+        // Construct VxLAN Instance
         SbiNeVxlanInstance sbiVxlanInstance = buildBasicField(nbiVxlan);
         sbiVxlanInstance.setExternalId(sbiVxlanInstance.getUuid());
         sbiVxlanInstance.setNbiVxlanTunnelId(nbiVxlan.getUuid());
@@ -134,15 +135,14 @@ public class CreateVxlanHelper {
         }
 
         String vxlanInsId = sbiVxlanInstance.getUuid();
-        sbiVxlanInstance.setVxlanInterfaceList(new ArrayList<SbiNeVxlanInterface>());
 
-        if(NeRoleType.LOCALCPE.getName().equals(neRole)) {
-            sbiVxlanInstance.setVxlanInterfaceList(buildVxlanInterfaceList(nbiVxlan, neId));
-            for(SbiNeVxlanInterface vxlanIf : sbiVxlanInstance.getVxlanInterfaceList()) {
-                vxlanIf.setVxlanInstanceId(vxlanInsId);
-            }
+        // Construct VxLAN Interface
+        sbiVxlanInstance.setVxlanInterfaceList(buildVxlanInterfaceList(nbiVxlan, neId));
+        for(SbiNeVxlanInterface vxlanIf : sbiVxlanInstance.getVxlanInterfaceList()) {
+            vxlanIf.setVxlanInstanceId(vxlanInsId);
         }
 
+        // Construct VxLAN Tunnel
         SbiNeVxlanTunnel neVxlanTunnel = buildNeVxlanTunnel(nbiVxlan, neId);
         neVxlanTunnel.setVxlanInstanceId(vxlanInsId);
         sbiVxlanInstance.setVxlanTunnelList(Arrays.asList(neVxlanTunnel));
@@ -155,10 +155,14 @@ public class CreateVxlanHelper {
         neVxlanTunnel.setVni(nbiVxlan.getVni());
 
         if(neId.equals(nbiVxlan.getSrcNeId())) {
+            neVxlanTunnel.setSourceAddress(nbiVxlan.getSrcIp().getIpv4());
+            neVxlanTunnel.setDestAddress(nbiVxlan.getDestIp().getIpv4());
             neVxlanTunnel.setSourceIfId(nbiVxlan.getSrcPortName());
             neVxlanTunnel.setDeviceId(nbiVxlan.getSrcNeId());
             neVxlanTunnel.setPeerDeviceId(nbiVxlan.getDestNeId());
         } else {
+            neVxlanTunnel.setSourceAddress(nbiVxlan.getDestIp().getIpv4());
+            neVxlanTunnel.setDestAddress(nbiVxlan.getSrcIp().getIpv4());
             neVxlanTunnel.setSourceIfId(nbiVxlan.getDestPortName());
             neVxlanTunnel.setDeviceId(nbiVxlan.getDestNeId());
             neVxlanTunnel.setPeerDeviceId(nbiVxlan.getSrcNeId());
@@ -184,28 +188,38 @@ public class CreateVxlanHelper {
         if(CollectionUtils.isEmpty(nbiVxlan.getPortVlans())) {
             return vxlanInterfaceList;
         }
+
         for(PortVlan portVlan : nbiVxlan.getPortVlans()) {
             if(!neId.equals(portVlan.getNeId())) {
                 continue;
             }
+
             buildNeVxlanInterface(nbiVxlan, neId, portVlan, vxlanInterfaceList);
         }
+
         return vxlanInterfaceList;
     }
 
     private static void buildNeVxlanInterface(NbiVxlanTunnel nbiVxlan, String neId, PortVlan portVlan,
             List<SbiNeVxlanInterface> vxlanInterfaceList) {
-        String portId = portVlan.getPort();
-        String vlxnRangeListStr = portVlan.getVlan();
-        LOGGER.info("start build NeVxlanInterface");
 
-        if((!StringUtils.isEmpty(portId)) && (!StringUtils.isEmpty(vlxnRangeListStr))) {
+        LOGGER.info("Build Ne Vxlan Interfaces");
+
+        String portId = portVlan.getPort();
+        String vxlanRangeListStr = portVlan.getVlan();
+
+        // PortVlan Access
+        if(StringUtils.isNotEmpty(portId) && StringUtils.isNotEmpty(vxlanRangeListStr)) {
             for(String vlan : portVlan.getVlanList()) {
                 vxlanInterfaceList.add(buildInterfaceAsPortVlan(neId, portVlan, vlan, nbiVxlan));
             }
-        } else if((!StringUtils.isEmpty(portId)) && (StringUtils.isEmpty(vlxnRangeListStr))) {
+        }
+        // Port Access
+        else if(StringUtils.isNotEmpty(portId) && StringUtils.isEmpty(vxlanRangeListStr)) {
             vxlanInterfaceList.add(buildInterfaceAsPort(neId, portVlan, nbiVxlan));
-        } else if((StringUtils.isEmpty(portId)) && (!StringUtils.isEmpty(vlxnRangeListStr))) {
+        }
+        // Vlan Access
+        else if(StringUtils.isEmpty(portId) && StringUtils.isNotEmpty(vxlanRangeListStr)) {
             for(String vlan : portVlan.getVlanList()) {
                 vxlanInterfaceList.add(buildInterfaceAsVlan(neId, vlan, nbiVxlan));
             }
@@ -287,7 +301,6 @@ public class CreateVxlanHelper {
             for(SbiNeVxlanInterface vxlaninterface : sbivxlan.getVxlanInterfaceList()) {
                 vxlaninterface.setDeviceId(neIdToDeviceId.get(vxlaninterface.getDeviceId()));
             }
-
         }
 
     }
