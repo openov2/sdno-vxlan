@@ -30,6 +30,8 @@ import org.codehaus.jackson.type.TypeReference;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.exception.ParameterServiceException;
 import org.openo.sdno.framework.container.util.JsonUtil;
+import org.openo.sdno.overlayvpn.brs.invdao.LogicalTernminationPointInvDao;
+import org.openo.sdno.overlayvpn.brs.model.LogicalTernminationPointMO;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.NbiVxlanTunnel;
 import org.openo.sdno.overlayvpn.model.v2.vxlan.PortVlan;
@@ -87,7 +89,6 @@ public class DataValidator {
     public static void checkVlanPortResource(List<NbiVxlanTunnel> vxlanTunnels) throws ServiceException {
         Map<String, List<PortVlan>> tunnelIdToPortVlan = checkPortVlan(vxlanTunnels);
         writeBackPortVlanToTunnel(tunnelIdToPortVlan, vxlanTunnels);
-
     }
 
     private static void writeBackPortVlanToTunnel(Map<String, List<PortVlan>> tunnelIdToPortVlan,
@@ -115,7 +116,6 @@ public class DataValidator {
         }
 
         return tunnelIdToPortVlan;
-
     }
 
     private static void checkNeBaseData(String tempId, NetworkElementMO tempNe) throws ParameterServiceException {
@@ -192,7 +192,13 @@ public class DataValidator {
             port.setVxlanTunnelId(vxlanTunnel.getUuid());
             checkBasicPort(srcNeId, destNeId, port);
 
-            if(!StringUtils.isEmpty(port.getVlan())) {
+            if(StringUtils.isNotEmpty(port.getPort())) {
+                LogicalTernminationPointMO curLtpMO = (new LogicalTernminationPointInvDao()).query(port.getPort());
+                port.setPortName(curLtpMO.getName());
+                port.setPortNativeId(curLtpMO.getNativeID());
+            }
+
+            if(StringUtils.isNotEmpty(port.getVlan())) {
                 checkVlan(port);
             }
         }
@@ -203,7 +209,6 @@ public class DataValidator {
         if(NeRoleType.LOCALCPE.getName().equals(vxlanTunnel.getSrcNeRole())) {
             checkTunnelHasVlan(portList, destNeId);
         }
-
     }
 
     private static void checkBasicPort(String srcNeId, String destNeId, PortVlan port) throws ServiceException {
@@ -240,8 +245,8 @@ public class DataValidator {
 
         String vlanRangeList = port.getVlan();
         if(!vlanRangeList.matches(VLAN_RANGE_REGEX)) {
-            LOGGER.error("invalid vlan format" + port.getPortName());
-            throw new ParameterServiceException("invalid vlan format.");
+            LOGGER.error("Invalid vlan format " + port.getPortName());
+            throw new ParameterServiceException("Invalid vlan format.");
         }
 
         String[] vlanRanges = vlanRangeList.split(",");
@@ -253,7 +258,6 @@ public class DataValidator {
         for(String vlanRange : vlanRanges) {
             buildVlan(port, vlanRange);
         }
-
     }
 
     private static void buildVlan(PortVlan port, String vlanRange) throws ParameterServiceException {
@@ -273,7 +277,6 @@ public class DataValidator {
             for(int vlan = vlanLBound; vlan < vlanUBound; vlan++) {
                 port.getVlanList().add(String.valueOf(vlan));
             }
-
         } catch(NumberFormatException e) {
             LOGGER.error("vlan parse error." + e.getMessage());
             throw new ParameterServiceException("vlan parse error.");
