@@ -97,7 +97,12 @@ public class VxlanSvcResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public NbiVxlanTunnel query(@PathParam("vxlanTunnelId") String vxlanTunnelId) throws ServiceException {
-        return VxlanTunnelDbHelper.getComplexNbiVxlanById(vxlanTunnelId);
+        NbiVxlanTunnel vxLanTunnel = VxlanTunnelDbHelper.getComplexNbiVxlanById(vxlanTunnelId);
+        if(null == vxLanTunnel) {
+            LOGGER.error("This Vxlan tunnel does not exist");
+            throw new ParameterServiceException("This Vxlan tunnel does not exist");
+        }
+        return vxLanTunnel;
     }
 
     /**
