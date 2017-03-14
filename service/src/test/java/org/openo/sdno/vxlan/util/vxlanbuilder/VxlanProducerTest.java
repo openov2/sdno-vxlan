@@ -91,7 +91,7 @@ public class VxlanProducerTest {
         assertEquals(2, vxlanProducer.getAllVxlanInstances().size());
         assertEquals("VNI", vxlanProducer.getOperVxlanInstances().get(0).getVni());
         assertEquals("WSIF01", vxlanProducer.getOperVxlanInstances().get(0).getNeId());
-        assertEquals("Normal", vxlanProducer.getOperVxlanInstances().get(0).getActionState());
+        assertEquals("normal", vxlanProducer.getOperVxlanInstances().get(0).getActionState());
     }
 
 }

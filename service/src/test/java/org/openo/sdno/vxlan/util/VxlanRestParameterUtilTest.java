@@ -49,7 +49,7 @@ public class VxlanRestParameterUtilTest {
         neVxlanInstance.setOperStatus("up");
         vxlanNeInstanceList.add(neVxlanInstance);
         String expected = "[{\"tenantId\":null,\"name\":null,\"description\":null,\"modifyMask\":\"NOMODIFY\","
-                + "\"additionalInfo\":null,\"operStatus\":\"up\",\"adminStatus\":\"active\",\"actionState\":\"Normal\",\"createTime\":null,\"controllerId\":null,"
+                + "\"additionalInfo\":null,\"operStatus\":\"up\",\"adminStatus\":\"active\",\"actionState\":\"normal\",\"createTime\":null,\"controllerId\":null,"
                 + "\"externalId\":null,\"connectionServiceId\":null,\"vni\":null,"
                 + "\"arpProxy\":\"false\",\"arpBroadcastSuppress\":\"false\",\"neId\":\"test\","
                 + "\"vxlanInterfaceList\":null,\"vxlanTunnelList\":null,\"id\":null}]";
