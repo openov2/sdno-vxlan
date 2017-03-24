@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright 2016 Huawei Technologies Co., Ltd.
+    Copyright 2016-2017 Huawei Technologies Co., Ltd.
    
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openo.sdno.vxlan</groupId>
@@ -36,6 +37,22 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>2.2.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${yamlfile.path}</inputSpec>
+                            <language>swagger</language>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
@@ -62,17 +79,18 @@
                                 ant.mkdir(dir: "${deployFolder}")
 
                                 ant.delete(dir: "${deployUnzip}")
-                                ant.mkdir(dir:
-                                "${deployUnzip}")
+                                ant.mkdir(dir: "${deployUnzip}")
 
                                 ant.mkdir(dir: "${deployUnzip}/webapps/ROOT")
-                                ant.mkdir(dir:
-                                "${deployUnzip}/logs")
+                                ant.mkdir(dir: "${deployUnzip}/docs")
+                                ant.mkdir(dir: "${deployUnzip}/logs")
 
-                                ant.copy(todir: "${deployUnzip}") {
+                                ant.copy(todir:
+                                "${deployUnzip}") {
                                 fileset(dir:
                                 "${basedir}/src/main/release"){
-                                exclude(name: "**/.gitignore")
+                                exclude(name:
+                                "**/.gitignore")
                                 }
                                 }
 
@@ -80,6 +98,12 @@
                                 "${deployUnzip}/webapps/ROOT") {
                                 fileset(dir:
                                 "${project.build.directory}/../../service/target/${package.name}")
+                                }
+
+                                ant.copy(todir:
+                                "${deployUnzip}/docs") {
+                                fileset(dir:
+                                "${project.build.directory}/generated-sources/swagger")
                                 }
 
                                 ant.zip(destfile:
@@ -115,4 +139,7 @@
             </plugin>
         </plugins>
     </build>
-<name>sdno-vxlan/deployment</name></project>
+
+    <name>sdno-vxlan/deployment</name>
+
+</project>

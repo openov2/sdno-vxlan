@@ -1,0 +1,454 @@
+#
+# Copyright 2017 Huawei Technologies Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+swagger: '2.0'
+info:
+  title: VxlanService
+  description: vxlan service SBI interface
+  version: 1.0.0
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /openoapi/sbi-vxlan/v1
+paths:
+  /batch-create-vxlan:
+    post:
+      tags:
+      - VxlanRoaResource
+      summary: create  vxlans
+      description: create  vxlans
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller
+          required: true
+          type: string
+          format: uuid
+        - name: createSbiNeTunnels
+          in: body
+          description: vxlan sbi models to be created
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiNeVxlanInstance'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiNeVxlanInstanceResultResponse'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /batch-query-vxlan:
+    post:
+      tags:
+      - VxlanRoaResource
+      summary: query  vxlans
+      description: query  vxlans
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller
+          required: true
+          type: string
+          format: uuid
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiNeVxlanInstanceResultResponse'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /batch-update-vxlan:
+    post:
+      tags:
+      - VxlanRoaResource
+      summary: update  vxlans
+      description: update  vxlans
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller
+          required: true
+          type: string
+          format: uuid
+        - name: updateSbiNeTunnels
+          in: body
+          description: vxlan sbi models to be created
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiNeVxlanInstance'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiNeVxlanInstanceResultResponse'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /device/{deviceid}/batch-delete-vxlan:
+    post:
+      tags:
+      - VxlanRoaResource
+      summary: delete  vxlans
+      description: delete  vxlans
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller
+          required: true
+          type: string
+          format: uuid
+        - name: deviceid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: unDeploySbiNeVxlanInstance
+          in: body
+          description: vxlan sbi models to delete
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiNeVxlanInstance'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiNeVxlanInstanceResultResponse'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+definitions:
+  UuidModel:
+    type: object
+    properties:
+      id:
+        type: string
+        description: the UUID of the model
+
+  BaseModel:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - tenantId
+        properties:
+          name:
+            type: string
+            description: the name of the model
+          tenantId:
+            type: string
+            description: tenant ID
+          description:
+            type: string
+            description: description info
+          deployStatus:
+            type: string
+            description: deploy status(deploy,undeploy)
+          actionState:
+            type: string
+            description: operation status(scope:none,normal,creating,deleting,updating,create_exception,update_exception,delete_exception,deploying,deploy_exception,undeploying,undeploy_exception,checking,check_exception)
+          activeStatus:
+            type: string
+            description: active status(scope:none,active,inactive,partially_inactive)
+          runningStatus:
+            type: string
+            description: running status(scope:none,up,down,partially_down)
+          additionalInfo:
+            type: string
+            description: additional info
+  SbiVxlanNetModel:
+    allOf:
+      - $ref: '#/definitions/BaseModel'
+      - type: object
+        required:
+          - deviceId
+          - connectionId
+        properties:
+          deviceId:
+            type: string
+            description: device ID
+          peerDeviceId:
+            type: string
+            description: peerDevice ID
+          controllerId:
+            type: string
+            description: controller ID
+          connectionId:
+            type: string
+            description: connection ID
+          externalId:
+            type: string
+            description: external ID
+
+  SbiNeVxlanInterface:
+    allOf:
+      - $ref: '#/definitions/SbiVxlanNetModel'
+      - type: object
+        required:
+          - localName
+          - vxlanInstanceId
+        properties:
+          localName:
+            type: string
+            description: vxlan's name on controller
+          vxlanInstanceId:
+            type: string
+            description: bound vxlan instance id
+          accessType:
+            type: string
+            description: matching access type of message
+          portNativeId:
+            type: string
+            description: physical id of associated access point
+          dot1qVlanBitmap:
+            type: string
+            description: access vlan range, set when accessType is dot1q
+
+  SbiNeVxlanTunnel:
+    allOf:
+      - $ref: '#/definitions/SbiVxlanNetModel'
+      - type: object
+        required:
+          - vxlanInstanceId
+        properties:
+          vni:
+            type: string
+            description: vlan id
+          vxlanInstanceId:
+            type: string
+            description: bound vxlan instance id
+          sourceAddress:
+            $ref: "#/definitions/Ip"
+          destAddress:
+            $ref: "#/definitions/Ip"
+          sourceIfId:
+            type: string
+            description: source ifid
+          tunnelIfId:
+            type: string
+            description: tunnel ifid
+          vxlanInstances:
+            type: array
+            items:
+              type: string
+          vnis:
+            type: array
+            items:
+              type: string
+
+  SbiNeVxlanInstance:
+    allOf:
+      - $ref: '#/definitions/SbiVxlanNetModel'
+      - type: object
+        required:
+          - nbiVxlanTunnelId
+          - vni
+        properties:
+          nbiVxlanTunnelId:
+            type: string
+            description: associated nbi vxlan ID
+          vni:
+            type: string
+            description: net ID which vxlan belongs to
+          arpProxy:
+            type: string
+            description: whether to enable arpProxy(default:"false")
+          arpBroadcastSuppress:
+            type: string
+            description: arp broadcast suppress enable(default:"false")
+          keepAlive:
+            type: string
+          vxlanInterfaces:
+            type: array
+            items:
+              type: string
+          vxlanTunnels:
+            type: array
+            items:
+              type: string
+          vxlanInterfaceList:
+            type: array
+            items:
+              $ref: '#/definitions/SbiNeVxlanInterface'
+          vxlanTunnelList:
+            type: array
+            items:
+              $ref: '#/definitions/SbiNeVxlanTunnel'
+  ErrorCodeInfo:
+    type: object
+    description: Error code information model
+    required:
+      - errorCode
+      - description
+      - objectId
+      - objectName
+      - object
+      - descArg
+      - reasonArg
+      - detailArg
+    properties:
+      errorCode:
+        type: string
+        description: error code
+      description:
+        type: string
+        description: error description
+      objectId:
+        type: string
+        description: object Id
+      objectName:
+        type: string
+        description: object Name
+      object:
+        type: object
+        description: object
+      descArg:
+        type: string
+        description: The description args
+      reasonArg:
+        type: string
+        description: The reason args
+      detailArg:
+        type: string
+        description: The detail args
+
+  ResultResponse:
+    type: object
+    description: Result response model
+    required:
+      - errorCode
+      - httpCode
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      descArg:
+        type: string
+        description: The description args
+      reasonArg:
+        type: string
+        description: The reason args
+      detailArg:
+        type: string
+        description: The detail args
+      adviceArg:
+        type: string
+        description: The advice args
+      httpCode:
+        type: integer
+        description: The http status code
+      message:
+        type: string
+        description: the exception message word
+      smallErrorCodeList:
+        $ref: "#/definitions/ErrorCodeInfo"
+
+  Ip:
+    type: object
+    description: ip model
+    required:
+      - ipv4
+      - ipMask
+    properties:
+      ipv4:
+        type: string
+        description: ipv4 ip
+      ipv6:
+        type: string
+        description: ipv6 ip
+      ipMask:
+        type: string
+        description: ip mask
+      prefixLength:
+        type: string
+        description: length of prifix
+      neId:
+        type: string
+        description: id of ne
+      deviceId:
+        type: string
+        description: device id
+      vxlanTunnelId:
+        type: string
+        description: vxlan tunnel id
+
+
+  FailDataSbiNeVxlanInstance:
+    type: object
+    description: Fail data model
+    properties:
+      errcode:
+        type: string
+        description: result error code
+      errmsg:
+        type: string
+        description: error message
+      data:
+        $ref: "#/definitions/SbiNeVxlanInstance"
+  SbiNeVxlanInstanceResultResponse:
+    description: SbiNeVxlanInstance result model
+    allOf:
+    - $ref: '#/definitions/ResultResponse'
+    - type: object
+      properties:
+        data:
+          $ref: "#/definitions/SbiNeVxlanInstance"
+        successed:
+          type: array
+          items:
+            $ref: "#/definitions/SbiNeVxlanInstance"
+          description: the successed list.
+        fail:
+          type: array
+          items:
+            $ref: "#/definitions/FailDataSbiNeVxlanInstance"
+          description: the failed list.
