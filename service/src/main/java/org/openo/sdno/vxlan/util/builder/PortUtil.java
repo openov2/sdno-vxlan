@@ -68,10 +68,10 @@ public class PortUtil {
         for(Map.Entry<String, String> entry : neIdToPortNameMap.entrySet()) {
             String portName = entry.getValue();
             for(LogicalTernminationPointMO ltp : ltpMos) {
-                if(!ltp.getName().equals(portName)) {
-                    continue;
+                
+                if(ltp.getName().equals(portName) && entry.getKey().equals(ltp.getMeID())) {
+                    neIdToIp.put(entry.getKey(), getIpFromLtp(ltp));
                 }
-                neIdToIp.put(entry.getKey(), getIpFromLtp(ltp));
             }
         }
 

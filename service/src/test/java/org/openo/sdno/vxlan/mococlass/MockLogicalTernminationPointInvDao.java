@@ -32,11 +32,13 @@ public class MockLogicalTernminationPointInvDao extends MockUp<LogicalTernminati
         List<LogicalTernminationPointMO> datas = new ArrayList<LogicalTernminationPointMO>();
         LogicalTernminationPointMO ltp1 = new LogicalTernminationPointMO();
         ltp1.setId("neid1");
+        ltp1.setMeID("neid1");
         ltp1.setIpAddress("192.168.1.1");
         ltp1.setName("Ltp1");
 
         LogicalTernminationPointMO ltp2 = new LogicalTernminationPointMO();
         ltp2.setId("neid2");
+        ltp2.setMeID("neid2");
         ltp2.setIpAddress("192.168.2.1");
         ltp2.setName("Ltp2");
 
