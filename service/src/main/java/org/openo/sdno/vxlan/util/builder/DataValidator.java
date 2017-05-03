@@ -206,7 +206,7 @@ public class DataValidator {
         if(NeRoleType.LOCALCPE.getName().equals(vxlanTunnel.getSrcNeRole())) {
             checkTunnelHasVlan(portList, srcNeId);
         }
-        if(NeRoleType.LOCALCPE.getName().equals(vxlanTunnel.getSrcNeRole())) {
+        if(NeRoleType.LOCALCPE.getName().equals(vxlanTunnel.getDestNeRole())) {
             checkTunnelHasVlan(portList, destNeId);
         }
     }
